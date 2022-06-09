@@ -6,18 +6,23 @@ namespace Domain
     {
         [Key]
         [Required]
+        public string from { get; set; }
+
+        [Key]
+        [Required]
+        public string to { get; set; }
+
+        [Key]
+        [Required]
         public int Id { get; set; }
 
         [Required]
-        public string Type { get; set; }
-
-        [Required]
-        public string Data { get; set; }
+        public string Content { get; set; }
 
         [Required]
         public DateTime TimeSent { get; set; }
 
         [Required]
-        public bool IsMine { get; set; }
+        public bool Sent { get; set; }
     }
 }

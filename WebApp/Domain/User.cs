@@ -17,14 +17,11 @@ namespace Domain
         [JsonIgnore]
         public string Password { get; set; }
 
+        [Required]
         public string Server { get; set; }
 
         public DateTime LastSeen { get; set; }
 
-        [JsonIgnore]
-        public string ImgSrc { get; set; }
-
-        [JsonIgnore]
         public List<Contact> Contacts { get; set; }
 
     }

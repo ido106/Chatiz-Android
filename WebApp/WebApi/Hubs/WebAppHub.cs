@@ -13,7 +13,7 @@ namespace WebApi.Hubs
             _service = service;
         }
 
-        public async Task Login(string username)
+        /*public async Task Login(string username)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, username);
         }
@@ -25,6 +25,6 @@ namespace WebApi.Hubs
             await _service.AddMessage(contact_username, username, message);
             await _service.ReceiveMessage(username, contact_username, message);
             //await Clients.All.SendAsync("ChangeRecieved", value);
-        }
+        }*/
     }
 }

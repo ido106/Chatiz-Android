@@ -1088,3 +1088,13 @@ C:\Users\shahar\1\5\Advanced2_New\WebApp\WebApi\obj\Debug\net6.0\refint\WebApi.d
 C:\Users\shahar\1\5\Advanced2_New\WebApp\WebApi\obj\Debug\net6.0\WebApi.pdb
 C:\Users\shahar\1\5\Advanced2_New\WebApp\WebApi\obj\Debug\net6.0\WebApi.genruntimeconfig.cache
 C:\Users\shahar\1\5\Advanced2_New\WebApp\WebApi\obj\Debug\net6.0\ref\WebApi.dll
+C:\Users\Ido\Documents\GitHub\Advanced2_Android\WebApp\WebApi\obj\Debug\net6.0\WebApi.csproj.AssemblyReference.cache
+C:\Users\Ido\Documents\GitHub\Advanced2_Android\WebApp\WebApi\obj\Debug\net6.0\WebApi.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Ido\Documents\GitHub\Advanced2_Android\WebApp\WebApi\obj\Debug\net6.0\WebApi.AssemblyInfoInputs.cache
+C:\Users\Ido\Documents\GitHub\Advanced2_Android\WebApp\WebApi\obj\Debug\net6.0\WebApi.AssemblyInfo.cs
+C:\Users\Ido\Documents\GitHub\Advanced2_Android\WebApp\WebApi\obj\Debug\net6.0\WebApi.csproj.CoreCompileInputs.cache
+C:\Users\Ido\Documents\GitHub\Advanced2_Android\WebApp\WebApi\obj\Debug\net6.0\WebApi.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Ido\Documents\GitHub\Advanced2_Android\WebApp\WebApi\obj\Debug\net6.0\WebApi.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Ido\Documents\GitHub\Advanced2_Android\WebApp\WebApi\obj\Debug\net6.0\WebApi.dll
+C:\Users\Ido\Documents\GitHub\Advanced2_Android\WebApp\WebApi\obj\Debug\net6.0\refint\WebApi.dll
+C:\Users\Ido\Documents\GitHub\Advanced2_Android\WebApp\WebApi\obj\Debug\net6.0\WebApi.pdb
