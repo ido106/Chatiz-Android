@@ -93,7 +93,7 @@ namespace WebApi.Controllers
 
         [HttpGet("contacts/{id}")]
         [Authorize]
-        public async Task<IActionResult> ContactID(string contact)
+        public async Task<IActionResult> ContactID([Bind("id")] string contact)
         {
             string username = getConnectedUser();
             if (username == null || await _service.Get(username) == null) return NotFound();
@@ -109,7 +109,7 @@ namespace WebApi.Controllers
 
         [HttpPut("contacts/{id}")]
         [Authorize]
-        public async Task<IActionResult> ChangeContactID(string contact, [FromBody] JsonElement json)
+        public async Task<IActionResult> ChangeContactID([Bind("id")] string contact, [FromBody] JsonElement json)
         {
             string username = getConnectedUser();
             if (username == null || await _service.Get(username) == null) return NotFound();
@@ -135,7 +135,7 @@ namespace WebApi.Controllers
 
         [HttpDelete("contacts/{id}")]
         [Authorize]
-        public async Task<IActionResult> DeleteContactID(string contact)
+        public async Task<IActionResult> DeleteContactID([Bind("id")] string contact)
         {
             string username = getConnectedUser();
             if (username == null || await _service.Get(username) == null) return NotFound();
@@ -182,7 +182,7 @@ namespace WebApi.Controllers
                 return BadRequest(e.Message);
             }
 
-            await _service.AddMessage(username, id, content);
+            await _service.AddMessage(username, id, content, true);
             await _service.UpdateTimeToAllUsers(username);
 
             return StatusCode(201);
@@ -190,7 +190,7 @@ namespace WebApi.Controllers
 
         [HttpGet("contacts/{id}/messages/{id2}")]
         [Authorize]
-        public async Task<IActionResult> GetMessageID(string contact, string id)
+        public async Task<IActionResult> GetMessageID([Bind("id")] string contact, [Bind("id2")] string id)
         {
             string username = getConnectedUser();
             if (id == null || username == null || await _service.Get(username) == null) return NotFound();
@@ -207,7 +207,8 @@ namespace WebApi.Controllers
 
         [HttpPut("contacts/{id}/messages/{id2}")]
         [Authorize]
-        public async Task<IActionResult> EditMessageID(string contact, string id, [FromBody] JsonElement json)
+        public async Task<IActionResult> EditMessageID([Bind("id")] string contact,
+            [Bind("id2")] string id, [FromBody] JsonElement json)
         {
             string username = getConnectedUser();
             if (id == null || username == null || await _service.Get(username) == null) return NotFound();
@@ -235,7 +236,7 @@ namespace WebApi.Controllers
 
         [HttpDelete("contacts/{id}/messages/{id2}")]
         [Authorize]
-        public async Task<IActionResult> DeleteMessageID(string contact, string id)
+        public async Task<IActionResult> DeleteMessageID([Bind("id")] string contact, [Bind("id2")] string id)
         {
             string username = getConnectedUser();
             if (id == null || username == null || await _service.Get(username) == null) return NotFound();
@@ -297,7 +298,7 @@ namespace WebApi.Controllers
             if (await _service.Get(to) == null) return BadRequest();
             if (await _service.GetContact(to, from) == null) return BadRequest();
 
-            await _service.AddMessage(to, from, content);
+            await _service.AddMessage(to, from, content, false);
             return StatusCode(201);
         }
 
