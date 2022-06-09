@@ -4,10 +4,8 @@
     "\\Domain",
     "\\Services",
     "\\WebApi",
-    "\\WebApi\\Controllers",
-    "\\WebApp",
-    "\\WebApp\\Controllers",
-    "\\WebApp\\Views"
+    "\\WebApi\\Controllers"
   ],
+  "SelectedNode": "\\WebApp.sln",
   "PreviewInSolutionExplorer": false
 }

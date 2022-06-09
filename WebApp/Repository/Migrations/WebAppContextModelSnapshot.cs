@@ -21,15 +21,10 @@ namespace Repository.Migrations
 
             modelBuilder.Entity("Domain.Contact", b =>
                 {
-                    b.Property<int>("IdContact")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("TalkingTo")
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Id")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("ImgSrc")
                         .HasColumnType("longtext");
 
                     b.Property<string>("LastMessage")
@@ -38,20 +33,18 @@ namespace Repository.Migrations
                     b.Property<DateTime>("LastSeen")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Nickname")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Server")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("TalkingTo")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Username")
                         .HasColumnType("varchar(255)");
 
-                    b.HasKey("IdContact");
+                    b.HasKey("TalkingTo");
 
                     b.HasIndex("Username");
 
@@ -60,30 +53,31 @@ namespace Repository.Migrations
 
             modelBuilder.Entity("Domain.Message", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("to")
+                        .HasColumnType("varchar(255)");
 
-                    b.Property<int?>("ContactIdContact")
-                        .HasColumnType("int");
+                    b.Property<string>("ContactTalkingTo")
+                        .HasColumnType("varchar(255)");
 
-                    b.Property<string>("Data")
+                    b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<bool>("IsMine")
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Sent")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<DateTime>("TimeSent")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
+                    b.Property<string>("from")
                         .HasColumnType("longtext");
 
-                    b.HasKey("Id");
+                    b.HasKey("to");
 
-                    b.HasIndex("ContactIdContact");
+                    b.HasIndex("ContactTalkingTo");
 
                     b.ToTable("Message");
                 });
@@ -92,9 +86,6 @@ namespace Repository.Migrations
                 {
                     b.Property<string>("Username")
                         .HasColumnType("varchar(255)");
-
-                    b.Property<string>("ImgSrc")
-                        .HasColumnType("longtext");
 
                     b.Property<DateTime>("LastSeen")
                         .HasColumnType("datetime(6)");
@@ -108,6 +99,7 @@ namespace Repository.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("Server")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Username");
@@ -126,7 +118,7 @@ namespace Repository.Migrations
                 {
                     b.HasOne("Domain.Contact", null)
                         .WithMany("Messages")
-                        .HasForeignKey("ContactIdContact");
+                        .HasForeignKey("ContactTalkingTo");
                 });
 
             modelBuilder.Entity("Domain.Contact", b =>
