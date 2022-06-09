@@ -48,14 +48,19 @@ namespace Repository
 
             modelBuilder.Entity<Contact>()
             .Property(s => s.Id).IsRequired();
-            modelBuilder.Entity<Contact>().HasKey(c => c.Id);
-            modelBuilder.Entity<Contact>().HasKey(c => c.TalkingTo);
-            //modelBuilder.Entity<Contact>().HasOne(c => c.User).WithMany(u => u.Contacts).HasForeignKey(c => c.ContactUsername);
+            modelBuilder.Entity<Contact>().HasKey(contact => new
+            {
+                contact.TalkingTo, contact.Id
+            });
             modelBuilder.Entity<Contact>().HasMany(c => c.Messages);
+            //modelBuilder.Entity<Contact>().HasOne(c => c.User).WithMany(u => u.Contacts).HasForeignKey(c => c.ContactUsername);
 
-            modelBuilder.Entity<Message>().HasKey(message => message.Id);
-            modelBuilder.Entity<Message>().HasKey(message => message.from);
-            modelBuilder.Entity<Message>().HasKey(message => message.to);
+            modelBuilder.Entity<Message>().HasKey(message => new
+            {
+                message.Id,
+                message.to,
+                message.from
+            });
         }
 
 

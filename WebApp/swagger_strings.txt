@@ -1,0 +1,15 @@
+signin:
+{ "username" : "idoido", "password" : "idoido1"}
+
+add contact:
+{ "id" : "yoavyoav", "name" : "yoavav", "server" : "localhost:7038"}
+
+
+signup:
+{ "username" : "idoido", "nickName" : "idodo", "password" : "idoido1"}
+
+
+{ "username" : "yoavyoav", "nickName" : "yoavav", "password" : "yoav123"}
+
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjb25uZWN0aW9uIiwianRpIjoiMzEwNTc1NzktMjkxMS00ZjZkLWEyNGItNDRmODFhM2ZmOWQ4IiwiaWF0IjoiMDkvMDYvMjAyMiAyMTozNjoxMCIsInVzZXJuYW1lIjoiaWRvaWRvIiwiZXhwIjoxNjU1NDE1MzcwLCJpc3MiOiJzZXJ2ZXIiLCJhdWQiOiJ1c2VycyJ9.LyusQjl10Zfj0FvYIz8CSouVvYNGcvwSctFZ0iHpJ2g
