@@ -108,6 +108,9 @@ namespace Services
             if(contact == null) return false;
 
             user.Contacts.Remove(contact);
+
+            _context.Contact.Remove(contact);
+
             _context.Update(user);
 
             await _context.SaveChangesAsync();
@@ -166,7 +169,11 @@ namespace Services
             message.from = from;
             message.to = to;
             message.Sent = sent;
-            int id = (await GetLast(from, to)).Id + 1;
+            int id = 1;
+            if ((await GetLast(from, to)) != null)
+            {
+                id = (await GetLast(from, to)).Id + 1;
+            }
             message.Id = id;
             message.Content = content;
             message.TimeSent = DateTime.Now;
@@ -207,8 +214,8 @@ namespace Services
             if (m == null) return false;
 
             c.Messages.Remove(m);
-            //(await GetMessages(username, contact)).Remove(m);
-            _context.Update(c);
+
+            _context.Message.Remove(m);
 
             await _context.SaveChangesAsync();
             return true;
