@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Android Chat</string>
+    <string name="test">Hello World</string>
+    <string name="login_etUsername">Username</string>
+    <string name="login_etPassword">Password</string>
+    <string name="login_btnLogin">Login</string>
+</resources>
