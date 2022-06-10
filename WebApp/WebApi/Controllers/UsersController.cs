@@ -135,14 +135,14 @@ namespace WebApi.Controllers
 
         [HttpDelete("contacts/{id}")]
         [Authorize]
-        public async Task<IActionResult> DeleteContactID([Bind("id")] string contact)
+        public async Task<IActionResult> DeleteContactID(string id)
         {
             string username = getConnectedUser();
             if (username == null || await _service.Get(username) == null) return NotFound();
-            if (contact == null || await _service.GetContact(username, contact) == null) return NotFound();
+            if (id == null || await _service.GetContact(username, id) == null) return NotFound();
 
 
-            await _service.DeleteContact(username, contact);
+            await _service.DeleteContact(username, id);
 
             return NoContent();
         }
@@ -183,23 +183,23 @@ namespace WebApi.Controllers
             }
 
             await _service.AddMessage(username, id, content, true);
-            await _service.UpdateTimeToAllUsers(username);
+            //await _service.UpdateTimeToAllUsers(username);
 
             return StatusCode(201);
         }
 
         [HttpGet("contacts/{id}/messages/{id2}")]
         [Authorize]
-        public async Task<IActionResult> GetMessageID([Bind("id")] string contact, [Bind("id2")] string id)
+        public async Task<IActionResult> GetMessageID(string id, string id2)
         {
             string username = getConnectedUser();
-            if (id == null || username == null || await _service.Get(username) == null) return NotFound();
+            if (id2 == null || username == null || await _service.Get(username) == null) return NotFound();
 
-            if (contact == null || await _service.GetContact(username, contact) == null) return NotFound();
+            if (id == null || await _service.GetContact(username, id) == null) return NotFound();
 
-            if (!int.TryParse(id, out var id2)) return BadRequest();
+            if (!int.TryParse(id2, out var id3)) return BadRequest();
 
-            Message message = await _service.GetMessageID(username, contact, id2);
+            Message message = await _service.GetMessageID(username, id, id3);
             if (message == null) return NotFound();
 
             return Ok(message);
@@ -207,17 +207,16 @@ namespace WebApi.Controllers
 
         [HttpPut("contacts/{id}/messages/{id2}")]
         [Authorize]
-        public async Task<IActionResult> EditMessageID([Bind("id")] string contact,
-            [Bind("id2")] string id, [FromBody] JsonElement json)
+        public async Task<IActionResult> EditMessageID(string id, string id2, [FromBody] JsonElement json)
         {
             string username = getConnectedUser();
-            if (id == null || username == null || await _service.Get(username) == null) return NotFound();
+            if (id2 == null || username == null || await _service.Get(username) == null) return NotFound();
 
-            if (contact == null || await _service.GetContact(username, contact) == null) return NotFound();
+            if (id == null || await _service.GetContact(username, id) == null) return NotFound();
 
-            if (!int.TryParse(id, out var id2)) return BadRequest();
+            if (!int.TryParse(id2, out var id3)) return BadRequest();
 
-            Message message = await _service.GetMessageID(username, contact, id2);
+            Message message = await _service.GetMessageID(username, id, id3);
             if (message == null) return NotFound();
 
             string content;
@@ -229,26 +228,26 @@ namespace WebApi.Controllers
                 return BadRequest(e.Message);
             }
 
-            await _service.UpdateMessage(contact, id2, username, content);
+            await _service.UpdateMessage(id, id3, username, content);
 
             return NoContent();
         }
 
         [HttpDelete("contacts/{id}/messages/{id2}")]
         [Authorize]
-        public async Task<IActionResult> DeleteMessageID([Bind("id")] string contact, [Bind("id2")] string id)
+        public async Task<IActionResult> DeleteMessageID(string id, string id2)
         {
             string username = getConnectedUser();
-            if (id == null || username == null || await _service.Get(username) == null) return NotFound();
+            if (id2 == null || username == null || await _service.Get(username) == null) return NotFound();
 
-            if (contact == null || await _service.GetContact(username, contact) == null) return NotFound();
+            if (id == null || await _service.GetContact(username, id) == null) return NotFound();
 
-            if (!int.TryParse(id, out var id2)) return BadRequest();
+            if (!int.TryParse(id2, out var id3)) return BadRequest();
 
-            Message message = await _service.GetMessageID(username, contact, id2);
+            Message message = await _service.GetMessageID(username, id, id3);
             if (message == null) return NotFound();
 
-            await _service.DeleteMessage(username, contact, id2);
+            await _service.DeleteMessage(username, id, id3);
 
             return NoContent();
         }
