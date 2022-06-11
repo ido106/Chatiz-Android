@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:orientation="vertical"
     android:background="@color/seashell"
-    >
+    android:orientation="vertical"
+    tools:context=".LoginActivity">
 
     <ImageView
         android:id="@+id/imageView9"
@@ -50,15 +49,32 @@
             android:hint="@string/login_etPassword"
             android:inputType="textPassword" />
 
-        <Button
-            android:background="@color/grey"
-            android:textColor="@color/white"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/login_btnLogin" />
-    </LinearLayout>
+            android:layout_gravity="center">
 
+
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:background="@color/grey"
+                android:text="@string/login_btnLogin"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/btnLoginToSignUp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/grey"
+                android:text="@string/login_to_sign_up_btn_text"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
