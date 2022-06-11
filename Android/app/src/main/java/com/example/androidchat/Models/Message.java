@@ -9,11 +9,12 @@ import java.util.Date;
 public class Message {
 
     @PrimaryKey()
-    private String from;
+    private String From;
 
     @PrimaryKey()
-    private String to;
+    private String To;
 
+    // todo is autoGenerate generating the count globally for all users or by keys?
     @PrimaryKey(autoGenerate = true)
     private int Id;
 
@@ -26,8 +27,8 @@ public class Message {
     // Constructor
 
     public Message(String from, String to, String content, boolean sent) {
-        this.from = from;
-        this.to = to;
+        this.From = from;
+        this.To = to;
         this.Content = content;
         this.Sent = sent;
         // todo how to get time? i do it null for now
@@ -38,11 +39,11 @@ public class Message {
     // GET
 
     public String getFrom() {
-        return from;
+        return From;
     }
 
     public String getTo() {
-        return to;
+        return To;
     }
 
     public int getId() {
