@@ -7,4 +7,5 @@
     <string name="login_to_sign_up_btn_text">Sign up</string>
     <string name="Signup_nickname_hint">Nickname</string>
     <string name="verify_password_sign_up_hint">Verify Password</string>
+    <string name="btnSave">Save</string>
 </resources>

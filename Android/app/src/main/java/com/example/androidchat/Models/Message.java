@@ -1,23 +1,42 @@
 package com.example.androidchat.Models;
 
-import androidx.room.*;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+import java.util.Date;
 
 @Entity
 public class Message {
 
-    @PrimaryKey(autoGenerate=true)
-    public String from;
+    @PrimaryKey()
+    private String from;
 
-    public String to;
+    @PrimaryKey()
+    private String to;
 
-    public int Id;
+    @PrimaryKey(autoGenerate = true)
+    private int Id;
 
-    public String Content;
+    private String Content;
 
-    //public DateTime TimeSent { get; set; }
+    private Date TimeSent;
 
-    public boolean Sent;
-// GETTERS AND SETTERS
+    private boolean Sent;
+
+    // Constructor
+
+    public Message(String from, String to, String content, boolean sent) {
+        this.from = from;
+        this.to = to;
+        this.Content = content;
+        this.Sent = sent;
+        // todo how to get time? i do it null for now
+        // this.TimeSent = ?
+        this.TimeSent = null;
+    }
+
+    // GET
+
     public String getFrom() {
         return from;
     }
@@ -34,27 +53,17 @@ public class Message {
         return Content;
     }
 
+    public Date getTimeSent() {
+        return TimeSent;
+    }
+
     public boolean isSent() {
         return Sent;
     }
 
-    public void setFrom(String from) {
-        this.from = from;
-    }
-
-    public void setTo(String to) {
-        this.to = to;
-    }
-
-    public void setId(int id) {
-        Id = id;
-    }
+    //SET
 
     public void setContent(String content) {
         Content = content;
-    }
-
-    public void setSent(boolean sent) {
-        Sent = sent;
     }
 }

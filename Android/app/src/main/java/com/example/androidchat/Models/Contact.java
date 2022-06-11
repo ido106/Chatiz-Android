@@ -1,46 +1,50 @@
 package com.example.androidchat.Models;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+@Entity
 public class Contact {
-    public String Id;
 
-    public String TalkingTo;
+    @PrimaryKey
+    private String Id;
 
-    public String Nickname;
+    @PrimaryKey
+    private String TalkingTo;
 
-    public String Server;
+    private String Nickname;
 
-    // public DateTime LastSeen ;
+    private String Server;
 
-    public String LastMessage;
+    private Date LastSeen;
 
+    private String LastMessage;
 
-    public List<Message> Messages;
-    //GETTERS AND SETTERS
-    public void setId(String id) {
-        Id = id;
+    private List<Message> Messages;
+
+    // CONSTRUCTOR
+
+    public Contact(String id, String talkingTo, String nickname, String server) {
+        this.Id = id;
+        this.TalkingTo = talkingTo;
+        this.Nickname = nickname;
+        this.Server = server;
+        this.Messages = new ArrayList<>();
+
+        // is it ok to do it null ?
+        this.LastMessage = null;
+
+        // todo lastSeen?
+        this.LastSeen = null;
     }
 
-    public void setTalkingTo(String talkingTo) {
-        TalkingTo = talkingTo;
-    }
+    // todo ADD EMPTY CONSTRUCTOR ?
 
-    public void setNickname(String nickname) {
-        Nickname = nickname;
-    }
-
-    public void setServer(String server) {
-        Server = server;
-    }
-
-    public void setLastMessage(String lastMessage) {
-        LastMessage = lastMessage;
-    }
-
-    public void setMessages(List<Message> messages) {
-        Messages = messages;
-    }
+    // GET
 
     public String getId() {
         return Id;
@@ -58,6 +62,10 @@ public class Contact {
         return Server;
     }
 
+    public Date getLastSeen() {
+        return LastSeen;
+    }
+
     public String getLastMessage() {
         return LastMessage;
     }
@@ -66,4 +74,13 @@ public class Contact {
         return Messages;
     }
 
+    // SET
+
+    public void setNickname(String nickname) {
+        Nickname = nickname;
+    }
+
+    public void setServer(String server) {
+        Server = server;
+    }
 }

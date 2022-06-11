@@ -1,42 +1,40 @@
 package com.example.androidchat.Models;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+@Entity
 public class User {
 
-    public String Username;
+    @PrimaryKey
+    private String Username;
 
-    public String Nickname;
+    private String Nickname;
 
+    private String Password;
 
-    public String Password;
+    private String Server;
 
+    private Date LastSeen;
 
-    public String Server;
+    private List<Contact> Contacts;
 
-    //public DateTime LastSeen
-
-    public List<Contact> Contacts;
-//getters and setters
-    public void setUsername(String username) {
+    // CONSTRUCTOR
+    public User(String username, String nickname, String password, String server) {
         Username = username;
-    }
-
-    public void setNickname(String nickname) {
         Nickname = nickname;
-    }
-
-    public void setPassword(String password) {
         Password = password;
-    }
-
-    public void setServer(String server) {
         Server = server;
+        // todo add lastSeen to now, i do it null for now
+        LastSeen = null;
+        Contacts = new ArrayList<>();
     }
 
-    public void setContacts(List<Contact> contacts) {
-        Contacts = contacts;
-    }
+    // GET
 
     public String getUsername() {
         return Username;
@@ -54,9 +52,21 @@ public class User {
         return Server;
     }
 
+    public Date getLastSeen() {
+        return LastSeen;
+    }
+
     public List<Contact> getContacts() {
         return Contacts;
     }
 
+    // SET
 
+    public void setNickname(String nickname) {
+        Nickname = nickname;
+    }
+
+    public void setServer(String server) {
+        Server = server;
+    }
 }
