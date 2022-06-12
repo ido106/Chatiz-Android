@@ -1,6 +1,9 @@
 package com.example.androidchat;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -34,8 +37,19 @@ public class FormActivity extends AppCompatActivity {
         // now we can get the Dao
         chatDao = db.chatDao();
 
-        EditText connectedET = findViewById(R.id.LoginUsername);
-        connected = connectedET.getText().toString();
+//        EditText connectedET = findViewById(R.id.LoginUsername);
+
+
+//        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+//        connected = sharedPref.getString("Username", "");
+
+
+        SharedPreferences sharedpreferences = getSharedPreferences("MyPref",
+                Context.MODE_PRIVATE);
+        if (sharedpreferences.contains("Username")) {
+            connected = sharedpreferences.getString("Username", "shit");
+        }
+//        connected = getSharedPreferences("username",1).toString();
 
         Button btnSave = binding.btnSave;
         // call the database
@@ -43,15 +57,20 @@ public class FormActivity extends AppCompatActivity {
             EditText contactUsername = binding.etUsername;
             EditText contactNickname = binding.etNickname;
             EditText contactServer = binding.etServer;
-            // get the connected username
-            Contact contact = new Contact(
-                    contactUsername.getText().toString(),
-                    connected,
-                    contactNickname.getText().toString(),
-                    contactServer.getText().toString());
 
-            chatDao.addContact(connected, contact);
+            if (chatDao.getContact(connected, contactUsername.getText().toString()) != null) {
+                binding.AddContactErrorExist.setVisibility(View.VISIBLE);
 
+            } else {
+                // get the connected username
+                Contact contact = new Contact(
+                        contactUsername.getText().toString(),
+                        connected,
+                        contactNickname.getText().toString(),
+                        contactServer.getText().toString());
+
+                chatDao.addContact(contact);
+            }
             // finish and return to the previous activity
             finish();
         });

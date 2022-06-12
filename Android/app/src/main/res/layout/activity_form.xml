@@ -19,7 +19,8 @@
             android:hint="@string/AddContactUsername"
             android:id="@+id/etUsername"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:transitionName="username"/>
 
         <EditText
             android:hint="@string/AddContactNickname"
@@ -32,6 +33,19 @@
             android:id="@+id/etServer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+        <!--        change color to red-->
+        <TextView
+            android:textColor="@color/design_default_color_error"
+            android:textColorHighlight="@color/design_default_color_error"
+            android:id="@+id/AddContactErrorExist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:ems="10"
+            android:hint="@string/login_error_message"
+            android:visibility="invisible"
+            />
 
         <Button
             android:id="@+id/btnSave"

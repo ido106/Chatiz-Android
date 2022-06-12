@@ -1,20 +1,20 @@
 package com.example.androidchat.Models;
 
+import android.annotation.SuppressLint;
+
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-@Entity
+@Entity(primaryKeys = {"Id", "TalkingTo"})
 public class Contact {
+    @NonNull
 
-    @PrimaryKey
     private String Id;
+    @NonNull
 
-    @PrimaryKey
     private String TalkingTo;
 
     private String Nickname;
@@ -25,32 +25,34 @@ public class Contact {
 
     private String LastMessage;
 
-    private List<Message> Messages;
+    //private List<Message> Messages;
 
     // CONSTRUCTOR
 
-    public Contact(String id, String talkingTo, String nickname, String server) {
-        this.Id = id;
-        this.TalkingTo = talkingTo;
-        this.Nickname = nickname;
-        this.Server = server;
-        this.Messages = new ArrayList<>();
+    public Contact(@NonNull String Id, @NonNull String TalkingTo, String Nickname, String Server) {
+        this.Id = Id;
+        this.TalkingTo = TalkingTo;
+        this.Nickname = Nickname;
+        this.Server = Server;
+        //this.Messages = new ArrayList<>();
 
         // is it ok to do it null ?
         this.LastMessage = null;
 
         // todo change lastSeen according to contact's date ? currently inserting the current time
         Date date = new Date(); // new() gives the current date
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM hh:mm");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("dd/MM hh:mm");
         this.LastSeen = formatter.format(date);
     }
 
     // GET
 
+    @NonNull
     public String getId() {
         return Id;
     }
 
+    @NonNull
     public String getTalkingTo() {
         return TalkingTo;
     }
@@ -71,9 +73,7 @@ public class Contact {
         return LastMessage;
     }
 
-    public List<Message> getMessages() {
-        return Messages;
-    }
+    //public List<Message> getMessages() {return Messages;}
 
     // SET
 
@@ -83,5 +83,33 @@ public class Contact {
 
     public void setServer(String server) {
         Server = server;
+    }
+
+    public void setId(@NonNull String id) {
+        Id = id;
+    }
+
+    public void setTalkingTo(@NonNull String talkingTo) {
+        TalkingTo = talkingTo;
+    }
+
+    public void setLastSeen(String lastSeen) {
+        LastSeen = lastSeen;
+    }
+
+    public void setLastMessage(String lastMessage) {
+        LastMessage = lastMessage;
+    }
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "Id='" + Id + '\'' +
+                ", TalkingTo='" + TalkingTo + '\'' +
+                ", Nickname='" + Nickname + '\'' +
+                ", Server='" + Server + '\'' +
+                ", LastSeen='" + LastSeen + '\'' +
+                ", LastMessage='" + LastMessage + '\'' +
+                '}';
     }
 }

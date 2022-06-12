@@ -26,10 +26,10 @@ public interface ChatDao {
     void addUser(User user);
 
     @Update
-    void updateUser(String username);
+    void updateUser(User username);
 
     @Delete
-    void deleteUser(String username);
+    void deleteUser(User username);
 
     // *** CONTACT ***
     @Query("SELECT * FROM contact")
@@ -42,15 +42,15 @@ public interface ChatDao {
     Contact getContact(String username, String contact);
 
     @Insert
-    void addContact(String user, Contact contact);
+    void addContact(Contact contact);
 
     @Update
-    void updateContact(String contact);
+    void updateContact(Contact contact);
     // todo do i have to support changing the contact's server and nickname like the api ?
     // void updateContact(String username, String contact, String server, String Nickname);
 
     @Delete
-    void deleteContact(String username, String contact);
+    void deleteContact(Contact contact);
 
     // *** MESSAGE ***
     @Query("SELECT * FROM message")
@@ -63,11 +63,11 @@ public interface ChatDao {
     Message getMessage(String from, String to, int id);
 
     @Insert
-    void addMessage(String from, String to, String Content, boolean isMine);
+    void addMessage(Message message);
 
     @Update
-    void updateMessage(String from, String to, int id);
+    void updateMessage(Message message);
 
     @Delete
-    void deleteMessage(String from, String to, int id);
+    void deleteMessage(Message message);
 }

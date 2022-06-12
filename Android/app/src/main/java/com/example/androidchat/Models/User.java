@@ -1,16 +1,17 @@
 package com.example.androidchat.Models;
 
+import android.annotation.SuppressLint;
+
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 public class User {
-
+    @NonNull
     @PrimaryKey
     private String Username;
 
@@ -22,19 +23,19 @@ public class User {
 
     private String LastSeen;
 
-    private List<Contact> Contacts;
+    //private List<Contact> Contacts;
 
     // CONSTRUCTOR
-    public User(String username, String nickname, String password, String server) {
-        Username = username;
-        Nickname = nickname;
-        Password = password;
-        Server = server;
-        Contacts = new ArrayList<>();
+    public User(@NonNull String Username, String Nickname, String Password, String Server) {
+        this.Username = Username;
+        this.Nickname = Nickname;
+        this.Password = Password;
+        this.Server = Server;
+        //Contacts = new ArrayList<>();
 
         // get time
         Date date = new Date(); // new() gives the current date
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM hh:mm");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("dd/MM hh:mm");
         this.LastSeen = formatter.format(date);
     }
 
@@ -60,9 +61,7 @@ public class User {
         return LastSeen;
     }
 
-    public List<Contact> getContacts() {
-        return Contacts;
-    }
+    //public List<Contact> getContacts() {return Contacts;}
 
     // SET
 
@@ -72,5 +71,17 @@ public class User {
 
     public void setServer(String server) {
         Server = server;
+    }
+
+    public void setUsername(String username) {
+        Username = username;
+    }
+
+    public void setPassword(String password) {
+        Password = password;
+    }
+
+    public void setLastSeen(String lastSeen) {
+        LastSeen = lastSeen;
     }
 }

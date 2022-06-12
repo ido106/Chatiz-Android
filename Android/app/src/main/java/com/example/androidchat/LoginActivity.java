@@ -1,7 +1,9 @@
 package com.example.androidchat;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,8 +28,8 @@ public class LoginActivity extends AppCompatActivity {
 
         // create the DB connection
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ChatDB") // "ChatDB" will be the name of the DB
-                                        .allowMainThreadQueries()  // allow the DB to run on the main thread, it is not supposed to be like this but its okay for now
-                                        .build();
+                .allowMainThreadQueries()  // allow the DB to run on the main thread, it is not supposed to be like this but its okay for now
+                .build();
 
         // now we can get the Dao
         chatDao = db.chatDao();
@@ -43,6 +45,27 @@ public class LoginActivity extends AppCompatActivity {
 
         Button btnLogin = binding.btnLogin;
         btnLogin.setOnClickListener(view -> {
+            if (chatDao.getUser(binding.LoginUsername.getText().toString()) != null &&
+                    chatDao.getUser(binding.LoginUsername.getText().toString()).getPassword().
+                            equals(binding.LoginPassword.getText().toString())) {
+
+
+//                SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+//                @SuppressLint("CommitPrefEdits") SharedPreferences.Editor editor = sharedPref.edit();
+//                editor.putString("username", binding.LoginUsername.getText().toString());
+//                editor.apply();
+
+                SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putString("Username", binding.LoginUsername.getText().toString());
+                editor.apply();
+
+
+                Intent chat = new Intent(this, StartChatActivity.class);
+                startActivity(chat);
+            } else {
+                binding.LoginError.setVisibility(View.VISIBLE);
+            }
             //validations and login to the chat page if correct
         });
     }

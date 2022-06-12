@@ -7,6 +7,7 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
+import com.example.androidchat.Models.User;
 import com.example.androidchat.databinding.ActivitySignUpBinding;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -51,6 +52,12 @@ public class SignUpActivity extends AppCompatActivity {
 
     private boolean registerToServer(View view) {
         // send data to server and register
+
+        chatDao.addUser(new User(   binding.SignupUsername.getText().toString(),
+                                    binding.SignupNickname.getText().toString(),
+                                    binding.SignupPassword1.getText().toString(),
+                                "http://localhost:7038"
+                        ));
         return true;
     }
 
@@ -68,12 +75,17 @@ public class SignUpActivity extends AppCompatActivity {
         // now we can get the Dao
         chatDao = db.chatDao();
 
+        binding.SignUpToLogin.setOnClickListener(view -> {
+            Intent login = new Intent(this, LoginActivity.class);
+            startActivity((login));
+        });
+
         binding.SignupAction.setOnClickListener(view -> {
             if (!checkValidation(view)) {
                 return;
             }
             if (registerToServer(view)) {
-                Intent chat = new Intent(this, StartChatActivity.class);
+                Intent chat = new Intent(this, LoginActivity.class);
                 startActivity(chat);
             }
         });

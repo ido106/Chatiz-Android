@@ -49,6 +49,20 @@
             android:hint="@string/login_etPassword"
             android:inputType="textPassword" />
 
+<!--        change color to red-->
+        <TextView
+            android:textColor="@color/design_default_color_error"
+            android:textColorHighlight="@color/design_default_color_error"
+            android:id="@+id/LoginError"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:ems="10"
+            android:hint="@string/login_error_message"
+            android:visibility="invisible"
+            />
+
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

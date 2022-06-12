@@ -11,4 +11,5 @@
     <string name="AddContactUsername">Username</string>
     <string name="AddContactNickname">Nickname</string>
     <string name="AddContactServer">Server</string>
+    <string name="login_error_message">Username or Password are incorrect!</string>
 </resources>
