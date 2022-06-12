@@ -10,10 +10,10 @@ import java.util.Date;
 public class Message {
 
     @PrimaryKey()
-    private String From;
+    private String from;
 
     @PrimaryKey()
-    private String To;
+    private String to;
 
     // todo is autoGenerate generating the count globally for all users or by keys?
     @PrimaryKey(autoGenerate = true)
@@ -28,8 +28,8 @@ public class Message {
     // Constructor
 
     public Message(String from, String to, String content, boolean sent) {
-        this.From = from;
-        this.To = to;
+        this.from = from;
+        this.to = to;
         this.Content = content;
         this.Sent = sent;
 
@@ -42,11 +42,11 @@ public class Message {
     // GET
 
     public String getFrom() {
-        return From;
+        return from;
     }
 
     public String getTo() {
-        return To;
+        return to;
     }
 
     public int getId() {

@@ -43,7 +43,7 @@ public class FormActivity extends AppCompatActivity {
             EditText contactUsername = binding.etUsername;
             EditText contactNickname = binding.etNickname;
             EditText contactServer = binding.etServer;
-            // todo how to get the connected user username?
+            // get the connected username
             Contact contact = new Contact(
                     contactUsername.getText().toString(),
                     connected,
@@ -51,6 +51,9 @@ public class FormActivity extends AppCompatActivity {
                     contactServer.getText().toString());
 
             chatDao.addContact(connected, contact);
+
+            // finish and return to the previous activity
+            finish();
         });
     }
 }
