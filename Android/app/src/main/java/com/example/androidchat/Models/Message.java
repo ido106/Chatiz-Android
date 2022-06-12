@@ -3,6 +3,7 @@ package com.example.androidchat.Models;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -20,7 +21,7 @@ public class Message {
 
     private String Content;
 
-    private Date TimeSent;
+    private String TimeSent;
 
     private boolean Sent;
 
@@ -31,9 +32,11 @@ public class Message {
         this.To = to;
         this.Content = content;
         this.Sent = sent;
-        // todo how to get time? i do it null for now
-        // this.TimeSent = ?
-        this.TimeSent = null;
+
+        // get time
+        Date date = new Date(); // new() gives the current date
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM hh:mm");
+        this.TimeSent = formatter.format(date);
     }
 
     // GET
@@ -54,7 +57,7 @@ public class Message {
         return Content;
     }
 
-    public Date getTimeSent() {
+    public String getTimeSent() {
         return TimeSent;
     }
 

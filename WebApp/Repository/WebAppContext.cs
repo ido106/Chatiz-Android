@@ -10,32 +10,12 @@ namespace Repository
 {
     public class WebAppContext : DbContext
     {
-        
-        //public WebAppContext (DbContextOptions<WebAppContext> options)
-        //    : base(options)
-        //{
-        //}
-
         private const string connectionString = "Server=localhost;Port=3306;Database=WebAppDB;User=root;Password=iddo";
-
-        /**
-        public WebAppContext()
-        {
-            Database.EnsureCreated();
-        }
-        **/
 
         protected override void OnConfiguring (DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseMySql(connectionString, MariaDbServerVersion.AutoDetect(connectionString));
         }
-
-        /**
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Contact>().HasKey(e => e.Username);
-        }
-        **/
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

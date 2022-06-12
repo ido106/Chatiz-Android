@@ -5,12 +5,15 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import com.example.androidchat.databinding.ActivitySignUpBinding;
 
 public class SignUpActivity extends AppCompatActivity {
 
     private ActivitySignUpBinding binding;
+    private AppDB db;
+    private ChatDao chatDao; // we can communicate with the DB with chatDao
 
 
     private boolean checkValidation(View view) {
@@ -56,6 +59,14 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivitySignUpBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        // create the DB connection
+        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ChatDB") // "ChatDB" will be the name of the DB
+                .allowMainThreadQueries()  // allow the DB to run on the main thread, it is not supposed to be like this but its okay for now
+                .build();
+
+        // now we can get the Dao
+        chatDao = db.chatDao();
 
         binding.SignupAction.setOnClickListener(view -> {
             if (!checkValidation(view)) {

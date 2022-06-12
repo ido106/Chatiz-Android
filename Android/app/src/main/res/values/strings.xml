@@ -8,4 +8,7 @@
     <string name="Signup_nickname_hint">Nickname</string>
     <string name="verify_password_sign_up_hint">Verify Password</string>
     <string name="btnSave">Save</string>
+    <string name="AddContactUsername">Username</string>
+    <string name="AddContactNickname">Nickname</string>
+    <string name="AddContactServer">Server</string>
 </resources>

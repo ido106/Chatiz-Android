@@ -1943,19 +1943,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\yoavo\\.nuget\\packages\\": {}
+    "C:\\Users\\Ido\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\yoavo\\Advanced_2\\Advanced2_Android\\WebApp\\Repository\\Repository.csproj",
+      "projectUniqueName": "C:\\Users\\Ido\\Documents\\GitHub\\Advanced2_Android\\WebApp\\Repository\\Repository.csproj",
       "projectName": "Repository",
-      "projectPath": "C:\\Users\\yoavo\\Advanced_2\\Advanced2_Android\\WebApp\\Repository\\Repository.csproj",
-      "packagesPath": "C:\\Users\\yoavo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\yoavo\\Advanced_2\\Advanced2_Android\\WebApp\\Repository\\obj\\",
+      "projectPath": "C:\\Users\\Ido\\Documents\\GitHub\\Advanced2_Android\\WebApp\\Repository\\Repository.csproj",
+      "packagesPath": "C:\\Users\\Ido\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Ido\\Documents\\GitHub\\Advanced2_Android\\WebApp\\Repository\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\yoavo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Ido\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1969,8 +1969,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\yoavo\\Advanced_2\\Advanced2_Android\\WebApp\\Domain\\Domain.csproj": {
-              "projectPath": "C:\\Users\\yoavo\\Advanced_2\\Advanced2_Android\\WebApp\\Domain\\Domain.csproj"
+            "C:\\Users\\Ido\\Documents\\GitHub\\Advanced2_Android\\WebApp\\Domain\\Domain.csproj": {
+              "projectPath": "C:\\Users\\Ido\\Documents\\GitHub\\Advanced2_Android\\WebApp\\Domain\\Domain.csproj"
             }
           }
         }

@@ -3,6 +3,7 @@ package com.example.androidchat.Models;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,7 +21,7 @@ public class Contact {
 
     private String Server;
 
-    private Date LastSeen;
+    private String LastSeen;
 
     private String LastMessage;
 
@@ -38,11 +39,11 @@ public class Contact {
         // is it ok to do it null ?
         this.LastMessage = null;
 
-        // todo lastSeen?
-        this.LastSeen = null;
+        // todo change lastSeen according to contact's date ? currently inserting the current time
+        Date date = new Date(); // new() gives the current date
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM hh:mm");
+        this.LastSeen = formatter.format(date);
     }
-
-    // todo ADD EMPTY CONSTRUCTOR ?
 
     // GET
 
@@ -62,7 +63,7 @@ public class Contact {
         return Server;
     }
 
-    public Date getLastSeen() {
+    public String getLastSeen() {
         return LastSeen;
     }
 
