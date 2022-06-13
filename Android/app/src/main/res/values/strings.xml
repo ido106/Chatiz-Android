@@ -18,4 +18,7 @@
     <string name="NotificationMessageName">messages</string>
     <string name="NotificationMessageID">messagesNotificationID</string>
     <string name="descriptionNotificationMessage">Chatiz messages</string>
+    <string name="myMessage">Yes</string>
+    <string name="notMyMessage">No</string>
+
 </resources>

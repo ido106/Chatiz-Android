@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import com.example.androidchat.Models.Contact;
@@ -55,11 +56,14 @@ public class ChatPageActivity extends AppCompatActivity {
         currentContact = chatDao.getContact(connected, id);
         messageList = chatDao.getUserMessageWithContact(connected, currentContact.getId());
 
-        messageArrayAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, // draw according to this layout (this layout contains only one TextView tag)
-                messageList);
+//        messageArrayAdapter = new ArrayAdapter<>(this,
+//                android.R.layout.simple_list_item_1, // draw according to this layout (this layout contains only one TextView tag)
+//                messageList);
+//
+//        binding.listMessages.setAdapter(messageArrayAdapter);
 
-        binding.listMessages.setAdapter(messageArrayAdapter);
+        RecyclerView listMessages = binding.listMessages;
+
 
 
         binding.btnSendMessage.setOnClickListener(view -> {

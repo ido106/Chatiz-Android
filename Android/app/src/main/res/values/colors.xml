@@ -11,4 +11,9 @@
     <color name="ivory">#FFFFF0</color>
     <color name="cream">#FFFDD0</color>
     <color name="seashell">#FFF5EE</color>
+    <color name="backgroundMyMessage">#0EE325</color>
+    <color name="backgroundNotMyMessage">#393939</color>
+    <color name="myMessageColorText">#FFFFFF</color>
+    <color name="notMyMessageColorText">#FFFFFF</color>
+
 </resources>
