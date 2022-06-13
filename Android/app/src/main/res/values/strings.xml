@@ -12,4 +12,6 @@
     <string name="AddContactNickname">Nickname</string>
     <string name="AddContactServer">Server</string>
     <string name="login_error_message">Username or Password are incorrect!</string>
+    <string name="messgae_type_hint">type here...</string>
+    <string name="send_message_text_on_btn">send</string>
 </resources>

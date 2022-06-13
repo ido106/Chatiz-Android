@@ -26,6 +26,8 @@ public class LoginActivity extends AppCompatActivity {
         // have to return the main layout
         setContentView(binding.getRoot());
 
+
+
         // create the DB connection
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ChatDB") // "ChatDB" will be the name of the DB
                 .allowMainThreadQueries()  // allow the DB to run on the main thread, it is not supposed to be like this but its okay for now

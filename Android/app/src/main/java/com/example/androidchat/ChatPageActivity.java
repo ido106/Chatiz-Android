@@ -2,13 +2,16 @@ package com.example.androidchat;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Message;
+import android.widget.ArrayAdapter;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import com.example.androidchat.Models.Contact;
+import com.example.androidchat.Models.Message;
 import com.example.androidchat.databinding.ActivityChatPageBinding;
 
 import java.util.List;
@@ -21,15 +24,16 @@ public class ChatPageActivity extends AppCompatActivity {
     private String connected;
     private Contact currentContact;
     private List<Message> messageList;
+    private ArrayAdapter<Message> messageArrayAdapter;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat_page);
-
-
         binding = ActivityChatPageBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
 
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ChatDB") // "ChatDB" will be the name of the DB
                 .allowMainThreadQueries()  // allow the DB to run on the main thread, it is not supposed to be like this but its okay for now
@@ -49,8 +53,42 @@ public class ChatPageActivity extends AppCompatActivity {
         }
         String id = getIntent().getExtras().getString("id");
         currentContact = chatDao.getContact(connected, id);
+        messageList = chatDao.getUserMessageWithContact(connected, currentContact.getId());
+
+        messageArrayAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1, // draw according to this layout (this layout contains only one TextView tag)
+                messageList);
+
+        binding.listMessages.setAdapter(messageArrayAdapter);
 
 
+        binding.btnSendMessage.setOnClickListener(view -> {
+            String msg = binding.messageData.getText().toString();
+            if (msg.length() == 0) {
+                return;
+            }
+            final int[] newId = {1};
+            chatDao.getAllDatabaseMessages().forEach(m -> {
+                if (m.getId() > newId[0]) {
+                    newId[0] = m.getId();
+                }
+            });
+            Message msgToAdd = new Message(connected, currentContact.getId(),
+                    newId[0] + 1, msg, "", true);
 
+            chatDao.addMessage(msgToAdd);
+            messageList.clear();
+            messageList.addAll(chatDao.getUserMessageWithContact(connected, currentContact.getId()));
+            messageArrayAdapter.notifyDataSetChanged();
+            binding.messageData.setText("");
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        messageArrayAdapter.clear();
+        messageList.addAll(chatDao.getUserMessageWithContact(connected, currentContact.getId()));
+        messageArrayAdapter.notifyDataSetChanged();
     }
 }

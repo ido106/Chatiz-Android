@@ -48,6 +48,8 @@ public class Message {
         this.TimeSent = formatter.format(date);
     }
 
+
+
     // GET
 
     @NonNull
@@ -82,5 +84,15 @@ public class Message {
         Content = content;
     }
 
-
+    @Override
+    public String toString() {
+        return "Message{" +
+                "from='" + from + '\'' +
+                ", to='" + to + '\'' +
+                ", Id=" + Id +
+                ", Content='" + Content + '\'' +
+                ", TimeSent='" + TimeSent + '\'' +
+                ", Sent=" + Sent +
+                '}';
+    }
 }

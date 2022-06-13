@@ -1,0 +1,159 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "9333cc35406b44fd5285bf526dfc7e88",
+    "entities": [
+      {
+        "tableName": "User",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Username` TEXT NOT NULL, `Nickname` TEXT, `Password` TEXT, `Server` TEXT, `LastSeen` TEXT, PRIMARY KEY(`Username`))",
+        "fields": [
+          {
+            "fieldPath": "Username",
+            "columnName": "Username",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Nickname",
+            "columnName": "Nickname",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "Password",
+            "columnName": "Password",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "Server",
+            "columnName": "Server",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "LastSeen",
+            "columnName": "LastSeen",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "Username"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Contact",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` TEXT NOT NULL, `TalkingTo` TEXT NOT NULL, `Nickname` TEXT, `Server` TEXT, `LastSeen` TEXT, `LastMessage` TEXT, PRIMARY KEY(`Id`, `TalkingTo`))",
+        "fields": [
+          {
+            "fieldPath": "Id",
+            "columnName": "Id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "TalkingTo",
+            "columnName": "TalkingTo",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Nickname",
+            "columnName": "Nickname",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "Server",
+            "columnName": "Server",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "LastSeen",
+            "columnName": "LastSeen",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "LastMessage",
+            "columnName": "LastMessage",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "Id",
+            "TalkingTo"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Message",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`from` TEXT NOT NULL, `to` TEXT NOT NULL, `Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `Content` TEXT, `TimeSent` TEXT, `Sent` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "from",
+            "columnName": "from",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "to",
+            "columnName": "to",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Id",
+            "columnName": "Id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Content",
+            "columnName": "Content",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "TimeSent",
+            "columnName": "TimeSent",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "Sent",
+            "columnName": "Sent",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "Id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9333cc35406b44fd5285bf526dfc7e88')"
+    ]
+  }
+}

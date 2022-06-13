@@ -6,4 +6,64 @@
     android:layout_height="match_parent"
     tools:context=".ChatPageActivity">
 
+
+    <LinearLayout
+        android:id="@+id/MessagesLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ListView
+            android:id="@+id/listMessages"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_editor_absoluteX="0dp"
+            app:layout_editor_absoluteY="0dp" />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linearLayoutSendAndType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:orientation="horizontal"
+        android:padding="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <EditText
+            android:id="@+id/messageData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:ems="10"
+            android:layout_weight="10"
+            android:hint="@string/messgae_type_hint"
+            android:inputType="text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_editor_absoluteX="16dp" />
+
+        <Button
+            android:id="@+id/btnSendMessage"
+            android:layout_width="wrap_content"
+            android:paddingBottom="5dp"
+
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            android:text="@string/send_message_text_on_btn"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
