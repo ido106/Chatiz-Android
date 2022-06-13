@@ -82,7 +82,13 @@ public class ChatPageActivity extends AppCompatActivity {
             messageArrayAdapter.notifyDataSetChanged();
             binding.messageData.setText("");
         });
+
+        binding.btnGoBackChatPage.setOnClickListener(view -> {
+            finish();
+        });
     }
+
+
 
     @Override
     protected void onResume() {

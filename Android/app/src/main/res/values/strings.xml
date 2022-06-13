@@ -12,6 +12,10 @@
     <string name="AddContactNickname">Nickname</string>
     <string name="AddContactServer">Server</string>
     <string name="login_error_message">Username or Password are incorrect!</string>
-    <string name="messgae_type_hint">type here...</string>
+    <string name="messgae_type_hint">type here…</string>
     <string name="send_message_text_on_btn">send</string>
+    <string name="go_back_btn_text_chat_page">Go back</string>
+    <string name="NotificationMessageName">messages</string>
+    <string name="NotificationMessageID">messagesNotificationID</string>
+    <string name="descriptionNotificationMessage">Chatiz messages</string>
 </resources>

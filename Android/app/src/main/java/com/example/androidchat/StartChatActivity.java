@@ -1,13 +1,19 @@
 package com.example.androidchat;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.room.Room;
 
 import com.example.androidchat.Models.Contact;
@@ -24,6 +30,8 @@ public class StartChatActivity extends AppCompatActivity {
     private ChatDao chatDao; // we can communicate with the DB with chatDao
     private ArrayAdapter<Contact> contactArrayAdapter;
     private String connected;
+    private NotificationManagerCompat notificationManagerCompat;
+    private static int maxNotificationId = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +43,9 @@ public class StartChatActivity extends AppCompatActivity {
         if (sharedpreferences.contains("Username")) {
             connected = sharedpreferences.getString("Username", "shit");
         }
+
+        //create notification manager
+        notificationManagerCompat = NotificationManagerCompat.from(this);
 
         // we have to do this in order to get the Binding (gets null otherwise)
         binding = ActivityStartChatBinding.inflate(getLayoutInflater());
@@ -75,12 +86,47 @@ public class StartChatActivity extends AppCompatActivity {
     }
 
 
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence msgNotification = getString(R.string.NotificationMessageName);
+            String description = getString(R.string.descriptionNotificationMessage);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(
+                    getString(R.string.NotificationMessageID), msgNotification, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
         contactList.clear();
         contactList.addAll(chatDao.getAllUserContacts(connected));
         contactArrayAdapter.notifyDataSetChanged();
+    }
 
+
+    //call this function when receiving new massage
+    private void putNotification(String contactName, String msg) {
+        Intent contactChat = new Intent(this, ChatPageActivity.class);
+        contactChat.putExtra("id", contactName);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(
+                this, getString(R.string.NotificationMessageID))
+                .setSmallIcon(R.drawable.fulllogo_transparent)
+                .setContentTitle(contactName)
+                .setContentText(msg)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(PendingIntent.getActivity(this, 0,
+                        contactChat, 0));
+
+        if (msg.length() > 20) {
+            builder = builder
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(msg));
+        }
+
+        notificationManagerCompat.notify(maxNotificationId++, builder.build());
     }
 }

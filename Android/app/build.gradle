@@ -22,7 +22,6 @@ android {
     }
 
 
-
     buildFeatures {
         viewBinding true
     }
@@ -41,6 +40,9 @@ android {
 }
 
 dependencies {
+    // hemi has 1.1.0 on both, offers only 1.1.1 here
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+    implementation "android.arch.lifecycle:viewmodel:1.1.1"
 
     implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation 'com.google.android.material:material:1.6.1'
