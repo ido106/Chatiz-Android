@@ -11,14 +11,15 @@ import java.util.Date;
 @Entity(primaryKeys = {"Id", "TalkingTo"})
 public class Contact {
     @NonNull
-
     private String Id;
-    @NonNull
 
+    @NonNull
     private String TalkingTo;
 
+    @NonNull
     private String Nickname;
 
+    @NonNull
     private String Server;
 
     private String LastSeen;
@@ -29,7 +30,7 @@ public class Contact {
 
     // CONSTRUCTOR
 
-    public Contact(@NonNull String Id, @NonNull String TalkingTo, String Nickname, String Server) {
+    public Contact(@NonNull String Id, @NonNull String TalkingTo,@NonNull String Nickname,@NonNull String Server) {
         this.Id = Id;
         this.TalkingTo = TalkingTo;
         this.Nickname = Nickname;

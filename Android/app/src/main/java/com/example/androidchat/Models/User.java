@@ -15,10 +15,13 @@ public class User {
     @PrimaryKey
     private String Username;
 
+    @NonNull
     private String Nickname;
 
+    @NonNull
     private String Password;
 
+    @NonNull
     private String Server;
 
     private String LastSeen;
@@ -26,7 +29,7 @@ public class User {
     //private List<Contact> Contacts;
 
     // CONSTRUCTOR
-    public User(@NonNull String Username, String Nickname, String Password, String Server) {
+    public User(@NonNull String Username,@NonNull String Nickname,@NonNull String Password,@NonNull String Server) {
         this.Username = Username;
         this.Nickname = Nickname;
         this.Password = Password;

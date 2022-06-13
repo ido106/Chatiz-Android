@@ -5,13 +5,11 @@ import android.annotation.SuppressLint;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.Index;
-import androidx.room.PrimaryKey;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@Entity(indices = {@Index(value = {"from", "to"}, unique = true)})
+@Entity(primaryKeys = {"from", "to", "Id"})
 public class Message {
 
     @NonNull
@@ -23,9 +21,9 @@ public class Message {
     private final String to;
 
     // todo is autoGenerate generating the count globally for all users or by keys?
-    @PrimaryKey(autoGenerate = true)
     private final int Id;
 
+    @NonNull
     private String Content;
 
     private final String TimeSent;
@@ -34,7 +32,7 @@ public class Message {
 
     // Constructor
 
-    public Message(@NonNull String from, @NonNull String to, int Id, String Content,
+    public Message(@NonNull String from, @NonNull String to, int Id,@NonNull String Content,
                    String TimeSent, boolean Sent) {
         this.from = from;
         this.to = to;

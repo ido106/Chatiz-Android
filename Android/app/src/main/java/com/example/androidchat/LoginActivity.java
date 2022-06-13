@@ -51,12 +51,6 @@ public class LoginActivity extends AppCompatActivity {
                     chatDao.getUser(binding.LoginUsername.getText().toString()).getPassword().
                             equals(binding.LoginPassword.getText().toString())) {
 
-
-//                SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-//                @SuppressLint("CommitPrefEdits") SharedPreferences.Editor editor = sharedPref.edit();
-//                editor.putString("username", binding.LoginUsername.getText().toString());
-//                editor.apply();
-
                 SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
                 SharedPreferences.Editor editor = pref.edit();
                 editor.putString("Username", binding.LoginUsername.getText().toString());

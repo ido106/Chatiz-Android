@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "9333cc35406b44fd5285bf526dfc7e88",
+    "identityHash": "810184952ae7448a386f969e48d6f515",
     "entities": [
       {
         "tableName": "User",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Username` TEXT NOT NULL, `Nickname` TEXT, `Password` TEXT, `Server` TEXT, `LastSeen` TEXT, PRIMARY KEY(`Username`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Username` TEXT NOT NULL, `Nickname` TEXT NOT NULL, `Password` TEXT NOT NULL, `Server` TEXT NOT NULL, `LastSeen` TEXT, PRIMARY KEY(`Username`))",
         "fields": [
           {
             "fieldPath": "Username",
@@ -18,19 +18,19 @@
             "fieldPath": "Nickname",
             "columnName": "Nickname",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "Password",
             "columnName": "Password",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "Server",
             "columnName": "Server",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "LastSeen",
@@ -50,7 +50,7 @@
       },
       {
         "tableName": "Contact",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` TEXT NOT NULL, `TalkingTo` TEXT NOT NULL, `Nickname` TEXT, `Server` TEXT, `LastSeen` TEXT, `LastMessage` TEXT, PRIMARY KEY(`Id`, `TalkingTo`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` TEXT NOT NULL, `TalkingTo` TEXT NOT NULL, `Nickname` TEXT NOT NULL, `Server` TEXT NOT NULL, `LastSeen` TEXT, `LastMessage` TEXT, PRIMARY KEY(`Id`, `TalkingTo`))",
         "fields": [
           {
             "fieldPath": "Id",
@@ -68,13 +68,13 @@
             "fieldPath": "Nickname",
             "columnName": "Nickname",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "Server",
             "columnName": "Server",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "LastSeen",
@@ -101,7 +101,7 @@
       },
       {
         "tableName": "Message",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`from` TEXT NOT NULL, `to` TEXT NOT NULL, `Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `Content` TEXT, `TimeSent` TEXT, `Sent` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`from` TEXT NOT NULL, `to` TEXT NOT NULL, `Id` INTEGER NOT NULL, `Content` TEXT NOT NULL, `TimeSent` TEXT, `Sent` INTEGER NOT NULL, PRIMARY KEY(`from`, `to`, `Id`))",
         "fields": [
           {
             "fieldPath": "from",
@@ -125,7 +125,7 @@
             "fieldPath": "Content",
             "columnName": "Content",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "TimeSent",
@@ -142,9 +142,11 @@
         ],
         "primaryKey": {
           "columnNames": [
+            "from",
+            "to",
             "Id"
           ],
-          "autoGenerate": true
+          "autoGenerate": false
         },
         "indices": [],
         "foreignKeys": []
@@ -153,7 +155,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9333cc35406b44fd5285bf526dfc7e88')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '810184952ae7448a386f969e48d6f515')"
     ]
   }
 }

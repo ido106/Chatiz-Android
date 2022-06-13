@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Ido/Documents/GitHub/Advanced2_Android/Android/app/src/main/res/layout/activity_form.xml" value="0.1371640407784986" />
         <entry key="..\:/Users/Ido/Documents/GitHub/Advanced2_Android/Android/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/Ido/Documents/GitHub/Advanced2_Android/Android/app/src/main/res/layout/activity_sign_up.xml" value="0.20350577169730655" />
+        <entry key="..\:/Users/Ido/Documents/GitHub/Advanced2_Android/Android/app/src/main/res/layout/activity_start_chat.xml" value="0.20350577169730655" />
         <entry key="..\:/Users/Ido/Documents/GitHub/Advanced2_Android/Android/app/src/main/res/mipmap-anydpi-v26/chat_logo.xml" value="0.2" />
         <entry key="..\:/Users/Ido/Documents/GitHub/Advanced2_Android/Android/app/src/main/res/mipmap-anydpi-v26/chat_logo_round.xml" value="0.1935" />
         <entry key="..\:/Users/yoavo/Advanced_2/Advanced2_Android/Android/app/src/main/res/layout/activity_chat_page.xml" value="0.24166666666666667" />
