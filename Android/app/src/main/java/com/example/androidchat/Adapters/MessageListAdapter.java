@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,21 +19,31 @@ import java.util.List;
 public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.MessageViewHolder> {
 
     class MessageViewHolder extends RecyclerView.ViewHolder {
-        private final TextView sendTime;
-        private final TextView isMine;
-        private final TextView data;
+        private final TextView mySendTime;
+        private final TextView myData;
+        private final RelativeLayout myMessageLayoutWarp;
+
+
+        private final TextView notMySendTime;
+        private final TextView notMyData;
+        private final RelativeLayout notMyMessageLayoutWarp;
 
 
         private MessageViewHolder(@NonNull View itemView) {
             super(itemView);
-            sendTime = itemView.findViewById(R.id.sendTime);
-            isMine = itemView.findViewById(R.id.isMine);
-            data = itemView.findViewById(R.id.data);
+            myMessageLayoutWarp = itemView.findViewById(R.id.myMessageLayoutWrap);
+            mySendTime = itemView.findViewById(R.id.mySentTimeMessage);
+            myData = itemView.findViewById(R.id.myMessageTextData);
+
+            notMyMessageLayoutWarp = itemView.findViewById(R.id.notMyMessageLayoutWrap);
+            notMySendTime = itemView.findViewById(R.id.notMySentTimeMessage);
+            notMyData = itemView.findViewById(R.id.notMyMessageTextData);
         }
     }
 
     private final LayoutInflater mInflater;
     private List<Message> messageList;
+
 
     public MessageListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
@@ -42,7 +53,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     @NonNull
     @Override
     public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = mInflater.inflate(R.layout.my_message_item, parent, false);
+        View itemView = mInflater.inflate(R.layout.message_item, parent, false);
         return new MessageViewHolder(itemView);
     }
 
@@ -52,12 +63,22 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
         if (messageList != null) {
             final Message current = messageList.get(position);
-            holder.sendTime.setText(current.getTimeSent());
-            if (current.isSent())
-                holder.isMine.setText("@strings/myMessage");
-            else
-                holder.isMine.setText("@strings/notMyMessage");
-            holder.data.setText(current.getContent());
+
+
+            holder.mySendTime.setText(current.getTimeSent());
+            holder.notMySendTime.setText(current.getTimeSent());
+
+            holder.myData.setText(current.getContent());
+            holder.notMyData.setText(current.getContent());
+
+
+            if (current.isSent()) {
+                holder.notMyMessageLayoutWarp.setVisibility(View.GONE);
+                holder.myMessageLayoutWarp.setVisibility(View.VISIBLE);
+            } else {
+                holder.notMyMessageLayoutWarp.setVisibility(View.VISIBLE);
+                holder.myMessageLayoutWarp.setVisibility(View.GONE);
+            }
         }
     }
 

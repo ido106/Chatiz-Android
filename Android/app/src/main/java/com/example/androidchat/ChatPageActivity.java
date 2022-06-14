@@ -8,9 +8,11 @@ import android.widget.ArrayAdapter;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import com.example.androidchat.Adapters.MessageListAdapter;
 import com.example.androidchat.Models.Contact;
 import com.example.androidchat.Models.Message;
 import com.example.androidchat.databinding.ActivityChatPageBinding;
@@ -62,8 +64,11 @@ public class ChatPageActivity extends AppCompatActivity {
 //
 //        binding.listMessages.setAdapter(messageArrayAdapter);
 
+        //recycle view for messages
         RecyclerView listMessages = binding.listMessages;
-
+        final MessageListAdapter adapter = new MessageListAdapter(this);
+        listMessages.setAdapter(adapter);
+        listMessages.setLayoutManager(new LinearLayoutManager(this));
 
 
         binding.btnSendMessage.setOnClickListener(view -> {
@@ -91,7 +96,6 @@ public class ChatPageActivity extends AppCompatActivity {
             finish();
         });
     }
-
 
 
     @Override
