@@ -20,5 +20,6 @@
     <string name="descriptionNotificationMessage">Chatiz messages</string>
     <string name="myMessage">Yes</string>
     <string name="notMyMessage">No</string>
+    <string name="Chatiz">Chatiz</string>
 
 </resources>

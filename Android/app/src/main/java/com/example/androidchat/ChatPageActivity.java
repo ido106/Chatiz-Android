@@ -58,11 +58,6 @@ public class ChatPageActivity extends AppCompatActivity {
         currentContact = chatDao.getContact(connected, id);
         messageList = chatDao.getUserMessageWithContact(connected, currentContact.getId());
 
-//        messageArrayAdapter = new ArrayAdapter<>(this,
-//                android.R.layout.simple_list_item_1, // draw according to this layout (this layout contains only one TextView tag)
-//                messageList);
-//
-//        binding.listMessages.setAdapter(messageArrayAdapter);
 
         //recycle view for messages
         RecyclerView listMessages = binding.listMessages;
@@ -71,6 +66,7 @@ public class ChatPageActivity extends AppCompatActivity {
         listMessages.setLayoutManager(new LinearLayoutManager(this));
 
 
+        // add listener to "Send message" button to send the message
         binding.btnSendMessage.setOnClickListener(view -> {
             String msg = binding.messageData.getText().toString();
             if (msg.length() == 0) {
@@ -90,7 +86,24 @@ public class ChatPageActivity extends AppCompatActivity {
             messageList.addAll(chatDao.getUserMessageWithContact(connected, currentContact.getId()));
             messageArrayAdapter.notifyDataSetChanged();
             binding.messageData.setText("");
+
+            /** add listener to "Send message" button to send notification **/
+            //todo have to figure out how to send the notification only to the message receiver
+            /**
+             * otma the idiot already did it
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, getString(R.string.NotificationMessageID))
+                    .setSmallIcon(R.drawable.fulllogo_transparent_nobuffer)
+                    .setContentTitle(getString(R.string.Chatiz)) // the title for the notification
+                    .setContentText(msgToAdd.getContent().substring(0, 50)) // set maximum of 50 characters to the content
+                    .setStyle(new NotificationCompat.BigTextStyle() // if the content is longer than 50 characters
+                            .bigText(msgToAdd.getContent()))
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+            int notificationID = 1; // if we will have to EDIT the notification content in the future, we can re-send the notification with the same notificationID
+            notificationManager.notify(notificationID, builder.build());
+             **/
         });
+
 
         binding.btnGoBackChatPage.setOnClickListener(view -> {
             finish();

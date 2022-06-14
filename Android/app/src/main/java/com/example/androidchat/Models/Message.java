@@ -20,7 +20,6 @@ public class Message {
     @ColumnInfo(name = "to")
     private final String to;
 
-    // todo is autoGenerate generating the count globally for all users or by keys?
     private final int Id;
 
     @NonNull

@@ -78,13 +78,27 @@ public class StartChatActivity extends AppCompatActivity {
         }));
 
 
-        // add onclick listener
+        // add onclick listener - adding a contact
         binding.btnAdd.setOnClickListener(view -> {
             // move to the FormActivity in order to add a new contact
             Intent i = new Intent(this, FormActivity.class);
             startActivity(i);
         });
 
+
+        // todo check if it is working - cannot run app for now
+        // Delete contact on long click
+        binding.listContacts.setOnItemLongClickListener((adapterView, view, i, l) -> {
+                    Contact contact = contactList.remove(i);
+                    chatDao.deleteContact(contact);
+                    contactArrayAdapter.notifyDataSetChanged();
+                    return true;
+                });
+
+        // todo update contact? Room video (number 6) on 45 minute approx
+
+
+        createNotificationChannel();
 
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(
                 StartChatActivity.this, instanceIdResult -> {
@@ -108,34 +122,54 @@ public class StartChatActivity extends AppCompatActivity {
         }
     }
 
+    /** add listener to "Send message" button to send notification **/
+    //todo have to figure out how to send the notification only to the message receiver
+    private void putNotification(String contactName, String msg) {
+        if(msg == null || msg.length() == 0) return;
+
+        Intent contactChat = new Intent(this, ChatPageActivity.class);
+        contactChat.putExtra("id", contactName);
+
+        /** OTMA **/
+//        NotificationCompat.Builder builder = new NotificationCompat.Builder(
+//                this, getString(R.string.NotificationMessageID))
+//                .setSmallIcon(R.drawable.fulllogo_transparent)
+//                .setContentTitle(contactName)
+//                .setContentText(msg)
+//                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+//                .setContentIntent(PendingIntent.getActivity(this, 0,
+//                        contactChat, 0));
+//        if (msg.length() > 20) {
+//            builder = builder
+//                    .setStyle(new NotificationCompat.BigTextStyle().bigText(msg));
+//        }
+
+        /** IDO **/
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, getString(R.string.NotificationMessageID))
+                .setSmallIcon(R.drawable.fulllogo_transparent_nobuffer)
+                .setContentTitle(getString(R.string.Chatiz)) // the title for the notification
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(PendingIntent.getActivity(this, 0,
+                        contactChat, 0))
+                .setAutoCancel(true);
+        if(msg.length() > 50) {
+            builder.setContentText(msg.substring(0, 50)) // set maximum of 50 characters to the content
+                    .setStyle(new NotificationCompat.BigTextStyle() // if the content is longer than 50 characters
+                            .bigText(msg));
+        } else {
+            builder.setContentText(msg);
+        }
+
+
+
+        notificationManagerCompat.notify(maxNotificationId++, builder.build());
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
         contactList.clear();
         contactList.addAll(chatDao.getAllUserContacts(connected));
         contactArrayAdapter.notifyDataSetChanged();
-    }
-
-
-    //call this function when receiving new massage
-    private void putNotification(String contactName, String msg) {
-        Intent contactChat = new Intent(this, ChatPageActivity.class);
-        contactChat.putExtra("id", contactName);
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(
-                this, getString(R.string.NotificationMessageID))
-                .setSmallIcon(R.drawable.fulllogo_transparent)
-                .setContentTitle(contactName)
-                .setContentText(msg)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(PendingIntent.getActivity(this, 0,
-                        contactChat, 0));
-
-        if (msg.length() > 20) {
-            builder = builder
-                    .setStyle(new NotificationCompat.BigTextStyle().bigText(msg));
-        }
-
-        notificationManagerCompat.notify(maxNotificationId++, builder.build());
     }
 }
