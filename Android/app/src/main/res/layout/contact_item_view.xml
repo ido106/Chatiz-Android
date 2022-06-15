@@ -30,17 +30,18 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
+                android:textColor="@color/black"
+                android:id="@+id/contactNickName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="nickname: dumb" />
+            <TextView
+
                 android:id="@+id/contactUserName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="name: idodo"
                 tools:ignore="NestedWeights" />
-
-            <TextView
-                android:id="@+id/contactNickName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="nickname: dumb" />
         </LinearLayout>
 
 
