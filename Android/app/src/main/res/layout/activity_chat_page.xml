@@ -32,19 +32,14 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <android.support.v4.widget.SwipeRefreshLayout
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listMessages"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/refreshLayoutChatPage">
+            android:background="@android:color/darker_gray"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/listMessages"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/darker_gray"/>
-
-        </android.support.v4.widget.SwipeRefreshLayout>
-<!--        <ListView-->
+        <!--        <ListView-->
 <!--            android:id="@+id/listMessages"-->
 <!--            android:layout_width="wrap_content"-->
 <!--            android:layout_height="wrap_content"-->

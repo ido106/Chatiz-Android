@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,7 +26,7 @@ public class ChatPageActivity extends AppCompatActivity {
     private String connected;
     private Contact currentContact;
     private List<Message> messageList;
-    private ArrayAdapter<Message> messageArrayAdapter;
+    private MessageListAdapter messageAdapter;
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -59,12 +58,16 @@ public class ChatPageActivity extends AppCompatActivity {
         messageList = chatDao.getUserMessageWithContact(connected, currentContact.getId());
 
 
+        messageAdapter = new MessageListAdapter(this);
+
         //recycle view for messages
         RecyclerView listMessages = binding.listMessages;
         final MessageListAdapter adapter = new MessageListAdapter(this);
         listMessages.setAdapter(adapter);
         listMessages.setLayoutManager(new LinearLayoutManager(this));
 
+        messageAdapter.setMessageList(messageList);
+        listMessages.setAdapter(messageAdapter);
 
         // add listener to "Send message" button to send the message
         binding.btnSendMessage.setOnClickListener(view -> {
@@ -84,7 +87,7 @@ public class ChatPageActivity extends AppCompatActivity {
             chatDao.addMessage(msgToAdd);
             messageList.clear();
             messageList.addAll(chatDao.getUserMessageWithContact(connected, currentContact.getId()));
-            messageArrayAdapter.notifyDataSetChanged();
+            messageAdapter.notifyDataSetChanged();
             binding.messageData.setText("");
 
             /** add listener to "Send message" button to send notification **/
@@ -114,8 +117,7 @@ public class ChatPageActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        messageArrayAdapter.clear();
-        messageList.addAll(chatDao.getUserMessageWithContact(connected, currentContact.getId()));
-        messageArrayAdapter.notifyDataSetChanged();
+        messageAdapter.setMessageList(chatDao.getUserMessageWithContact(connected, currentContact.getId()));
+        messageAdapter.notifyDataSetChanged();
     }
 }

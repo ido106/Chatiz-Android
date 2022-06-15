@@ -10,7 +10,7 @@ namespace Repository
 {
     public class WebAppContext : DbContext
     {
-        private const string connectionString = "Server=localhost;Port=3306;Database=WebAppDB;User=root;Password=iddo";
+        private const string connectionString = "Server=localhost;Port=3306;Database=WebAppDB;User=root;Password=P@$$W0rd";
 
         protected override void OnConfiguring (DbContextOptionsBuilder optionsBuilder)
         {

@@ -18,7 +18,6 @@ import androidx.room.Room;
 
 import com.example.androidchat.Models.Contact;
 import com.example.androidchat.databinding.ActivityStartChatBinding;
-import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,12 +99,12 @@ public class StartChatActivity extends AppCompatActivity {
 
         createNotificationChannel();
 
-        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(
-                StartChatActivity.this, instanceIdResult -> {
-                    String newToken = instanceIdResult.getToken();
-                }
-
-        );
+//        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(
+//                StartChatActivity.this, instanceIdResult -> {
+//                    String newToken = instanceIdResult.getToken();
+//                }
+//
+//        );
     }
 
 
