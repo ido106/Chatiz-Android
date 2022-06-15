@@ -15,5 +15,7 @@
     <color name="backgroundNotMyMessage">#393939</color>
     <color name="myMessageColorText">#FFFFFF</color>
     <color name="notMyMessageColorText">#FFFFFF</color>
+    <color name="light_green">#d2f8d2</color>
+    <color name="light_grey">#e6e6e6</color>
 
 </resources>

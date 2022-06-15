@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/seashell"
     tools:context=".FormActivity">
 
     <LinearLayout
@@ -12,47 +13,47 @@
         android:layout_margin="10dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="10dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            android:hint="@string/AddContactUsername"
             android:id="@+id/etUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:transitionName="username"/>
+            android:hint="@string/AddContactUsername"
+            android:transitionName="username" />
 
         <EditText
-            android:hint="@string/AddContactNickname"
             android:id="@+id/etNickname"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:hint="@string/AddContactNickname" />
 
         <EditText
-            android:hint="@string/AddContactServer"
             android:id="@+id/etServer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:hint="@string/AddContactServer" />
 
         <!--        change color to red-->
         <TextView
-            android:textColor="@color/design_default_color_error"
-            android:textColorHighlight="@color/design_default_color_error"
             android:id="@+id/AddContactErrorExist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:ems="10"
             android:hint="@string/login_error_message"
-            android:visibility="invisible"
-            />
+            android:textColor="@color/design_default_color_error"
+            android:textColorHighlight="@color/design_default_color_error"
+            android:visibility="invisible" />
 
         <Button
             android:id="@+id/btnSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/btnSave"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal"
+            android:text="@string/btnSave" />
     </LinearLayout>
 
 
