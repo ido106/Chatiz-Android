@@ -1,5 +1,6 @@
 package com.example.androidchat;
 
+import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -8,14 +9,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import com.example.androidchat.Adapters.ContactListAdapter;
 import com.example.androidchat.Models.Contact;
 import com.example.androidchat.databinding.ActivityStartChatBinding;
 
@@ -28,15 +30,13 @@ public class StartChatActivity extends AppCompatActivity {
     private ActivityStartChatBinding binding;
     private AppDB db;
     private ChatDao chatDao; // we can communicate with the DB with chatDao
-    private ArrayAdapter<Contact> contactArrayAdapter;
+    private ContactListAdapter contactArrayAdapter;
     private String connected;
     private NotificationManagerCompat notificationManagerCompat;
     private static int maxNotificationId = 1;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
+    private void setDefaultSettings() {
         //getting connected username
         SharedPreferences sharedpreferences = getSharedPreferences("MyPref",
                 Context.MODE_PRIVATE);
@@ -58,23 +58,38 @@ public class StartChatActivity extends AppCompatActivity {
 
         // now we can get the Dao
         chatDao = db.chatDao();
+    }
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setDefaultSettings();
 
         contactList = new ArrayList<>();
-        ListView listContacts = binding.listContacts;
-        //ListView listContacts = findViewById(R.id.listContacts);
 
-        // adapt between the list and the list view
-        contactArrayAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, // draw according to this layout (this layout contains only one TextView tag)
-                contactList);
-        // adapt
-        listContacts.setAdapter(contactArrayAdapter);
+        contactArrayAdapter = new ContactListAdapter(this);
 
-        binding.listContacts.setOnItemClickListener(((adapterView, view, i, l) -> {
-            Intent chat = new Intent(this, ChatPageActivity.class);
-            chat.putExtra("id", contactList.get(i).getId());
-            startActivity(chat);
-        }));
+        //recycle view for messages
+        RecyclerView contactListView = binding.listContacts;
+        //set layout manager (linear should do the work for our needs every time)
+        contactListView.setLayoutManager(new LinearLayoutManager(this));
+
+        //setting the data for the adapter
+        contactArrayAdapter.setContactList(contactList);
+
+        //adapt
+        contactListView.setAdapter(contactArrayAdapter);
+
+
+//        RecyclerView listContacts = binding.listContacts;
+//        //ListView listContacts = findViewById(R.id.listContacts);
+//
+//        // adapt between the list and the list view
+//        contactArrayAdapter = new ContactListAdapter(this);
+//        // adapt
+//        listContacts.setAdapter(contactArrayAdapter);
+//        listContacts.setLayoutManager(new LinearLayoutManager(this));
 
 
         // add onclick listener - adding a contact
@@ -85,14 +100,14 @@ public class StartChatActivity extends AppCompatActivity {
         });
 
 
-        // todo check if it is working - cannot run app for now
-        // Delete contact on long click
-        binding.listContacts.setOnItemLongClickListener((adapterView, view, i, l) -> {
-                    Contact contact = contactList.remove(i);
-                    chatDao.deleteContact(contact);
-                    contactArrayAdapter.notifyDataSetChanged();
-                    return true;
-                });
+//        // todo check if it is working - cannot run app for now
+//        // Delete contact on long click
+//        binding.listContacts.setOnItemLongClickListener((adapterView, view, i, l) -> {
+//            Contact contact = contactList.remove(i);
+//            chatDao.deleteContact(contact);
+//            contactArrayAdapter.notifyDataSetChanged();
+//            return true;
+//        });
 
         // todo update contact? Room video (number 6) on 45 minute approx
 
@@ -121,10 +136,12 @@ public class StartChatActivity extends AppCompatActivity {
         }
     }
 
-    /** add listener to "Send message" button to send notification **/
+    /**
+     * add listener to "Send message" button to send notification
+     **/
     //todo have to figure out how to send the notification only to the message receiver
     private void putNotification(String contactName, String msg) {
-        if(msg == null || msg.length() == 0) return;
+        if (msg == null || msg.length() == 0) return;
 
         Intent contactChat = new Intent(this, ChatPageActivity.class);
         contactChat.putExtra("id", contactName);
@@ -151,7 +168,7 @@ public class StartChatActivity extends AppCompatActivity {
                 .setContentIntent(PendingIntent.getActivity(this, 0,
                         contactChat, 0))
                 .setAutoCancel(true);
-        if(msg.length() > 50) {
+        if (msg.length() > 50) {
             builder.setContentText(msg.substring(0, 50)) // set maximum of 50 characters to the content
                     .setStyle(new NotificationCompat.BigTextStyle() // if the content is longer than 50 characters
                             .bigText(msg));
@@ -160,15 +177,14 @@ public class StartChatActivity extends AppCompatActivity {
         }
 
 
-
         notificationManagerCompat.notify(maxNotificationId++, builder.build());
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     protected void onResume() {
         super.onResume();
-        contactList.clear();
-        contactList.addAll(chatDao.getAllUserContacts(connected));
+        contactArrayAdapter.setContactList(chatDao.getAllUserContacts(connected));
         contactArrayAdapter.notifyDataSetChanged();
     }
 }

@@ -5,7 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,21 +21,21 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     class MessageViewHolder extends RecyclerView.ViewHolder {
         private final TextView mySendTime;
         private final TextView myData;
-        private final RelativeLayout myMessageLayoutWarp;
+        private final LinearLayout myMessageLayoutWarp;
 
 
         private final TextView notMySendTime;
         private final TextView notMyData;
-        private final RelativeLayout notMyMessageLayoutWarp;
+        private final LinearLayout notMyMessageLayoutWarp;
 
 
         private MessageViewHolder(@NonNull View itemView) {
             super(itemView);
-            myMessageLayoutWarp = itemView.findViewById(R.id.myMessageLayoutWrap);
+            myMessageLayoutWarp = (LinearLayout) itemView.findViewById(R.id.myMessageLayoutWrap);
             mySendTime = itemView.findViewById(R.id.mySentTimeMessage);
             myData = itemView.findViewById(R.id.myMessageTextData);
 
-            notMyMessageLayoutWarp = itemView.findViewById(R.id.notMyMessageLayoutWrap);
+            notMyMessageLayoutWarp = (LinearLayout) itemView.findViewById(R.id.notMyMessageLayoutWrap);
             notMySendTime = itemView.findViewById(R.id.notMySentTimeMessage);
             notMyData = itemView.findViewById(R.id.notMyMessageTextData);
         }
@@ -53,7 +53,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     @NonNull
     @Override
     public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = mInflater.inflate(R.layout.message_item, parent, false);
+        View itemView = mInflater.inflate(R.layout.message_view, parent, false);
         return new MessageViewHolder(itemView);
     }
 

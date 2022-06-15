@@ -1,5 +1,6 @@
 package com.example.androidchat;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -29,6 +30,7 @@ public class ChatPageActivity extends AppCompatActivity {
     private MessageListAdapter messageAdapter;
 
 
+    @SuppressLint("NotifyDataSetChanged")
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,12 +64,16 @@ public class ChatPageActivity extends AppCompatActivity {
 
         //recycle view for messages
         RecyclerView listMessages = binding.listMessages;
-        final MessageListAdapter adapter = new MessageListAdapter(this);
-        listMessages.setAdapter(adapter);
+        //adapt
+        //set layout manager (linear should do the work for our needs every time)
         listMessages.setLayoutManager(new LinearLayoutManager(this));
 
+        //setting the data for the adapter
         messageAdapter.setMessageList(messageList);
+
+        //adapt
         listMessages.setAdapter(messageAdapter);
+
 
         // add listener to "Send message" button to send the message
         binding.btnSendMessage.setOnClickListener(view -> {
@@ -87,23 +93,29 @@ public class ChatPageActivity extends AppCompatActivity {
             chatDao.addMessage(msgToAdd);
             messageList.clear();
             messageList.addAll(chatDao.getUserMessageWithContact(connected, currentContact.getId()));
-            messageAdapter.notifyDataSetChanged();
+            //messageAdapter.notifyDataSetChanged();
             binding.messageData.setText("");
+            messageAdapter.setMessageList(chatDao.getUserMessageWithContact(connected, currentContact.getId()));
+            messageAdapter.notifyDataSetChanged();
+
+            //scrolling down to the last message
+            listMessages.smoothScrollToPosition(messageList.size());
+
 
             /** add listener to "Send message" button to send notification **/
             //todo have to figure out how to send the notification only to the message receiver
             /**
              * otma the idiot already did it
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, getString(R.string.NotificationMessageID))
-                    .setSmallIcon(R.drawable.fulllogo_transparent_nobuffer)
-                    .setContentTitle(getString(R.string.Chatiz)) // the title for the notification
-                    .setContentText(msgToAdd.getContent().substring(0, 50)) // set maximum of 50 characters to the content
-                    .setStyle(new NotificationCompat.BigTextStyle() // if the content is longer than 50 characters
-                            .bigText(msgToAdd.getContent()))
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-            int notificationID = 1; // if we will have to EDIT the notification content in the future, we can re-send the notification with the same notificationID
-            notificationManager.notify(notificationID, builder.build());
+             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+             NotificationCompat.Builder builder = new NotificationCompat.Builder(this, getString(R.string.NotificationMessageID))
+             .setSmallIcon(R.drawable.fulllogo_transparent_nobuffer)
+             .setContentTitle(getString(R.string.Chatiz)) // the title for the notification
+             .setContentText(msgToAdd.getContent().substring(0, 50)) // set maximum of 50 characters to the content
+             .setStyle(new NotificationCompat.BigTextStyle() // if the content is longer than 50 characters
+             .bigText(msgToAdd.getContent()))
+             .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+             int notificationID = 1; // if we will have to EDIT the notification content in the future, we can re-send the notification with the same notificationID
+             notificationManager.notify(notificationID, builder.build());
              **/
         });
 
@@ -114,10 +126,13 @@ public class ChatPageActivity extends AppCompatActivity {
     }
 
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     protected void onResume() {
         super.onResume();
         messageAdapter.setMessageList(chatDao.getUserMessageWithContact(connected, currentContact.getId()));
         messageAdapter.notifyDataSetChanged();
+        binding.listMessages.smoothScrollToPosition(messageList.size());
+
     }
 }
