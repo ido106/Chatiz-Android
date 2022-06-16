@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/parentView"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parentView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/seashell"
     android:orientation="vertical"
     tools:context=".LoginActivity">
 
     <ImageView
         android:id="@+id/imageView9"
-        android:layout_width="266dp"
-        android:layout_height="236dp"
+        android:layout_width="212dp"
+        android:layout_height="203dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.516"
+        app:layout_constraintVertical_bias="0.19"
         app:srcCompat="@drawable/fulllogo_transparent_nobuffer" />
 
     <LinearLayout
@@ -89,13 +89,15 @@
                 android:background="@color/grey"
                 android:text="@string/login_to_sign_up_btn_text"
                 android:textColor="@color/black" />
+
         </LinearLayout>
+
     </LinearLayout>
+
     <TextView
         android:id="@+id/titleTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Settings"
         android:textAllCaps="true"
         android:textColor="@color/black"
         android:textSize="30sp"
@@ -103,7 +105,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.1"/>
+        app:layout_constraintVertical_bias="0.1" />
 
     <TextView
         android:id="@+id/themeTV"
@@ -123,9 +125,22 @@
         android:id="@+id/themeSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/themeTV"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/themeTV" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="settings"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="11dp" />
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

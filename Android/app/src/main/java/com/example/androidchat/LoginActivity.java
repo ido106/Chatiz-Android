@@ -9,7 +9,11 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.Toast;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -65,7 +69,13 @@ public class LoginActivity extends AppCompatActivity {
             // move to the page
             startActivity(i);
         });
-
+        Button btnSettings = binding.button3;
+        btnSettings.setOnClickListener(view -> {
+            // in order to switch page we need an intent object
+            Intent i = new Intent(this, SettingsPage.class);
+            // move to the page
+            startActivity(i);
+        });
         Button btnLogin = binding.btnLogin;
         btnLogin.setOnClickListener(view -> {
             if (chatDao.getUser(binding.LoginUsername.getText().toString()) != null &&

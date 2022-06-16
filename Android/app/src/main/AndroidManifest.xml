@@ -14,10 +14,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidChat"
         tools:targetApi="31">
+        <activity
+            android:name=".SettingsPage"
+            android:exported="false" />
+
         <service
             android:name=".MessagesService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
         <activity
             android:name=".ChatPageActivity"
