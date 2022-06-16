@@ -5,9 +5,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
@@ -16,11 +18,14 @@ import com.example.androidchat.Adapters.MessageListAdapter;
 import com.example.androidchat.Models.Contact;
 import com.example.androidchat.Models.Message;
 import com.example.androidchat.databinding.ActivityChatPageBinding;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import java.util.List;
 
 public class ChatPageActivity extends AppCompatActivity {
-
+    private View parentView;
+    private SwitchMaterial themeSwitch;
+    private UserSettings settings;
     private ActivityChatPageBinding binding;
     private AppDB db;
     private ChatDao chatDao; // we can communicate with the DB with chatDao
@@ -38,7 +43,11 @@ public class ChatPageActivity extends AppCompatActivity {
         binding = ActivityChatPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        settings = (UserSettings) getApplication();
 
+        initWidgets();
+        loadSharedPreferences();
+        initSwitchListener();
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ChatDB") // "ChatDB" will be the name of the DB
                 .allowMainThreadQueries()  // allow the DB to run on the main thread, it is not supposed to be like this but its okay for now
                 .build();
@@ -133,6 +142,44 @@ public class ChatPageActivity extends AppCompatActivity {
         messageAdapter.setMessageList(chatDao.getUserMessageWithContact(connected, currentContact.getId()));
         messageAdapter.notifyDataSetChanged();
         binding.listMessages.smoothScrollToPosition(messageList.size());
+
+    }
+    private void initWidgets()
+    {
+
+        themeSwitch = findViewById(R.id.themeSwitch);
+        parentView = findViewById(R.id.parentView);
+    }
+
+    private void loadSharedPreferences()
+    {
+        SharedPreferences sharedPreferences = getSharedPreferences(UserSettings.PREFERENCES, MODE_PRIVATE);
+        String theme = sharedPreferences.getString(UserSettings.CUSTOM_THEME, UserSettings.LIGHT_THEME);
+        settings.setCustomTheme(theme);
+        updateView();
+    }
+
+    private void initSwitchListener()
+    {
+        updateView();
+    }
+
+    private void updateView()
+    {
+        final int black = ContextCompat.getColor(this, androidx.cardview.R.color.cardview_dark_background);
+        final int white = ContextCompat.getColor(this, R.color.white);
+
+        if(settings.getCustomTheme().equals(UserSettings.DARK_THEME))
+        {
+
+            parentView.setBackgroundColor(black);
+        }
+        else
+        {
+
+            parentView.setBackgroundColor(white);
+
+        }
 
     }
 }

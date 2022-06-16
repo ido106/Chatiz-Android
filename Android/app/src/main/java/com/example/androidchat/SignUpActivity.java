@@ -1,22 +1,22 @@
 package com.example.androidchat;
-
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import androidx.room.Room;
-
 import com.example.androidchat.Models.User;
 import com.example.androidchat.databinding.ActivitySignUpBinding;
-
 public class SignUpActivity extends AppCompatActivity {
 
     private ActivitySignUpBinding binding;
     private AppDB db;
     private ChatDao chatDao; // we can communicate with the DB with chatDao
-
-
+    private View parentView;
+    private SwitchMaterial themeSwitch;
+    private UserSettings settings;
     private boolean checkValidation(View view) {
         if (binding == null) {
             return false;
@@ -66,7 +66,11 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivitySignUpBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        settings = (UserSettings) getApplication();
 
+        initWidgets();
+        loadSharedPreferences();
+        initSwitchListener();
         // create the DB connection
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ChatDB") // "ChatDB" will be the name of the DB
                 .allowMainThreadQueries()  // allow the DB to run on the main thread, it is not supposed to be like this but its okay for now
@@ -92,6 +96,43 @@ public class SignUpActivity extends AppCompatActivity {
 
 
     }
+    private void initWidgets()
+    {
 
+        themeSwitch = findViewById(R.id.themeSwitch);
+        parentView = findViewById(R.id.parentView);
+    }
+
+    private void loadSharedPreferences()
+    {
+        SharedPreferences sharedPreferences = getSharedPreferences(UserSettings.PREFERENCES, MODE_PRIVATE);
+        String theme = sharedPreferences.getString(UserSettings.CUSTOM_THEME, UserSettings.LIGHT_THEME);
+        settings.setCustomTheme(theme);
+        updateView();
+    }
+
+    private void initSwitchListener()
+    {
+            updateView();
+    }
+
+    private void updateView()
+    {
+        final int black = ContextCompat.getColor(this, androidx.cardview.R.color.cardview_dark_background);
+        final int white = ContextCompat.getColor(this, R.color.white);
+
+        if(settings.getCustomTheme().equals(UserSettings.DARK_THEME))
+        {
+
+            parentView.setBackgroundColor(black);
+        }
+        else
+        {
+
+            parentView.setBackgroundColor(white);
+
+        }
+
+    }
 
 }

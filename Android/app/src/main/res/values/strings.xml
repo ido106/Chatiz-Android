@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">Android Chat</string>
     <string name="test">Hello World</string>
     <string name="login_etUsername">Username</string>
