@@ -13,12 +13,20 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+
+import com.example.androidchat.ViewModels.ContactsViewModel;
 import com.google.android.material.switchmaterial.SwitchMaterial;
+
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.room.Room;
+
 import com.example.androidchat.Models.User;
 import com.example.androidchat.databinding.ActivitySignUpBinding;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -37,7 +45,8 @@ public class StartChatActivity extends AppCompatActivity {
     private View parentView;
     private SwitchMaterial themeSwitch;
     private UserSettings settings;
-    private List<Contact> contactList;
+    private ContactsViewModel contactsViewModel;
+    //private List<Contact> contactList;
     private ActivityStartChatBinding binding;
     private AppDB db;
     private ChatDao chatDao; // we can communicate with the DB with chatDao
@@ -76,12 +85,12 @@ public class StartChatActivity extends AppCompatActivity {
     }
 
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setDefaultSettings();
 
-        contactList = new ArrayList<>();
 
         contactArrayAdapter = new ContactListAdapter(this);
 
@@ -91,20 +100,17 @@ public class StartChatActivity extends AppCompatActivity {
         contactListView.setLayoutManager(new LinearLayoutManager(this));
 
         //setting the data for the adapter
-        contactArrayAdapter.setContactList(contactList);
+        contactArrayAdapter.setContactList(new ArrayList<>());
 
         //adapt
         contactListView.setAdapter(contactArrayAdapter);
 
 
-//        RecyclerView listContacts = binding.listContacts;
-//        //ListView listContacts = findViewById(R.id.listContacts);
-//
-//        // adapt between the list and the list view
-//        contactArrayAdapter = new ContactListAdapter(this);
-//        // adapt
-//        listContacts.setAdapter(contactArrayAdapter);
-//        listContacts.setLayoutManager(new LinearLayoutManager(this));
+        contactsViewModel = new ViewModelProvider(this).get(ContactsViewModel.class);
+        contactsViewModel.getLiveData().observe(this, contacts -> {
+            contactArrayAdapter.setContactList(contacts);
+            contactArrayAdapter.notifyDataSetChanged();
+        });
 
 
         // add onclick listener - adding a contact
@@ -113,28 +119,7 @@ public class StartChatActivity extends AppCompatActivity {
             Intent i = new Intent(this, FormActivity.class);
             startActivity(i);
         });
-
-
-//        // todo check if it is working - cannot run app for now
-//        // Delete contact on long click
-//        binding.listContacts.setOnItemLongClickListener((adapterView, view, i, l) -> {
-//            Contact contact = contactList.remove(i);
-//            chatDao.deleteContact(contact);
-//            contactArrayAdapter.notifyDataSetChanged();
-//            return true;
-//        });
-
-        // todo update contact? Room video (number 6) on 45 minute approx
-
-
         createNotificationChannel();
-
-//        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(
-//                StartChatActivity.this, instanceIdResult -> {
-//                    String newToken = instanceIdResult.getToken();
-//                }
-//
-//        );
     }
 
 
@@ -161,28 +146,14 @@ public class StartChatActivity extends AppCompatActivity {
         Intent contactChat = new Intent(this, ChatPageActivity.class);
         contactChat.putExtra("id", contactName);
 
-        /** OTMA **/
-//        NotificationCompat.Builder builder = new NotificationCompat.Builder(
-//                this, getString(R.string.NotificationMessageID))
-//                .setSmallIcon(R.drawable.fulllogo_transparent)
-//                .setContentTitle(contactName)
-//                .setContentText(msg)
-//                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-//                .setContentIntent(PendingIntent.getActivity(this, 0,
-//                        contactChat, 0));
-//        if (msg.length() > 20) {
-//            builder = builder
-//                    .setStyle(new NotificationCompat.BigTextStyle().bigText(msg));
-//        }
-
-        /** IDO **/
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, getString(R.string.NotificationMessageID))
-                .setSmallIcon(R.drawable.fulllogo_transparent_nobuffer)
-                .setContentTitle(getString(R.string.Chatiz)) // the title for the notification
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(PendingIntent.getActivity(this, 0,
-                        contactChat, 0))
-                .setAutoCancel(true);
+        @SuppressLint("UnspecifiedImmutableFlag") NotificationCompat.Builder builder =
+                new NotificationCompat.Builder(this, getString(R.string.NotificationMessageID))
+                        .setSmallIcon(R.drawable.fulllogo_transparent_nobuffer)
+                        .setContentTitle(getString(R.string.Chatiz)) // the title for the notification
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                        .setContentIntent(PendingIntent.getActivity(this, 0,
+                                contactChat, 0))
+                        .setAutoCancel(true);
         if (msg.length() > 50) {
             builder.setContentText(msg.substring(0, 50)) // set maximum of 50 characters to the content
                     .setStyle(new NotificationCompat.BigTextStyle() // if the content is longer than 50 characters
@@ -202,38 +173,32 @@ public class StartChatActivity extends AppCompatActivity {
         contactArrayAdapter.setContactList(chatDao.getAllUserContacts(connected));
         contactArrayAdapter.notifyDataSetChanged();
     }
-    private void initWidgets()
-    {
+
+    private void initWidgets() {
 
         themeSwitch = findViewById(R.id.themeSwitch);
         parentView = findViewById(R.id.parentView);
     }
 
-    private void loadSharedPreferences()
-    {
+    private void loadSharedPreferences() {
         SharedPreferences sharedPreferences = getSharedPreferences(UserSettings.PREFERENCES, MODE_PRIVATE);
         String theme = sharedPreferences.getString(UserSettings.CUSTOM_THEME, UserSettings.LIGHT_THEME);
         settings.setCustomTheme(theme);
         updateView();
     }
 
-    private void initSwitchListener()
-    {
+    private void initSwitchListener() {
         updateView();
     }
 
-    private void updateView()
-    {
+    private void updateView() {
         final int black = ContextCompat.getColor(this, androidx.cardview.R.color.cardview_dark_background);
         final int white = ContextCompat.getColor(this, R.color.white);
 
-        if(settings.getCustomTheme().equals(UserSettings.DARK_THEME))
-        {
+        if (settings.getCustomTheme().equals(UserSettings.DARK_THEME)) {
 
             parentView.setBackgroundColor(black);
-        }
-        else
-        {
+        } else {
 
             parentView.setBackgroundColor(white);
 

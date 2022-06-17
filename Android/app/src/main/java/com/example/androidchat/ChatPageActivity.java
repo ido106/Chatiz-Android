@@ -109,23 +109,8 @@ public class ChatPageActivity extends AppCompatActivity {
 
             //scrolling down to the last message
             listMessages.smoothScrollToPosition(messageList.size());
-
-
-            /** add listener to "Send message" button to send notification **/
-            //todo have to figure out how to send the notification only to the message receiver
-            /**
-             * otma the idiot already did it
-             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-             NotificationCompat.Builder builder = new NotificationCompat.Builder(this, getString(R.string.NotificationMessageID))
-             .setSmallIcon(R.drawable.fulllogo_transparent_nobuffer)
-             .setContentTitle(getString(R.string.Chatiz)) // the title for the notification
-             .setContentText(msgToAdd.getContent().substring(0, 50)) // set maximum of 50 characters to the content
-             .setStyle(new NotificationCompat.BigTextStyle() // if the content is longer than 50 characters
-             .bigText(msgToAdd.getContent()))
-             .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-             int notificationID = 1; // if we will have to EDIT the notification content in the future, we can re-send the notification with the same notificationID
-             notificationManager.notify(notificationID, builder.build());
-             **/
+            currentContact.setLastMessage(msg);
+            chatDao.updateContact(currentContact);
         });
 
 
@@ -144,38 +129,32 @@ public class ChatPageActivity extends AppCompatActivity {
         binding.listMessages.smoothScrollToPosition(messageList.size());
 
     }
-    private void initWidgets()
-    {
+
+    private void initWidgets() {
 
         themeSwitch = findViewById(R.id.themeSwitch);
         parentView = findViewById(R.id.parentView);
     }
 
-    private void loadSharedPreferences()
-    {
+    private void loadSharedPreferences() {
         SharedPreferences sharedPreferences = getSharedPreferences(UserSettings.PREFERENCES, MODE_PRIVATE);
         String theme = sharedPreferences.getString(UserSettings.CUSTOM_THEME, UserSettings.LIGHT_THEME);
         settings.setCustomTheme(theme);
         updateView();
     }
 
-    private void initSwitchListener()
-    {
+    private void initSwitchListener() {
         updateView();
     }
 
-    private void updateView()
-    {
+    private void updateView() {
         final int black = ContextCompat.getColor(this, androidx.cardview.R.color.cardview_dark_background);
         final int white = ContextCompat.getColor(this, R.color.white);
 
-        if(settings.getCustomTheme().equals(UserSettings.DARK_THEME))
-        {
+        if (settings.getCustomTheme().equals(UserSettings.DARK_THEME)) {
 
             parentView.setBackgroundColor(black);
-        }
-        else
-        {
+        } else {
 
             parentView.setBackgroundColor(white);
 

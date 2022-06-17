@@ -1912,19 +1912,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Ido\\.nuget\\packages\\": {}
+    "C:\\Users\\yoavo\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Ido\\Documents\\GitHub\\Advanced2_Android\\WebApp\\Services\\Services.csproj",
+      "projectUniqueName": "C:\\Users\\yoavo\\BAR_ILAN\\second_year\\Android\\Advanced2_Android\\WebApp\\Services\\Services.csproj",
       "projectName": "Services",
-      "projectPath": "C:\\Users\\Ido\\Documents\\GitHub\\Advanced2_Android\\WebApp\\Services\\Services.csproj",
-      "packagesPath": "C:\\Users\\Ido\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Ido\\Documents\\GitHub\\Advanced2_Android\\WebApp\\Services\\obj\\",
+      "projectPath": "C:\\Users\\yoavo\\BAR_ILAN\\second_year\\Android\\Advanced2_Android\\WebApp\\Services\\Services.csproj",
+      "packagesPath": "C:\\Users\\yoavo\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\yoavo\\BAR_ILAN\\second_year\\Android\\Advanced2_Android\\WebApp\\Services\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Ido\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\yoavo\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1938,11 +1938,11 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\Ido\\Documents\\GitHub\\Advanced2_Android\\WebApp\\Domain\\Domain.csproj": {
-              "projectPath": "C:\\Users\\Ido\\Documents\\GitHub\\Advanced2_Android\\WebApp\\Domain\\Domain.csproj"
+            "C:\\Users\\yoavo\\BAR_ILAN\\second_year\\Android\\Advanced2_Android\\WebApp\\Domain\\Domain.csproj": {
+              "projectPath": "C:\\Users\\yoavo\\BAR_ILAN\\second_year\\Android\\Advanced2_Android\\WebApp\\Domain\\Domain.csproj"
             },
-            "C:\\Users\\Ido\\Documents\\GitHub\\Advanced2_Android\\WebApp\\Repository\\Repository.csproj": {
-              "projectPath": "C:\\Users\\Ido\\Documents\\GitHub\\Advanced2_Android\\WebApp\\Repository\\Repository.csproj"
+            "C:\\Users\\yoavo\\BAR_ILAN\\second_year\\Android\\Advanced2_Android\\WebApp\\Repository\\Repository.csproj": {
+              "projectPath": "C:\\Users\\yoavo\\BAR_ILAN\\second_year\\Android\\Advanced2_Android\\WebApp\\Repository\\Repository.csproj"
             }
           }
         }
