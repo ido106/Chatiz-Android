@@ -34,7 +34,13 @@ public interface WebServiceAPI {
     Call<List<Message>> getAllContactMessages(@Header("Authorization") String authorization, @Path("id") String id);
 
     @POST("contacts/{id}/messages")
-    Call<Void> addMessageToContact(@Header("Authorization") String authorization, @Path("id") String id);
+    Call<Void> addMessageToContact(@Header("Authorization") String authorization,
+                                   @Path("id") String id,
+                                   @Body Message message
+                                   );
+
+    @POST("signIn")
+    Call<String> signIn(@Body String username, @Body String password);
 
 
 }
