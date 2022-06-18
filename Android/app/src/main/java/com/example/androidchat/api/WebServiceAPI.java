@@ -10,8 +10,10 @@ import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface WebServiceAPI {
@@ -37,14 +39,20 @@ public interface WebServiceAPI {
     Call<Void> addMessageToContact(@Header("Authorization") String authorization,
                                    @Path("id") String id,
                                    @Body Message message
-                                   );
+    );
 
     //todo check if those are the real paths and params.
+    @Multipart
     @POST("signIn")
-    Call<String> signIn(@Body String username, @Body String password);
+    Call<String> signIn(@Part("username") String username,
+                        @Part("password") String password,
+                        @Part("token") String firebaseToken);
 
+    @Multipart
     @POST("signup")
-    Call<Void> signUp(@Body String username, @Body String nickName, @Body String password);
+    Call<Void> signUp(@Part("username") String username,
+                      @Part("nickname") String nickName,
+                      @Part("password") String password);
 
 
 }

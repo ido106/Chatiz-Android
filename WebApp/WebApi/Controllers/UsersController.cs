@@ -308,10 +308,13 @@ namespace WebApi.Controllers
         {
             string username;
             string password;
+            string firebaseToken;
             try
             {
                 username = json.GetProperty("username").ToString();
                 password = json.GetProperty("password").ToString();
+                //firebaseToken = json.GetProperty("token").ToString();
+
             } catch (Exception e)
             {
                 return BadRequest(e.Message);

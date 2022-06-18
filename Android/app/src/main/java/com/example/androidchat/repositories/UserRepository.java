@@ -27,7 +27,7 @@ public class UserRepository {
     //todo maybe its better to save them with mutable live data and observe from here, update when
     // user click on different contact or sigh in
     private String username;
-    private MutableLiveData<String> contact;
+    private final MutableLiveData<String> contact;
 
     public void setUsername(String username) {
         this.username = username;
@@ -41,18 +41,18 @@ public class UserRepository {
     public UserRepository(Context context) {
         //getting the singleton
         api = API.getInstance();
-        this.messageLstData = new MessageLstData(context);
-        this.contactsLstData = new ContactsLstData(context);
+        this.messageLstData = new MessageLstData();
+        this.contactsLstData = new ContactsLstData();
         this.contact = new MutableLiveData<>(null);
+        chatDao = Room.databaseBuilder(context, AppDB.class, "ChatDB") // "ChatDB" will be the name of the DB
+                .allowMainThreadQueries()  // allow the DB to run on the main thread, it is not supposed to be like this but its okay for now
+                .build().chatDao();
 
     }
 
     class ContactsLstData extends MutableLiveData<List<Contact>> {
-        public ContactsLstData(Context context) {
+        public ContactsLstData( ) {
             super();
-            chatDao = Room.databaseBuilder(context, AppDB.class, "ChatDB") // "ChatDB" will be the name of the DB
-                    .allowMainThreadQueries()  // allow the DB to run on the main thread, it is not supposed to be like this but its okay for now
-                    .build().chatDao();
             setValue(new LinkedList<>());
         }
 
@@ -67,17 +67,17 @@ public class UserRepository {
     }
 
     class MessageLstData extends MutableLiveData<List<Message>> {
-        public MessageLstData(Context context) {
+        public MessageLstData() {
             super();
-            chatDao = Room.databaseBuilder(context, AppDB.class, "ChatDB") // "ChatDB" will be the name of the DB
-                    .allowMainThreadQueries()  // allow the DB to run on the main thread, it is not supposed to be like this but its okay for now
-                    .build().chatDao();
             setValue(new LinkedList<>());
         }
 
         @Override
         protected void onActive() {
             super.onActive();
+            if (username == null || contact.getValue() == null) {
+                return;
+            }
 
             new Thread(() -> {
                 messageLstData.postValue(chatDao.getUserMessageWithContact(username,

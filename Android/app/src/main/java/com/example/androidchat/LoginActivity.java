@@ -68,6 +68,18 @@ public class LoginActivity extends AppCompatActivity {
         chatDao = db.chatDao();
     }
 
+    private String getFireBaseToken() {
+        //todo implement this function
+        return "";
+    }
+
+    private boolean login() {
+        String username = binding.LoginUsername.getText().toString();
+        String password = binding.LoginPassword.getText().toString();
+        String fireBaseToken = getFireBaseToken();
+        return api.signIn(username, password, fireBaseToken);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,22 +102,21 @@ public class LoginActivity extends AppCompatActivity {
         });
         Button btnLogin = binding.btnLogin;
         btnLogin.setOnClickListener(view -> {
-            if (chatDao.getUser(binding.LoginUsername.getText().toString()) != null &&
-                    chatDao.getUser(binding.LoginUsername.getText().toString()).getPassword().
-                            equals(binding.LoginPassword.getText().toString())) {
-
-                SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref",
-                        0); // 0 - for private mode
-                SharedPreferences.Editor editor = pref.edit();
-                editor.putString("Username", binding.LoginUsername.getText().toString());
-                editor.apply();
-
-
-                Intent chat = new Intent(this, StartChatActivity.class);
-                startActivity(chat);
-            } else {
+            boolean loginResponse = login();
+            if (!loginResponse) {
                 binding.LoginError.setVisibility(View.VISIBLE);
+                return;
             }
+
+            SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref",
+                    0); // 0 - for private mode
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putString("Username", binding.LoginUsername.getText().toString());
+            editor.apply();
+
+            Intent chat = new Intent(this, StartChatActivity.class);
+            startActivity(chat);
+
             //validations and login to the chat page if correct
         });
     }

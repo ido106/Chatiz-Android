@@ -46,14 +46,15 @@ public class API {
 
     public static API getInstance() {
         if (instanceAPI == null) {
-            return new API();
+            instanceAPI = new API();
         }
         return instanceAPI;
     }
 
-    public void setAuthorization(String authorization) {
-        this.authorization = authorization;
-    }
+    //todo maybe this function is needed, for now i set the key in the signIn function bellow.
+//    public void setAuthorization(String authorization) {
+//        this.authorization = authorization;
+//    }
 
     //todo send the firebase token to the server when signing up
     public boolean signUp(String username, String nickName, String password) {
@@ -74,19 +75,21 @@ public class API {
         return res[0];
     }
 
-    public boolean signIn(String username, String password) {
+    public boolean signIn(String username, String password, String firebaseToken) {
         final String[] key = new String[1];
         key[0] = null;
 
-        Call<String> call = webServiceAPI.signIn(username, password);
+        Call<String> call = webServiceAPI.signIn(username, password, firebaseToken);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
                 key[0] = response.body();
+
             }
 
             @Override
             public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+                int a = 1;
             }
         });
         if (key[0] != null) {
@@ -106,8 +109,9 @@ public class API {
             @Override
             public void onResponse(@NonNull Call<List<Contact>> call,
                                    @NonNull Response<List<Contact>> response) {
+                //setting the ContactViewModel list to the server response.
                 listMutableLiveData.setValue(response.body());
-                //todo handle with live data
+
             }
 
             @Override
