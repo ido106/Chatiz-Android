@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import com.example.androidchat.Adapters.MessageListAdapter;
+import com.example.androidchat.AppSettings.MyApplication;
 import com.example.androidchat.Models.Contact;
 import com.example.androidchat.Models.Message;
 import com.example.androidchat.databinding.ActivityChatPageBinding;
@@ -25,7 +26,6 @@ import java.util.List;
 public class ChatPageActivity extends AppCompatActivity {
     private View parentView;
     private SwitchMaterial themeSwitch;
-    private UserSettings settings;
     private ActivityChatPageBinding binding;
     private AppDB db;
     private ChatDao chatDao; // we can communicate with the DB with chatDao
@@ -42,8 +42,6 @@ public class ChatPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityChatPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        settings = (UserSettings) getApplication();
 
         initWidgets();
         loadSharedPreferences();
@@ -137,9 +135,9 @@ public class ChatPageActivity extends AppCompatActivity {
     }
 
     private void loadSharedPreferences() {
-        SharedPreferences sharedPreferences = getSharedPreferences(UserSettings.PREFERENCES, MODE_PRIVATE);
-        String theme = sharedPreferences.getString(UserSettings.CUSTOM_THEME, UserSettings.LIGHT_THEME);
-        settings.setCustomTheme(theme);
+        SharedPreferences sharedPreferences = getSharedPreferences(MyApplication.PREFERENCES, MODE_PRIVATE);
+        String theme = sharedPreferences.getString(MyApplication.CUSTOM_THEME, MyApplication.LIGHT_THEME);
+        MyApplication.customTheme = theme;
         updateView();
     }
 
@@ -151,7 +149,7 @@ public class ChatPageActivity extends AppCompatActivity {
         final int black = ContextCompat.getColor(this, androidx.cardview.R.color.cardview_dark_background);
         final int white = ContextCompat.getColor(this, R.color.white);
 
-        if (settings.getCustomTheme().equals(UserSettings.DARK_THEME)) {
+        if (MyApplication.customTheme.equals(MyApplication.DARK_THEME)) {
 
             parentView.setBackgroundColor(black);
         } else {

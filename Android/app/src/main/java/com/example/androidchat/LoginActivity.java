@@ -5,40 +5,21 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.widget.Toast;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.CompoundButton;
-import android.widget.TextView;
-
-import com.example.androidchat.api.API;
+import com.example.androidchat.AppSettings.MyApplication;
+import com.example.androidchat.api.ChatAPI;
 import com.google.android.material.switchmaterial.SwitchMaterial;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.room.Room;
-
 import com.example.androidchat.databinding.ActivityMainBinding;
-import com.google.android.material.switchmaterial.SwitchMaterial;
 
 public class LoginActivity extends AppCompatActivity {
     private View parentView;
     private SwitchMaterial themeSwitch;
     private TextView themeTV, titleTV, userN, Pass;
-    private API api;
-
-    private UserSettings settings;
+    private ChatAPI chatAPI;
     private ActivityMainBinding binding;
     private ChatDao chatDao; // we can communicate with the DB with chatDao
 
@@ -96,19 +77,14 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private String getFireBaseToken() {
-        //todo implement this function
-        return "";
-    }
-
     private void setDefaultSettings() {
         // we have to do this in order to get the Binding (gets null otherwise)
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         // have to return the main layout
         setContentView(binding.getRoot());
-        settings = (UserSettings) getApplication();
 
-        api = API.getInstance();
+        chatAPI = new ChatAPI(); // RetroFit
+
 
         initWidgets();
         loadSharedPreferences();
@@ -116,8 +92,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
         // create the DB connection
-        // "ChatDB" will be the name of the DB
-        // allow the DB to run on the main thread, it is not supposed to be like this but its okay for now
         AppDB db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ChatDB") // "ChatDB" will be the name of the DB
                 .allowMainThreadQueries()  // allow the DB to run on the main thread, it is not supposed to be like this but its okay for now
                 .build();
@@ -129,8 +103,11 @@ public class LoginActivity extends AppCompatActivity {
     private boolean login() {
         String username = binding.LoginUsername.getText().toString();
         String password = binding.LoginPassword.getText().toString();
-        String fireBaseToken = getFireBaseToken();
-        return api.signIn(username, password, fireBaseToken);
+        //String fireBaseToken = getFireBaseToken();
+        chatAPI.SignIn(username, password);
+        if (MyApplication.jwtToken == "SignIn failed in ChatAPI") // if signin failed
+            return false;
+        return true;
     }
 
     private void initWidgets() {
@@ -143,21 +120,21 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loadSharedPreferences() {
-        SharedPreferences sharedPreferences = getSharedPreferences(UserSettings.PREFERENCES, MODE_PRIVATE);
-        String theme = sharedPreferences.getString(UserSettings.CUSTOM_THEME, UserSettings.LIGHT_THEME);
-        settings.setCustomTheme(theme);
+        SharedPreferences sharedPreferences = getSharedPreferences(MyApplication.PREFERENCES, MODE_PRIVATE);
+        String theme = sharedPreferences.getString(MyApplication.CUSTOM_THEME, MyApplication.LIGHT_THEME);
+        MyApplication.customTheme = theme;
         updateView();
     }
 
     private void initSwitchListener() {
         themeSwitch.setOnCheckedChangeListener((compoundButton, checked) -> {
             if (checked)
-                settings.setCustomTheme(UserSettings.DARK_THEME);
+                MyApplication.customTheme = MyApplication.DARK_THEME;
             else
-                settings.setCustomTheme(UserSettings.LIGHT_THEME);
+                MyApplication.customTheme = MyApplication.LIGHT_THEME;
 
-            SharedPreferences.Editor editor = getSharedPreferences(UserSettings.PREFERENCES, MODE_PRIVATE).edit();
-            editor.putString(UserSettings.CUSTOM_THEME, settings.getCustomTheme());
+            SharedPreferences.Editor editor = getSharedPreferences(MyApplication.PREFERENCES, MODE_PRIVATE).edit();
+            editor.putString(MyApplication.CUSTOM_THEME, MyApplication.customTheme);
             editor.apply();
             updateView();
         });
@@ -167,7 +144,7 @@ public class LoginActivity extends AppCompatActivity {
         final int black = ContextCompat.getColor(this, androidx.cardview.R.color.cardview_dark_background);
         final int white = ContextCompat.getColor(this, R.color.white);
 
-        if (settings.getCustomTheme().equals(UserSettings.DARK_THEME)) {
+        if (MyApplication.customTheme.equals(MyApplication.DARK_THEME)) {
             titleTV.setTextColor(white);
             themeTV.setTextColor(white);
             userN.setTextColor(white);

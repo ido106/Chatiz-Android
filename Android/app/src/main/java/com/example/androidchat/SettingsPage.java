@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.example.androidchat.AppSettings.MyApplication;
 import com.example.androidchat.databinding.ActivityMainBinding;
 import com.example.androidchat.databinding.ActivitySettingsPageBinding;
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -23,7 +24,6 @@ public class SettingsPage extends AppCompatActivity
     private SwitchMaterial themeSwitch;
     private TextView themeTV, titleTV;
     private ActivitySettingsPageBinding binding;
-    private UserSettings settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -34,8 +34,6 @@ public class SettingsPage extends AppCompatActivity
         binding = ActivitySettingsPageBinding.inflate(getLayoutInflater());
         // have to return the main layout
         setContentView(binding.getRoot());
-
-        settings = (UserSettings) getApplication();
 
         initWidgets();
         loadSharedPreferences();
@@ -59,9 +57,9 @@ public class SettingsPage extends AppCompatActivity
 
     private void loadSharedPreferences()
     {
-        SharedPreferences sharedPreferences = getSharedPreferences(UserSettings.PREFERENCES, MODE_PRIVATE);
-        String theme = sharedPreferences.getString(UserSettings.CUSTOM_THEME, UserSettings.LIGHT_THEME);
-        settings.setCustomTheme(theme);
+        SharedPreferences sharedPreferences = getSharedPreferences(MyApplication.PREFERENCES, MODE_PRIVATE);
+        String theme = sharedPreferences.getString(MyApplication.CUSTOM_THEME, MyApplication.LIGHT_THEME);
+        MyApplication.customTheme = theme;
         updateView();
     }
 
@@ -73,12 +71,12 @@ public class SettingsPage extends AppCompatActivity
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked)
             {
                 if(checked)
-                    settings.setCustomTheme(UserSettings.DARK_THEME);
+                    MyApplication.customTheme = MyApplication.DARK_THEME;
                 else
-                    settings.setCustomTheme(UserSettings.LIGHT_THEME);
+                    MyApplication.customTheme = MyApplication.LIGHT_THEME;
 
-                SharedPreferences.Editor editor = getSharedPreferences(UserSettings.PREFERENCES, MODE_PRIVATE).edit();
-                editor.putString(UserSettings.CUSTOM_THEME, settings.getCustomTheme());
+                SharedPreferences.Editor editor = getSharedPreferences(MyApplication.PREFERENCES, MODE_PRIVATE).edit();
+                editor.putString(MyApplication.CUSTOM_THEME, MyApplication.customTheme);
                 editor.apply();
                 updateView();
             }
@@ -90,7 +88,7 @@ public class SettingsPage extends AppCompatActivity
         final int black = ContextCompat.getColor(this, com.google.android.material.R.color.cardview_dark_background);
         final int white = ContextCompat.getColor(this, R.color.white);
 
-        if(settings.getCustomTheme().equals(UserSettings.DARK_THEME))
+        if(MyApplication.customTheme.equals(MyApplication.DARK_THEME))
         {
             titleTV.setTextColor(white);
             themeTV.setTextColor(white);

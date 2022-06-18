@@ -9,43 +9,24 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.view.View;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-
-import com.example.androidchat.ViewModels.ContactsViewModel;
+import com.example.androidchat.AppSettings.MyApplication;
 import com.google.android.material.switchmaterial.SwitchMaterial;
-
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.room.Room;
-
-import com.example.androidchat.Models.User;
-import com.example.androidchat.databinding.ActivitySignUpBinding;
-
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
-
 import com.example.androidchat.Adapters.ContactListAdapter;
-import com.example.androidchat.Models.Contact;
 import com.example.androidchat.databinding.ActivityStartChatBinding;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class StartChatActivity extends AppCompatActivity {
     private View parentView;
     private SwitchMaterial themeSwitch;
-    private UserSettings settings;
-    private ContactsViewModel contactsViewModel;
+    //private ContactsViewModel contactsViewModel;
     //private List<Contact> contactList;
     private ActivityStartChatBinding binding;
     private AppDB db;
@@ -70,7 +51,6 @@ public class StartChatActivity extends AppCompatActivity {
         // we have to do this in order to get the Binding (gets null otherwise)
         binding = ActivityStartChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        settings = (UserSettings) getApplication();
 
         initWidgets();
         loadSharedPreferences();
@@ -106,11 +86,12 @@ public class StartChatActivity extends AppCompatActivity {
         contactListView.setAdapter(contactArrayAdapter);
 
 
-        contactsViewModel = new ViewModelProvider(this).get(ContactsViewModel.class);
-        contactsViewModel.getLiveData().observe(this, contacts -> {
-            contactArrayAdapter.setContactList(contacts);
-            contactArrayAdapter.notifyDataSetChanged();
-        });
+        /** ViewModel Delete **/
+//        contactsViewModel = new ViewModelProvider(this).get(ContactsViewModel.class);
+//        contactsViewModel.getLiveData().observe(this, contacts -> {
+//            contactArrayAdapter.setContactList(contacts);
+//            contactArrayAdapter.notifyDataSetChanged();
+//        });
 
 
         // add onclick listener - adding a contact
@@ -181,9 +162,9 @@ public class StartChatActivity extends AppCompatActivity {
     }
 
     private void loadSharedPreferences() {
-        SharedPreferences sharedPreferences = getSharedPreferences(UserSettings.PREFERENCES, MODE_PRIVATE);
-        String theme = sharedPreferences.getString(UserSettings.CUSTOM_THEME, UserSettings.LIGHT_THEME);
-        settings.setCustomTheme(theme);
+        SharedPreferences sharedPreferences = getSharedPreferences(MyApplication.PREFERENCES, MODE_PRIVATE);
+        String theme = sharedPreferences.getString(MyApplication.CUSTOM_THEME, MyApplication.LIGHT_THEME);
+        MyApplication.customTheme = theme;
         updateView();
     }
 
@@ -195,7 +176,7 @@ public class StartChatActivity extends AppCompatActivity {
         final int black = ContextCompat.getColor(this, androidx.cardview.R.color.cardview_dark_background);
         final int white = ContextCompat.getColor(this, R.color.white);
 
-        if (settings.getCustomTheme().equals(UserSettings.DARK_THEME)) {
+        if (MyApplication.customTheme.equals(MyApplication.DARK_THEME)) {
 
             parentView.setBackgroundColor(black);
         } else {

@@ -3,6 +3,7 @@ package com.example.androidchat.api;
 import com.example.androidchat.Models.Contact;
 import com.example.androidchat.Models.Message;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import java.util.List;
 
@@ -22,13 +23,13 @@ public interface WebServiceAPI {
     Call<List<Contact>> getAllContacts(@Header("Authorization") String authorization);
 
     @POST("contacts")
-    Call<Void> addContact(@Header("Authorization") String authorization, @Body JsonElement contact);
+    Call<Void> addContact(@Header("Authorization") String authorization, @Body JsonObject contact);
 
     @GET("contacts/{id}")
     Call<Contact> getContactById(@Header("Authorization") String authorization, @Path("id") String id);
 
     @PUT("contacts/{id}")
-    Call<Void> putContactById(@Header("Authorization") String authorization, @Path("id") String id, @Body JsonElement contact);
+    Call<Void> putContactById(@Header("Authorization") String authorization, @Path("id") String id, @Body JsonObject contact);
 
     @DELETE("contacts/{id}")
     Call<Void> DeleteContactById(@Header("Authorization") String authorization, @Path("id") String id);
@@ -39,14 +40,14 @@ public interface WebServiceAPI {
     @POST("contacts/{id}/messages")
     Call<Void> addMessageToContact(@Header("Authorization") String authorization,
                                    @Path("id") String id,
-                                   @Body JsonElement message
+                                   @Body JsonObject message
     );
 
     @POST("SignIn")
-    Call<String> signIn(@Body JsonElement contact);
+    Call<String> SignIn(@Body JsonObject contact);
 
     @POST("Register")
-    Call<Void> signUp(@Body JsonElement contact);
+    Call<Void> Register(@Body JsonObject contact);
 
 
 }
