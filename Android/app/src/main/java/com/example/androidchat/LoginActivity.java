@@ -42,6 +42,64 @@ public class LoginActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private ChatDao chatDao; // we can communicate with the DB with chatDao
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setDefaultSettings();
+
+        setSignUpButton();
+        setSettingsButton();
+        setLoginButton();
+
+    }
+
+    private void setLoginButton() {
+        Button btnLogin = binding.btnLogin;
+        btnLogin.setOnClickListener(view -> {
+            boolean loginResponse = login();
+            if (!loginResponse) {
+                binding.LoginError.setVisibility(View.VISIBLE);
+                return;
+            }
+            binding.LoginError.setVisibility(View.INVISIBLE);
+
+            SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref",
+                    0); // 0 - for private mode
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putString("Username", binding.LoginUsername.getText().toString());
+            editor.apply();
+
+            Intent chat = new Intent(this, StartChatActivity.class);
+            startActivity(chat);
+
+            //validations and login to the chat page if correct
+        });
+    }
+
+    private void setSettingsButton() {
+        Button btnSettings = binding.button3;
+        btnSettings.setOnClickListener(view -> {
+            // in order to switch page we need an intent object
+            Intent i = new Intent(this, SettingsPage.class);
+            // move to the page
+            startActivity(i);
+        });
+    }
+    private void setSignUpButton() {
+        // get signup button
+        Button btnLoginToSignUp = binding.btnLoginToSignUp;
+        btnLoginToSignUp.setOnClickListener(view -> {
+            // in order to switch page we need an intent object
+            Intent i = new Intent(this, SignUpActivity.class);
+            // move to the page
+            startActivity(i);
+        });
+    }
+
+    private String getFireBaseToken() {
+        //todo implement this function
+        return "";
+    }
 
     private void setDefaultSettings() {
         // we have to do this in order to get the Binding (gets null otherwise)
@@ -68,57 +126,11 @@ public class LoginActivity extends AppCompatActivity {
         chatDao = db.chatDao();
     }
 
-    private String getFireBaseToken() {
-        //todo implement this function
-        return "";
-    }
-
     private boolean login() {
         String username = binding.LoginUsername.getText().toString();
         String password = binding.LoginPassword.getText().toString();
         String fireBaseToken = getFireBaseToken();
         return api.signIn(username, password, fireBaseToken);
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setDefaultSettings();
-
-        // get signup button
-        Button btnLoginToSignUp = binding.btnLoginToSignUp;
-        btnLoginToSignUp.setOnClickListener(view -> {
-            // in order to switch page we need an intent object
-            Intent i = new Intent(this, SignUpActivity.class);
-            // move to the page
-            startActivity(i);
-        });
-        Button btnSettings = binding.button3;
-        btnSettings.setOnClickListener(view -> {
-            // in order to switch page we need an intent object
-            Intent i = new Intent(this, SettingsPage.class);
-            // move to the page
-            startActivity(i);
-        });
-        Button btnLogin = binding.btnLogin;
-        btnLogin.setOnClickListener(view -> {
-            boolean loginResponse = login();
-            if (!loginResponse) {
-                binding.LoginError.setVisibility(View.VISIBLE);
-                return;
-            }
-
-            SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref",
-                    0); // 0 - for private mode
-            SharedPreferences.Editor editor = pref.edit();
-            editor.putString("Username", binding.LoginUsername.getText().toString());
-            editor.apply();
-
-            Intent chat = new Intent(this, StartChatActivity.class);
-            startActivity(chat);
-
-            //validations and login to the chat page if correct
-        });
     }
 
     private void initWidgets() {

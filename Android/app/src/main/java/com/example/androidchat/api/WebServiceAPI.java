@@ -2,6 +2,7 @@ package com.example.androidchat.api;
 
 import com.example.androidchat.Models.Contact;
 import com.example.androidchat.Models.Message;
+import com.google.gson.JsonElement;
 
 import java.util.List;
 
@@ -21,13 +22,13 @@ public interface WebServiceAPI {
     Call<List<Contact>> getAllContacts(@Header("Authorization") String authorization);
 
     @POST("contacts")
-    Call<Void> addContact(@Header("Authorization") String authorization, @Body Contact contact);
+    Call<Void> addContact(@Header("Authorization") String authorization, @Body JsonElement contact);
 
     @GET("contacts/{id}")
     Call<Contact> getContactById(@Header("Authorization") String authorization, @Path("id") String id);
 
     @PUT("contacts/{id}")
-    Call<Void> putContactById(@Header("Authorization") String authorization, @Path("id") String id, @Body Contact contact);
+    Call<Void> putContactById(@Header("Authorization") String authorization, @Path("id") String id, @Body JsonElement contact);
 
     @DELETE("contacts/{id}")
     Call<Void> DeleteContactById(@Header("Authorization") String authorization, @Path("id") String id);
@@ -38,21 +39,14 @@ public interface WebServiceAPI {
     @POST("contacts/{id}/messages")
     Call<Void> addMessageToContact(@Header("Authorization") String authorization,
                                    @Path("id") String id,
-                                   @Body Message message
+                                   @Body JsonElement message
     );
 
-    //todo check if those are the real paths and params.
-    @Multipart
-    @POST("signIn")
-    Call<String> signIn(@Part("username") String username,
-                        @Part("password") String password,
-                        @Part("token") String firebaseToken);
+    @POST("SignIn")
+    Call<String> signIn(@Body JsonElement contact);
 
-    @Multipart
-    @POST("signup")
-    Call<Void> signUp(@Part("username") String username,
-                      @Part("nickname") String nickName,
-                      @Part("password") String password);
+    @POST("Register")
+    Call<Void> signUp(@Body JsonElement contact);
 
 
 }
