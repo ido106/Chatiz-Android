@@ -1,14 +1,22 @@
 package com.example.androidchat;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+
+import com.example.androidchat.api.API;
+import com.google.android.gms.common.api.Api;
 import com.google.android.material.switchmaterial.SwitchMaterial;
+
 import androidx.room.Room;
+
 import com.example.androidchat.Models.User;
 import com.example.androidchat.databinding.ActivitySignUpBinding;
+
 public class SignUpActivity extends AppCompatActivity {
 
     private ActivitySignUpBinding binding;
@@ -17,6 +25,7 @@ public class SignUpActivity extends AppCompatActivity {
     private View parentView;
     private SwitchMaterial themeSwitch;
     private UserSettings settings;
+
     private boolean checkValidation(View view) {
         if (binding == null) {
             return false;
@@ -52,12 +61,23 @@ public class SignUpActivity extends AppCompatActivity {
 
     private boolean registerToServer(View view) {
         // send data to server and register
+        API api = API.getInstance();
+        //making the call to the server api
+        boolean isRegistrationPassed = api.signUp(binding.SignupUsername.getText().toString(),
+                binding.SignupNickname.getText().toString(),
+                binding.SignupPassword1.getText().toString());
 
-        chatDao.addUser(new User(   binding.SignupUsername.getText().toString(),
-                                    binding.SignupNickname.getText().toString(),
-                                    binding.SignupPassword1.getText().toString(),
-                                "http://localhost:7038"
-                        ));
+        //if we were unable to register we put an error message and going back
+        if (!isRegistrationPassed) {
+            binding.SignupAction.setError("Unable to Sign up, please try again");
+            return false;
+        }
+        // if we managed to sign up we save the data in the local db.
+        chatDao.addUser(new User(binding.SignupUsername.getText().toString(),
+                binding.SignupNickname.getText().toString(),
+                binding.SignupPassword1.getText().toString(),
+                "http://localhost:7038"
+        ));
         return true;
     }
 
@@ -96,38 +116,32 @@ public class SignUpActivity extends AppCompatActivity {
 
 
     }
-    private void initWidgets()
-    {
+
+    private void initWidgets() {
 
         themeSwitch = findViewById(R.id.themeSwitch);
         parentView = findViewById(R.id.parentView);
     }
 
-    private void loadSharedPreferences()
-    {
+    private void loadSharedPreferences() {
         SharedPreferences sharedPreferences = getSharedPreferences(UserSettings.PREFERENCES, MODE_PRIVATE);
         String theme = sharedPreferences.getString(UserSettings.CUSTOM_THEME, UserSettings.LIGHT_THEME);
         settings.setCustomTheme(theme);
         updateView();
     }
 
-    private void initSwitchListener()
-    {
-            updateView();
+    private void initSwitchListener() {
+        updateView();
     }
 
-    private void updateView()
-    {
+    private void updateView() {
         final int black = ContextCompat.getColor(this, androidx.cardview.R.color.cardview_dark_background);
         final int white = ContextCompat.getColor(this, R.color.white);
 
-        if(settings.getCustomTheme().equals(UserSettings.DARK_THEME))
-        {
+        if (settings.getCustomTheme().equals(UserSettings.DARK_THEME)) {
 
             parentView.setBackgroundColor(black);
-        }
-        else
-        {
+        } else {
 
             parentView.setBackgroundColor(white);
 

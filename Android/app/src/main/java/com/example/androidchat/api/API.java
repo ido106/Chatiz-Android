@@ -16,6 +16,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
 
 
 /**
@@ -54,6 +55,24 @@ public class API {
         this.authorization = authorization;
     }
 
+    //todo send the firebase token to the server when signing up
+    public boolean signUp(String username, String nickName, String password) {
+        Call<Void> call = webServiceAPI.signUp(username, nickName, password);
+        boolean[] res = new boolean[1];
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                res[0] = true;
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                res[0] = false;
+            }
+        });
+
+        return res[0];
+    }
 
     public boolean signIn(String username, String password) {
         final String[] key = new String[1];

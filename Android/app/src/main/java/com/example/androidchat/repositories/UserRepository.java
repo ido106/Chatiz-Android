@@ -80,7 +80,8 @@ public class UserRepository {
             super.onActive();
 
             new Thread(() -> {
-                messageLstData.postValue(chatDao.getUserMessageWithContact(username, contact));
+                messageLstData.postValue(chatDao.getUserMessageWithContact(username,
+                        contact.getValue()));
             }).start();
         }
     }

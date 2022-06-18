@@ -39,8 +39,12 @@ public interface WebServiceAPI {
                                    @Body Message message
                                    );
 
+    //todo check if those are the real paths and params.
     @POST("signIn")
     Call<String> signIn(@Body String username, @Body String password);
+
+    @POST("signup")
+    Call<Void> signUp(@Body String username, @Body String nickName, @Body String password);
 
 
 }
