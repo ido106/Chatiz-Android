@@ -102,4 +102,42 @@ public class ChatAPI {
             }
         });
     }
+
+    public void TransferMessage(String from, String to, String content) {
+        JsonObject message = new JsonObject();
+        message.addProperty("from", from);
+        message.addProperty("to", to);
+        message.addProperty("content", content);
+
+        webServiceAPI.TransferMessage(message);
+    }
+
+    public void Invitation(String from, String to, String server) {
+        JsonObject invitation = new JsonObject();
+        invitation.addProperty("from", from);
+        invitation.addProperty("to", to);
+        invitation.addProperty("server", server);
+
+        webServiceAPI.Invitation(invitation);
+    }
+
+    public void AddContactLocal(String id, String name, String server) {
+        JsonObject contact = new JsonObject();
+        contact.addProperty("id", id);
+        contact.addProperty("name", name);
+        contact.addProperty("server", server);
+
+        webServiceAPI.addContact(MyApplication.jwtToken, contact);
+    }
+
+    public void DeleteContact(String id) {
+        webServiceAPI.DeleteContactById(MyApplication.jwtToken, id);
+    }
+
+    public void AddMessage(String id, String content) {
+        JsonObject msg = new JsonObject();
+        msg.addProperty("content", content);
+
+        webServiceAPI.AddMessage(MyApplication.jwtToken, id, msg);
+    }
 }

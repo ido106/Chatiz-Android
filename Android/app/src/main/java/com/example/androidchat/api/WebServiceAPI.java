@@ -19,6 +19,12 @@ import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface WebServiceAPI {
+    @POST("transfer")
+    Call<Void> TransferMessage(@Body JsonObject message);
+
+    @POST("invitations")
+    Call<Void> Invitation(@Body JsonObject contact);
+
     @GET("contacts")
     Call<List<Contact>> getAllContacts(@Header("Authorization") String authorization);
 
@@ -38,7 +44,7 @@ public interface WebServiceAPI {
     Call<List<Message>> getAllContactMessages(@Header("Authorization") String authorization, @Path("id") String id);
 
     @POST("contacts/{id}/messages")
-    Call<Void> addMessageToContact(@Header("Authorization") String authorization,
+    Call<Void> AddMessage(@Header("Authorization") String authorization,
                                    @Path("id") String id,
                                    @Body JsonObject message
     );
