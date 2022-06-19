@@ -34,26 +34,42 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void setLoginButton() {
-        Button btnLogin = binding.btnLogin;
-        btnLogin.setOnClickListener(view -> {
-            boolean loginResponse = login();
-            if (!loginResponse) {
-                binding.LoginError.setVisibility(View.VISIBLE);
-                return;
-            }
+//    private boolean login() {
+//        String username = binding.LoginUsername.getText().toString();
+//        String password = binding.LoginPassword.getText().toString();
+//        //String fireBaseToken = getFireBaseToken();
+//        chatAPI.SignIn(username, password);
+//        if (MyApplication.jwtToken == null) // if signin failed
+//            return false;
+//        return true;
+//    }
+
+    private void onLoginSuccess() {
+        if(MyApplication.jwtToken != null) { //success
             binding.LoginError.setVisibility(View.INVISIBLE);
 
-            SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref",
+            SharedPreferences pref = MyApplication.context.getSharedPreferences("MyPref",
                     0); // 0 - for private mode
             SharedPreferences.Editor editor = pref.edit();
             editor.putString("Username", binding.LoginUsername.getText().toString());
             editor.apply();
 
-            Intent chat = new Intent(this, StartChatActivity.class);
+            Intent chat = new Intent(MyApplication.context, StartChatActivity.class);
             startActivity(chat);
+        } else {
+            binding.LoginError.setVisibility(View.VISIBLE);
+        }
+    }
 
-            //validations and login to the chat page if correct
+
+    private void setLoginButton() {
+        Button btnLogin = binding.btnLogin;
+        btnLogin.setOnClickListener(view -> {
+            boolean loginResponse;
+            String username = binding.LoginUsername.getText().toString();
+            String password = binding.LoginPassword.getText().toString();
+            //String fireBaseToken = getFireBaseToken();
+            chatAPI.SignIn(username, password, () -> {onLoginSuccess();});
         });
     }
 
@@ -98,16 +114,6 @@ public class LoginActivity extends AppCompatActivity {
 
         // now we can get the Dao
         chatDao = db.chatDao();
-    }
-
-    private boolean login() {
-        String username = binding.LoginUsername.getText().toString();
-        String password = binding.LoginPassword.getText().toString();
-        //String fireBaseToken = getFireBaseToken();
-        chatAPI.SignIn(username, password);
-        if (MyApplication.jwtToken == "SignIn failed in ChatAPI") // if signin failed
-            return false;
-        return true;
     }
 
     private void initWidgets() {

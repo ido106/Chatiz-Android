@@ -1,5 +1,9 @@
 package com.example.androidchat.api;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.view.View;
+
 import androidx.room.Room;
 
 import com.example.androidchat.AppDB;
@@ -7,6 +11,9 @@ import com.example.androidchat.ChatDao;
 import com.example.androidchat.Models.User;
 import com.example.androidchat.AppSettings.MyApplication;
 import com.example.androidchat.R;
+import com.example.androidchat.StartChatActivity;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -21,10 +28,13 @@ public class ChatAPI {
     private ChatDao chatDao; // we can communicate with the DB with chatDao
 
     public ChatAPI() {
-        String s = MyApplication.context.getString(R.string.BaseURL);
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+
         retrofit = new Retrofit.Builder()
                 .baseUrl(MyApplication.context.getString(R.string.BaseURL))
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
         webServiceAPI = retrofit.create(WebServiceAPI.class);
@@ -44,7 +54,7 @@ public class ChatAPI {
         chatDao = db.chatDao();
     }
 
-    public void SignIn(String username, String password) {
+    public void SignIn(String username, String password, Runnable onSuccess) {
         // not yet implemented
         //String firebaseToken = MyApplication.firebaseToken;
 
@@ -56,12 +66,19 @@ public class ChatAPI {
         responseToken.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                MyApplication.jwtToken = response.body();
+                if (response.code() == 200) { // signin success
+                    MyApplication.jwtToken = response.body();
+                    onSuccess.run();
+                    //validations and login to the chat page if correct
+                } else { // signin failed
+                    MyApplication.jwtToken = null;
+                    onSuccess.run();
+                }
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                MyApplication.jwtToken = "SignIn failed in ChatAPI";
+                // nothing here
             }
         });
     }
@@ -83,7 +100,7 @@ public class ChatAPI {
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                String failed = "Failed on Register";
+                // nothing here
             }
         });
     }
