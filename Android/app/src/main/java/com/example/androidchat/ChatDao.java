@@ -70,4 +70,13 @@ public interface ChatDao {
 
     @Delete
     void deleteMessage(Message message);
+
+    @Query("DELETE FROM user")
+    void resetUserTable();
+
+    @Query("DELETE FROM contact")
+    void resetContactTable();
+
+    @Query("DELETE FROM message")
+    void resetMessageTable();
 }

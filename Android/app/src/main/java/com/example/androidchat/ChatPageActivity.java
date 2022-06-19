@@ -122,7 +122,7 @@ public class ChatPageActivity extends AppCompatActivity {
                 }
             });
             Message msgToAdd = new Message(connected, currentContact.getId(),
-                    newId[0] + 1, msg, "", true);
+                    newId[0] + 1, msg,"", true);
 
             chatDao.addMessage(msgToAdd);
             messageList.clear();

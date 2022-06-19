@@ -15,6 +15,7 @@ public class MyApplication extends Application {
     public static Context context;
     public static String jwtToken;
     public static String firebaseToken;
+    public static String connected_user;
 
     @Override
     public void onCreate() {

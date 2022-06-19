@@ -48,6 +48,8 @@ public class LoginActivity extends AppCompatActivity {
             editor.putString("Username", binding.LoginUsername.getText().toString());
             editor.apply();
 
+            MyApplication.connected_user = binding.LoginUsername.getText().toString(); // add to Application
+
             Intent chat = new Intent(MyApplication.context, StartChatActivity.class);
             startActivity(chat);
         } else {
