@@ -72,7 +72,7 @@ public class ChatAPI {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.code() == 200) { // signin success
-                    MyApplication.jwtToken = response.body();
+                    MyApplication.jwtToken = "Bearer " +response.body();
                     onSuccess.run();
                     //validations and login to the chat page if correct
                 } else { // signin failed
