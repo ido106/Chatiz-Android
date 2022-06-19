@@ -84,7 +84,7 @@ public class SignUpActivity extends AppCompatActivity {
             chatAPI.Register(username, nickname, password); // add to DB
 
             chatDao.addUser(new User(username, nickname, password, getString(R.string.ServerURL))); // add to ROOM
-            
+
             Intent chat = new Intent(this, LoginActivity.class);
             startActivity(chat);
         });

@@ -1,7 +1,11 @@
 package com.example.androidchat;
 
 import android.annotation.SuppressLint;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -9,6 +13,7 @@ import android.view.View;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,7 +24,10 @@ import com.example.androidchat.AppSettings.MyApplication;
 import com.example.androidchat.Models.Contact;
 import com.example.androidchat.Models.Message;
 import com.example.androidchat.databinding.ActivityChatPageBinding;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.List;
 
@@ -61,9 +69,14 @@ public class ChatPageActivity extends AppCompatActivity {
         binding = ActivityChatPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        setFirebase();
+
         initWidgets();
+
         loadSharedPreferences();
+
         initSwitchListener();
+
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ChatDB") // "ChatDB" will be the name of the DB
                 .allowMainThreadQueries()  // allow the DB to run on the main thread, it is not supposed to be like this but its okay for now
                 .build();
@@ -76,6 +89,16 @@ public class ChatPageActivity extends AppCompatActivity {
         if (sharedpreferences.contains("Username")) {
             connected = sharedpreferences.getString("Username", "shit");
         }
+    }
+
+    /** firebase **/
+    private void setFirebase() {
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(ChatPageActivity.this, new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                String newToken = instanceIdResult.getToken();
+            }
+        });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

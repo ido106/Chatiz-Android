@@ -34,7 +34,6 @@ public class StartChatActivity extends AppCompatActivity {
     private ContactListAdapter contactArrayAdapter;
     private String connected;
     private NotificationManagerCompat notificationManagerCompat;
-    private static int maxNotificationId = 1;
 
     @SuppressLint("NotifyDataSetChanged")
     @Override
@@ -147,7 +146,7 @@ public class StartChatActivity extends AppCompatActivity {
             builder.setContentText(msg);
         }
 
-        notificationManagerCompat.notify(maxNotificationId++, builder.build());
+        //notificationManagerCompat.notify(maxNotificationId++, builder.build());
     }
 
     @SuppressLint("NotifyDataSetChanged")

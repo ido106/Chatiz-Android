@@ -15,21 +15,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidChat"
-        tools:targetApi="31"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        tools:targetApi="31">
+        <service
+            android:name=".ChatService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".SettingsPage"
             android:exported="false" />
 
-        <service
-            android:name=".MessagesService"
-            android:enabled="true"
-            android:exported="true" />
-
         <activity
             android:name=".ChatPageActivity"
             android:exported="false" />
-
         <activity
             android:name=".FormActivity"
             android:exported="false" />
