@@ -30,6 +30,11 @@ public class SettingsPage extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
 
+        setDefaultSettings();
+        setImageButton();
+    }
+
+    private void setDefaultSettings() {
         // we have to do this in order to get the Binding (gets null otherwise)
         binding = ActivitySettingsPageBinding.inflate(getLayoutInflater());
         // have to return the main layout
@@ -38,8 +43,10 @@ public class SettingsPage extends AppCompatActivity
         initWidgets();
         loadSharedPreferences();
         initSwitchListener();
-        ImageButton btnLoginToSignUp = binding.imageButton;
-        btnLoginToSignUp.setOnClickListener(view -> {
+    }
+
+    private void setImageButton() {
+        binding.imageButton.setOnClickListener(view -> {
             // in order to switch page we need an intent object
             Intent i = new Intent(this, LoginActivity.class);
             // move to the page

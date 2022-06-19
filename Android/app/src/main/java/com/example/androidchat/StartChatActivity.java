@@ -36,6 +36,25 @@ public class StartChatActivity extends AppCompatActivity {
     private NotificationManagerCompat notificationManagerCompat;
     private static int maxNotificationId = 1;
 
+    @SuppressLint("NotifyDataSetChanged")
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setDefaultSettings();
+        setArrayAdapter();
+
+        /** ViewModel Delete **/
+//        contactsViewModel = new ViewModelProvider(this).get(ContactsViewModel.class);
+//        contactsViewModel.getLiveData().observe(this, contacts -> {
+//            contactArrayAdapter.setContactList(contacts);
+//            contactArrayAdapter.notifyDataSetChanged();
+//        });
+
+        setAddButton();
+
+        createNotificationChannel();
+    }
 
     private void setDefaultSettings() {
         //getting connected username
@@ -64,14 +83,16 @@ public class StartChatActivity extends AppCompatActivity {
         chatDao = db.chatDao();
     }
 
+    private void setAddButton() {
+        // add onclick listener - adding a contact
+        binding.btnAdd.setOnClickListener(view -> {
+            // move to the FormActivity in order to add a new contact
+            Intent i = new Intent(this, FormActivity.class);
+            startActivity(i);
+        });
+    }
 
-    @SuppressLint("NotifyDataSetChanged")
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setDefaultSettings();
-
-
+    private void setArrayAdapter() {
         contactArrayAdapter = new ContactListAdapter(this);
 
         //recycle view for messages
@@ -84,23 +105,6 @@ public class StartChatActivity extends AppCompatActivity {
 
         //adapt
         contactListView.setAdapter(contactArrayAdapter);
-
-
-        /** ViewModel Delete **/
-//        contactsViewModel = new ViewModelProvider(this).get(ContactsViewModel.class);
-//        contactsViewModel.getLiveData().observe(this, contacts -> {
-//            contactArrayAdapter.setContactList(contacts);
-//            contactArrayAdapter.notifyDataSetChanged();
-//        });
-
-
-        // add onclick listener - adding a contact
-        binding.btnAdd.setOnClickListener(view -> {
-            // move to the FormActivity in order to add a new contact
-            Intent i = new Intent(this, FormActivity.class);
-            startActivity(i);
-        });
-        createNotificationChannel();
     }
 
 
@@ -143,7 +147,6 @@ public class StartChatActivity extends AppCompatActivity {
             builder.setContentText(msg);
         }
 
-
         notificationManagerCompat.notify(maxNotificationId++, builder.build());
     }
 
@@ -156,7 +159,6 @@ public class StartChatActivity extends AppCompatActivity {
     }
 
     private void initWidgets() {
-
         themeSwitch = findViewById(R.id.themeSwitch);
         parentView = findViewById(R.id.parentView);
     }
@@ -177,13 +179,9 @@ public class StartChatActivity extends AppCompatActivity {
         final int white = ContextCompat.getColor(this, R.color.white);
 
         if (MyApplication.customTheme.equals(MyApplication.DARK_THEME)) {
-
             parentView.setBackgroundColor(black);
         } else {
-
             parentView.setBackgroundColor(white);
-
         }
-
     }
 }
