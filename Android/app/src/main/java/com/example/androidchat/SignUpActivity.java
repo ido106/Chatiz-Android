@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.example.androidchat.AppSettings.MyApplication;
+import com.example.androidchat.Models.User;
 import com.example.androidchat.api.ChatAPI;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import androidx.room.Room;
@@ -38,6 +39,12 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
         boolean isValid = true;
+
+        User user = chatDao.getUser(binding.SignupUsername.getText().toString());
+        if(user != null) {
+            binding.SignupUsername.setError("Username already exists");
+            isValid = false;
+        }
 
         if (binding.SignupUsername.getText().toString().length() < 3) {
             binding.SignupUsername.setError("Username must contain at least 3 characters");
@@ -71,15 +78,15 @@ public class SignUpActivity extends AppCompatActivity {
                 return;
             }
 
-            chatAPI.Register(
-                    binding.SignupUsername.getText().toString(),
-                    binding.SignupNickname.getText().toString(),
-                    binding.SignupPassword1.getText().toString()
-                    );
+            String username = binding.SignupUsername.getText().toString();
+            String nickname = binding.SignupNickname.getText().toString();
+            String password = binding.SignupPassword1.getText().toString();
+            chatAPI.Register(username, nickname, password); // add to DB
 
+            chatDao.addUser(new User(username, nickname, password, getString(R.string.ServerURL))); // add to ROOM
+            
             Intent chat = new Intent(this, LoginActivity.class);
             startActivity(chat);
-
         });
     }
 
