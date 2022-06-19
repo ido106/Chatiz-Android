@@ -17,14 +17,18 @@ import com.google.firebase.messaging.RemoteMessage;
 
 public class ChatService extends FirebaseMessagingService {
     private int maxNotificationId = 1;
+    private boolean initialized = false;
 
     public ChatService() {
     }
 
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
+        if( ! initialized) {
+            setNotificationChannel();
+            initialized = true;
+        }
         setNotification(remoteMessage);
-        setNotificationChannel();
     }
 
     private void setNotification(RemoteMessage remoteMessage) {

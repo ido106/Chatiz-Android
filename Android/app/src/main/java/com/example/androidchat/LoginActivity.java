@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
     /** firebase **/
     private void setFirebase() {
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(LoginActivity.this, instanceIdResult -> {
-            MyApplication.firebaseToken = instanceIdResult.getToken();
+            String newToken = instanceIdResult.getToken();
         });
     }
 
