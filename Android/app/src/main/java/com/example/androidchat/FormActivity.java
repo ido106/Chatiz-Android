@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import com.example.androidchat.Models.Contact;
+import com.example.androidchat.api.ChatAPI;
 import com.example.androidchat.databinding.ActivityFormBinding;
 
 public class FormActivity extends AppCompatActivity {
@@ -19,6 +20,7 @@ public class FormActivity extends AppCompatActivity {
     private AppDB db;
     private ChatDao chatDao; // we can communicate with the DB with chatDao
     private String connected;
+    private ChatAPI chatAPI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,19 +44,29 @@ public class FormActivity extends AppCompatActivity {
             EditText contactNickname = binding.etNickname;
             EditText contactServer = binding.etServer;
 
-//            if (chatDao.getContact(connected, contactUsername.getText().toString()) != null) {
-//                binding.AddContactErrorExist.setVisibility(View.VISIBLE);
-//
-//            } else {
-                // get the connected username
-                Contact contact = new Contact(
-                        contactUsername.getText().toString(),
-                        connected,
-                        contactNickname.getText().toString(),
-                        contactServer.getText().toString());
+            // add on DB and ROOM
+            chatAPI.AddContactLocal(
+                    contactUsername.getText().toString(),
+                    contactNickname.getText().toString(),
+                    contactServer.getText().toString()
+            );
+            // invitation
+            chatAPI.Invitation(
+                    contactUsername.getText().toString(),
+                    contactNickname.getText().toString(),
+                    contactServer.getText().toString()
+            );
 
-                chatDao.addContact(contact);
-            //}
+
+            /** ALREADY ADDED IN CHAT API REGISTER **/
+//            Contact contact = new Contact(
+//                    contactUsername.getText().toString(),
+//                    connected,
+//                    contactNickname.getText().toString(),
+//                    contactServer.getText().toString());
+
+            //chatDao.addContact(contact);
+
             // finish and return to the previous activity
             finish();
         });
@@ -64,6 +76,8 @@ public class FormActivity extends AppCompatActivity {
         binding = ActivityFormBinding.inflate(getLayoutInflater());
         // have to return the main layout
         setContentView(binding.getRoot());
+
+        chatAPI = new ChatAPI(); // RetroFit
 
         // create the DB connection
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ChatDB") // "ChatDB" will be the name of the DB

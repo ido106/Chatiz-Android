@@ -110,6 +110,7 @@ public class ChatAPI {
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void TransferMessage(String from, String to, String content) {
         JsonObject message = new JsonObject();
         message.addProperty("from", from);
@@ -129,9 +130,21 @@ public class ChatAPI {
                 return;
             }
         });
+
+        // todo how to update on local db
+        // add to Room
+        final int[] newId = {1};
+        chatDao.getUserMessageWithContact(to, from).forEach(m -> {
+            if (m.getId() > newId[0]) {
+                newId[0] = m.getId();
+            }
+        });
+        Message message_to_add = new Message(to, from, newId[0]+1, content, "", false);
+        chatDao.addMessage(message_to_add);
     }
 
     public void Invitation(String from, String to, String server) {
+
         JsonObject invitation = new JsonObject();
         invitation.addProperty("from", from);
         invitation.addProperty("to", to);
@@ -150,6 +163,9 @@ public class ChatAPI {
                 return;
             }
         });
+
+        // todo how to update on local db
+        chatDao.addContact(new Contact(to, from, from, server));
     }
 
     public void AddContactLocal(String id, String name, String server) {
@@ -222,13 +238,15 @@ public class ChatAPI {
 
         // add to Room
         final int[] newId = {1};
-        chatDao.getAllDatabaseMessages().forEach(m -> {
+        chatDao.getUserMessageWithContact(MyApplication.connected_user, id).forEach(m -> {
             if (m.getId() > newId[0]) {
                 newId[0] = m.getId();
             }
         });
         Message message_to_add = new Message(MyApplication.connected_user,id, newId[0]+1, content, "", true);
         chatDao.addMessage(message_to_add);
+
+
     }
 
     //todo update local db?

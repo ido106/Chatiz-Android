@@ -2,6 +2,7 @@ package com.example.androidchat.api;
 
 import com.example.androidchat.Models.Contact;
 import com.example.androidchat.Models.Message;
+import com.example.androidchat.Models.User;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -55,5 +56,7 @@ public interface WebServiceAPI {
     @POST("Register")
     Call<Void> Register(@Body JsonObject contact);
 
+    @GET("GetUser")
+    Call<User> GetUser(@Body JsonObject username);
 
 }

@@ -23,6 +23,7 @@ import com.example.androidchat.Adapters.MessageListAdapter;
 import com.example.androidchat.AppSettings.MyApplication;
 import com.example.androidchat.Models.Contact;
 import com.example.androidchat.Models.Message;
+import com.example.androidchat.api.ChatAPI;
 import com.example.androidchat.databinding.ActivityChatPageBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -41,6 +42,7 @@ public class ChatPageActivity extends AppCompatActivity {
     private Contact currentContact;
     private List<Message> messageList;
     private MessageListAdapter messageAdapter;
+    private ChatAPI chatAPI;
 
 
     @SuppressLint("NotifyDataSetChanged")
@@ -74,6 +76,8 @@ public class ChatPageActivity extends AppCompatActivity {
         loadSharedPreferences();
 
         initSwitchListener();
+
+        chatAPI = new ChatAPI(); // RetroFit
 
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ChatDB") // "ChatDB" will be the name of the DB
                 .allowMainThreadQueries()  // allow the DB to run on the main thread, it is not supposed to be like this but its okay for now
@@ -115,16 +119,25 @@ public class ChatPageActivity extends AppCompatActivity {
             if (msg.length() == 0) {
                 return;
             }
-            final int[] newId = {1};
-            chatDao.getAllDatabaseMessages().forEach(m -> {
-                if (m.getId() > newId[0]) {
-                    newId[0] = m.getId();
-                }
-            });
-            Message msgToAdd = new Message(connected, currentContact.getId(),
-                    newId[0] + 1, msg,"", true);
 
-            chatDao.addMessage(msgToAdd);
+            chatAPI.AddMessage(id, msg);
+            chatAPI.TransferMessage(MyApplication.connected_user, id, msg);
+
+//            final int[] newId = {1};
+//            chatDao.getAllDatabaseMessages().forEach(m -> {
+//                if (m.getId() > newId[0]) {
+//                    newId[0] = m.getId();
+//                }
+//            });
+//            Message msgToAdd = new Message(connected, currentContact.getId(),
+//                    newId[0] + 1, msg,"", true);
+
+            /** ALREADY ADDED ON ChatAPI AddMessage **/
+            //chatDao.addMessage(msgToAdd);
+
+
+
+
             messageList.clear();
             messageList.addAll(chatDao.getUserMessageWithContact(connected, currentContact.getId()));
             //messageAdapter.notifyDataSetChanged();

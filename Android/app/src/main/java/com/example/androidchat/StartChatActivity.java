@@ -120,35 +120,6 @@ public class StartChatActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * add listener to "Send message" button to send notification
-     **/
-    //todo have to figure out how to send the notification only to the message receiver
-    private void putNotification(String contactName, String msg) {
-        if (msg == null || msg.length() == 0) return;
-
-        Intent contactChat = new Intent(this, ChatPageActivity.class);
-        contactChat.putExtra("id", contactName);
-
-        @SuppressLint("UnspecifiedImmutableFlag") NotificationCompat.Builder builder =
-                new NotificationCompat.Builder(this, getString(R.string.NotificationMessageID))
-                        .setSmallIcon(R.drawable.fulllogo_transparent_nobuffer)
-                        .setContentTitle(getString(R.string.Chatiz)) // the title for the notification
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                        .setContentIntent(PendingIntent.getActivity(this, 0,
-                                contactChat, 0))
-                        .setAutoCancel(true);
-        if (msg.length() > 50) {
-            builder.setContentText(msg.substring(0, 50)) // set maximum of 50 characters to the content
-                    .setStyle(new NotificationCompat.BigTextStyle() // if the content is longer than 50 characters
-                            .bigText(msg));
-        } else {
-            builder.setContentText(msg);
-        }
-
-        //notificationManagerCompat.notify(maxNotificationId++, builder.build());
-    }
-
     @SuppressLint("NotifyDataSetChanged")
     @Override
     protected void onResume() {

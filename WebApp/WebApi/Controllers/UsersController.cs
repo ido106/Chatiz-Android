@@ -386,5 +386,25 @@ namespace WebApi.Controllers
             }
             return BadRequest();
         }
+
+        [HttpPost("GetUser")]
+        public async Task<IActionResult> GetUser([FromBody] JsonElement json)
+        {
+            string username;
+            try
+            {
+                username = json.GetProperty("username").ToString();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+
+            var q = await _service.Get(username);
+            // if user doesnt exist
+            if (q == null) return BadRequest();
+
+            return Ok(q);
+        }
     }
 }
