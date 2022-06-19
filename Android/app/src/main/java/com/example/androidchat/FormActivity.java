@@ -24,33 +24,6 @@ public class FormActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // we have to do this in order to get the Binding (gets null otherwise)
-        binding = ActivityFormBinding.inflate(getLayoutInflater());
-        // have to return the main layout
-        setContentView(binding.getRoot());
-
-        // create the DB connection
-        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ChatDB") // "ChatDB" will be the name of the DB
-                .allowMainThreadQueries()  // allow the DB to run on the main thread, it is not supposed to be like this but its okay for now
-                .build();
-
-        // now we can get the Dao
-        chatDao = db.chatDao();
-
-//        EditText connectedET = findViewById(R.id.LoginUsername);
-
-
-//        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-//        connected = sharedPref.getString("Username", "");
-
-
-        SharedPreferences sharedpreferences = getSharedPreferences("MyPref",
-                Context.MODE_PRIVATE);
-        if (sharedpreferences.contains("Username")) {
-            connected = sharedpreferences.getString("Username", "shit");
-        }
-//        connected = getSharedPreferences("username",1).toString();
-
         Button btnSave = binding.btnSave;
         // call the database
         btnSave.setOnClickListener(view -> {
@@ -74,5 +47,26 @@ public class FormActivity extends AppCompatActivity {
             // finish and return to the previous activity
             finish();
         });
+    }
+
+    private void setDefaultSettings() {
+        // we have to do this in order to get the Binding (gets null otherwise)
+        binding = ActivityFormBinding.inflate(getLayoutInflater());
+        // have to return the main layout
+        setContentView(binding.getRoot());
+
+        // create the DB connection
+        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ChatDB") // "ChatDB" will be the name of the DB
+                .allowMainThreadQueries()  // allow the DB to run on the main thread, it is not supposed to be like this but its okay for now
+                .build();
+
+        // now we can get the Dao
+        chatDao = db.chatDao();
+
+        SharedPreferences sharedpreferences = getSharedPreferences("MyPref",
+                Context.MODE_PRIVATE);
+        if (sharedpreferences.contains("Username")) {
+            connected = sharedpreferences.getString("Username", "shit");
+        }
     }
 }

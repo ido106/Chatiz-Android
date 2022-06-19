@@ -40,6 +40,24 @@ public class ChatPageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setDefaultSettings();
+        setMessageAdapter();
+        setGoBackButton();
+    }
+
+
+    @SuppressLint("NotifyDataSetChanged")
+    @Override
+    protected void onResume() {
+        super.onResume();
+        messageAdapter.setMessageList(chatDao.getUserMessageWithContact(connected, currentContact.getId()));
+        messageAdapter.notifyDataSetChanged();
+        binding.listMessages.smoothScrollToPosition(messageList.size());
+
+    }
+
+    private void setDefaultSettings() {
         binding = ActivityChatPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -58,26 +76,24 @@ public class ChatPageActivity extends AppCompatActivity {
         if (sharedpreferences.contains("Username")) {
             connected = sharedpreferences.getString("Username", "shit");
         }
+    }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void setMessageAdapter() {
         if (getIntent().getExtras() == null) {
             finish();
         }
         String id = getIntent().getExtras().getString("id");
         currentContact = chatDao.getContact(connected, id);
         messageList = chatDao.getUserMessageWithContact(connected, currentContact.getId());
-
-
         messageAdapter = new MessageListAdapter(this);
-
         //recycle view for messages
         RecyclerView listMessages = binding.listMessages;
         //adapt
         //set layout manager (linear should do the work for our needs every time)
         listMessages.setLayoutManager(new LinearLayoutManager(this));
-
         //setting the data for the adapter
         messageAdapter.setMessageList(messageList);
-
         //adapt
         listMessages.setAdapter(messageAdapter);
 
@@ -110,22 +126,12 @@ public class ChatPageActivity extends AppCompatActivity {
             currentContact.setLastMessage(msg);
             chatDao.updateContact(currentContact);
         });
+    }
 
-
+    private void setGoBackButton() {
         binding.btnGoBackChatPage.setOnClickListener(view -> {
             finish();
         });
-    }
-
-
-    @SuppressLint("NotifyDataSetChanged")
-    @Override
-    protected void onResume() {
-        super.onResume();
-        messageAdapter.setMessageList(chatDao.getUserMessageWithContact(connected, currentContact.getId()));
-        messageAdapter.notifyDataSetChanged();
-        binding.listMessages.smoothScrollToPosition(messageList.size());
-
     }
 
     private void initWidgets() {
@@ -150,12 +156,9 @@ public class ChatPageActivity extends AppCompatActivity {
         final int white = ContextCompat.getColor(this, R.color.white);
 
         if (MyApplication.customTheme.equals(MyApplication.DARK_THEME)) {
-
             parentView.setBackgroundColor(black);
         } else {
-
             parentView.setBackgroundColor(white);
-
         }
 
     }

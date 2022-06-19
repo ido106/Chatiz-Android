@@ -34,16 +34,6 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-//    private boolean login() {
-//        String username = binding.LoginUsername.getText().toString();
-//        String password = binding.LoginPassword.getText().toString();
-//        //String fireBaseToken = getFireBaseToken();
-//        chatAPI.SignIn(username, password);
-//        if (MyApplication.jwtToken == null) // if signin failed
-//            return false;
-//        return true;
-//    }
-
     private void onLoginSuccess() {
         if(MyApplication.jwtToken != null) { //success
             binding.LoginError.setVisibility(View.INVISIBLE);
@@ -65,7 +55,6 @@ public class LoginActivity extends AppCompatActivity {
     private void setLoginButton() {
         Button btnLogin = binding.btnLogin;
         btnLogin.setOnClickListener(view -> {
-            boolean loginResponse;
             String username = binding.LoginUsername.getText().toString();
             String password = binding.LoginPassword.getText().toString();
             //String fireBaseToken = getFireBaseToken();
