@@ -69,8 +69,6 @@ public class ChatPageActivity extends AppCompatActivity {
         binding = ActivityChatPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        setFirebase();
-
         initWidgets();
 
         loadSharedPreferences();
@@ -89,16 +87,6 @@ public class ChatPageActivity extends AppCompatActivity {
         if (sharedpreferences.contains("Username")) {
             connected = sharedpreferences.getString("Username", "shit");
         }
-    }
-
-    /** firebase **/
-    private void setFirebase() {
-        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(ChatPageActivity.this, new OnSuccessListener<InstanceIdResult>() {
-            @Override
-            public void onSuccess(InstanceIdResult instanceIdResult) {
-                String newToken = instanceIdResult.getToken();
-            }
-        });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

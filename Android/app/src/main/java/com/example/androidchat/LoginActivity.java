@@ -11,9 +11,12 @@ import androidx.core.content.ContextCompat;
 
 import com.example.androidchat.AppSettings.MyApplication;
 import com.example.androidchat.api.ChatAPI;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import androidx.room.Room;
 import com.example.androidchat.databinding.ActivityMainBinding;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 public class LoginActivity extends AppCompatActivity {
     private View parentView;
@@ -28,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setDefaultSettings();
 
+        setFirebase();
         setSignUpButton();
         setSettingsButton();
         setLoginButton();
@@ -57,8 +61,14 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(view -> {
             String username = binding.LoginUsername.getText().toString();
             String password = binding.LoginPassword.getText().toString();
-            //String fireBaseToken = getFireBaseToken();
             chatAPI.SignIn(username, password, () -> {onLoginSuccess();});
+        });
+    }
+
+    /** firebase **/
+    private void setFirebase() {
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(LoginActivity.this, instanceIdResult -> {
+            MyApplication.firebaseToken = instanceIdResult.getToken();
         });
     }
 

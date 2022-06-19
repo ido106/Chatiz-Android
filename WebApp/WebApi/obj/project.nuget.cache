@@ -1,9 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "wKFjcM8MNaAbeWePS/STbirAFRVQIKpOH/j8++sq8Fe2mqzVP+3MgFRFASUsGLKCONIslaApDqx3OY0wHqffNQ==",
+  "dgSpecHash": "i3wgg+tcMKNG8DA+dcMDbpo26lzRwIkhiKO+3j5KpO9ON84gud5dxVn39bR6IzyJF3WpKgpsNdD0n3mjD86ZOw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Ido\\Documents\\GitHub\\Advanced2_Android\\WebApp\\WebApi\\WebApi.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Ido\\.nuget\\packages\\firebaseadmin\\2.3.0\\firebaseadmin.2.3.0.nupkg.sha512",
+    "C:\\Users\\Ido\\.nuget\\packages\\google.api.gax\\3.2.0\\google.api.gax.3.2.0.nupkg.sha512",
+    "C:\\Users\\Ido\\.nuget\\packages\\google.api.gax.rest\\3.2.0\\google.api.gax.rest.3.2.0.nupkg.sha512",
+    "C:\\Users\\Ido\\.nuget\\packages\\google.apis\\1.49.0\\google.apis.1.49.0.nupkg.sha512",
+    "C:\\Users\\Ido\\.nuget\\packages\\google.apis.auth\\1.49.0\\google.apis.auth.1.49.0.nupkg.sha512",
+    "C:\\Users\\Ido\\.nuget\\packages\\google.apis.core\\1.49.0\\google.apis.core.1.49.0.nupkg.sha512",
     "C:\\Users\\Ido\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Ido\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",
     "C:\\Users\\Ido\\.nuget\\packages\\messagepack.annotations\\2.1.152\\messagepack.annotations.2.1.152.nupkg.sha512",

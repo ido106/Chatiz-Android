@@ -25,15 +25,16 @@ namespace WebApi.Controllers
     [Route("api/")]
     public class UsersController : ControllerBase
     {
-        //private readonly WebAppContext _context;
+        private IFirebaseService _firebaseService;
         private IUserService _service;
         private IConfiguration _config;
         private JwtSecurityTokenHandler _jwtHandler;
 
-        public UsersController(IUserService service, IConfiguration config)
+        public UsersController(IUserService service, IFirebaseService firebase, IConfiguration config)
         {
             _service = service;
             _config = config;
+            _firebaseService = firebase;
             _jwtHandler = new JwtSecurityTokenHandler();
         }
 
@@ -298,6 +299,10 @@ namespace WebApi.Controllers
             if (await _service.GetContact(to, from) == null) return BadRequest();
 
             await _service.AddMessage(to, from, content, false);
+
+            Message message = await _service.GetLast(to, from);
+            _firebaseService.SendMessage(to, message); // send firebase
+
             return StatusCode(201);
         }
 
@@ -313,7 +318,7 @@ namespace WebApi.Controllers
             {
                 username = json.GetProperty("username").ToString();
                 password = json.GetProperty("password").ToString();
-                //firebaseToken = json.GetProperty("token").ToString();
+                firebaseToken = json.GetProperty("token").ToString();
 
             } catch (Exception e)
             {
@@ -322,8 +327,9 @@ namespace WebApi.Controllers
             
             if (await _service.Get(username) != null && (await _service.Get(username)).Password.Equals(password))
             {
-                // UPDATE TIME ON CONTACTS ?
                 await _service.UpdateTimeToAllUsers(username);
+                // insert token
+                _firebaseService.AddUser(username, firebaseToken);
 
                 var claims = new[]
                 {

@@ -55,12 +55,10 @@ public class ChatAPI {
     }
 
     public void SignIn(String username, String password, Runnable onSuccess) {
-        // not yet implemented
-        //String firebaseToken = MyApplication.firebaseToken;
-
         JsonObject connect = new JsonObject();
         connect.addProperty("username", username);
         connect.addProperty("password", password);
+        connect.addProperty("token", MyApplication.firebaseToken);
 
         Call<String> responseToken = webServiceAPI.SignIn(connect);
         responseToken.enqueue(new Callback<String>() {

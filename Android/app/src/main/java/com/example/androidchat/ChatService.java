@@ -29,14 +29,16 @@ public class ChatService extends FirebaseMessagingService {
 
     private void setNotification(RemoteMessage remoteMessage) {
         if(remoteMessage.getNotification() != null) {
-            String message = remoteMessage.getNotification().getTitle(); // get the message
+            String message = remoteMessage.getData().get("content"); // get the message
+            Intent intent = new Intent(this, ChatPageActivity.class);
+            intent.putExtra("id", remoteMessage.getData().get("from"));
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this, getString(R.string.NotificationMessageID))
                     .setSmallIcon(R.drawable.fulllogo_transparent_nobuffer)
                     .setContentTitle(getString(R.string.Chatiz)) // the title for the notification
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-// todo  add contact intent                 .setContentIntent(PendingIntent.getActivity(this, 0,
-//                            contactChat, 0))
+                .setContentIntent(pendingIntent)
                     .setAutoCancel(true);
             if (message.length() > 50) {
                 builder.setContentText(message.substring(0, 50)) // set maximum of 50 characters to the content
