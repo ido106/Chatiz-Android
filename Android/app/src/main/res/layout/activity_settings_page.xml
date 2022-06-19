@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".SettingsPage">
+    tools:context=".SettingsPage"
+    android:background="@color/seashell">
 
     <ImageView
         android:id="@+id/imageView9"

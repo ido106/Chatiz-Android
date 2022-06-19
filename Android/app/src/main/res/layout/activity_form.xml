@@ -37,23 +37,44 @@
             android:hint="@string/AddContactServer" />
 
         <!--        change color to red-->
-        <TextView
-            android:id="@+id/AddContactErrorExist"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:ems="10"
-            android:hint="@string/login_error_message"
-            android:textColor="@color/design_default_color_error"
-            android:textColorHighlight="@color/design_default_color_error"
-            android:visibility="invisible" />
+<!--        <TextView-->
+<!--            android:id="@+id/AddContactErrorExist"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="10dp"-->
+<!--            android:ems="10"-->
+<!--            android:hint="@string/login_error_message"-->
+<!--            android:textColor="@color/design_default_color_error"-->
+<!--            android:textColorHighlight="@color/design_default_color_error"-->
+<!--            android:visibility="invisible" />-->
 
-        <Button
-            android:id="@+id/btnSave"
+
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/btnSave" />
+            android:layout_gravity="center">
+
+            <Button
+                android:id="@+id/btnSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/grey"
+                android:text="Add"
+                android:textColor="@color/black"
+                android:layout_margin="10dp"/>
+
+            <Button
+                android:id="@+id/btnGoBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/grey"
+                android:text="Go Back"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
     </LinearLayout>
 
 

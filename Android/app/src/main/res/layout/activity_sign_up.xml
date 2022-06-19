@@ -83,7 +83,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:background="@color/grey"
-                android:text="@string/login_btnLogin"
+                android:text="@string/sign_in"
                 android:textColor="@color/black" />
 
             <Button

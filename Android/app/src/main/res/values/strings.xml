@@ -24,5 +24,6 @@
     <string name="Chatiz">Chatiz</string>
     <string name="BaseURL">http://10.0.2.2:7038/api/</string>
     <string name="ServerURL">http://10.0.2.2:7038/</string>
+    <string name="sign_in">Sign In</string>
 
 </resources>

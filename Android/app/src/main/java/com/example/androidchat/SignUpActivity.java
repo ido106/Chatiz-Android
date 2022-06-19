@@ -57,38 +57,13 @@ public class SignUpActivity extends AppCompatActivity {
 
         if (!binding.SignupPassword1.getText().toString().equals
                 (binding.SignupPassword2.getText().toString())) {
-            binding.SignupPassword2.setError("Passwords must match!");
+            binding.SignupPassword2.setError("Passwords don't match");
             isValid = false;
         }
 
 
         return isValid;
     }
-
-    /** wtf is that **/
-//    private boolean registerToServer(View view) {
-//        // send data to server and register
-//        //making the call to the server api
-//
-//        boolean isRegistrationPassed = ChatAPI.Register(binding.SignupUsername.getText().toString(),
-//                binding.SignupNickname.getText().toString(),
-//                binding.SignupPassword1.getText().toString());
-//
-//        //if we were unable to register we put an error message and going back
-//        if (!isRegistrationPassed) {
-//            binding.SignupAction.setError("Unable to Sign up, please try again");
-//            return false;
-//        }
-//        // if we managed to sign up we save the data in the local db.
-//        chatDao.addUser(new User(binding.SignupUsername.getText().toString(),
-//                binding.SignupNickname.getText().toString(),
-//                binding.SignupPassword1.getText().toString(),
-//                MyApplication.context.getString(R.string.ServerURL) // i think we should use that one
-//                //"http://localhost:7038"
-//        ));
-//        return true;
-//    }
-
 
     private void setSignUpActionButton() {
         binding.SignupAction.setOnClickListener(view -> {
@@ -107,22 +82,6 @@ public class SignUpActivity extends AppCompatActivity {
 
         });
     }
-
-    /** what the hell is that shit **/
-//    private void setSignUpActionButton() {
-//        binding.SignupAction.setOnClickListener(view -> {
-//            if (!checkValidation(view)) {
-//                return;
-//            }
-//            //if (registerToServer(view)) {
-//
-//
-//
-//            Intent chat = new Intent(this, LoginActivity.class);
-//            startActivity(chat);
-//            //}
-//        });
-//    }
 
     private void setSignUpToLoginButton() {
         binding.SignUpToLogin.setOnClickListener(view -> {

@@ -26,6 +26,13 @@ public class FormActivity extends AppCompatActivity {
 
         setDefaultSettings();
         setSaveButton();
+        setGoBackButton();
+    }
+
+    private void setGoBackButton() {
+        binding.btnGoBack.setOnClickListener(view -> {
+            finish();
+        });
     }
 
     private void setSaveButton() {
@@ -35,10 +42,10 @@ public class FormActivity extends AppCompatActivity {
             EditText contactNickname = binding.etNickname;
             EditText contactServer = binding.etServer;
 
-            if (chatDao.getContact(connected, contactUsername.getText().toString()) != null) {
-                binding.AddContactErrorExist.setVisibility(View.VISIBLE);
-
-            } else {
+//            if (chatDao.getContact(connected, contactUsername.getText().toString()) != null) {
+//                binding.AddContactErrorExist.setVisibility(View.VISIBLE);
+//
+//            } else {
                 // get the connected username
                 Contact contact = new Contact(
                         contactUsername.getText().toString(),
@@ -47,7 +54,7 @@ public class FormActivity extends AppCompatActivity {
                         contactServer.getText().toString());
 
                 chatDao.addContact(contact);
-            }
+            //}
             // finish and return to the previous activity
             finish();
         });
