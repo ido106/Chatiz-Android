@@ -24,9 +24,13 @@ public class FormActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Button btnSave = binding.btnSave;
+        setDefaultSettings();
+        setSaveButton();
+    }
+
+    private void setSaveButton() {
         // call the database
-        btnSave.setOnClickListener(view -> {
+        binding.btnSave.setOnClickListener(view -> {
             EditText contactUsername = binding.etUsername;
             EditText contactNickname = binding.etNickname;
             EditText contactServer = binding.etServer;
@@ -48,7 +52,6 @@ public class FormActivity extends AppCompatActivity {
             finish();
         });
     }
-
     private void setDefaultSettings() {
         // we have to do this in order to get the Binding (gets null otherwise)
         binding = ActivityFormBinding.inflate(getLayoutInflater());
