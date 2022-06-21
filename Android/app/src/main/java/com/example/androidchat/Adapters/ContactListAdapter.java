@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.androidchat.ChatLand;
 import com.example.androidchat.ChatPageActivity;
 import com.example.androidchat.Models.Contact;
 import com.example.androidchat.R;
@@ -25,7 +26,7 @@ import java.util.List;
 public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ContactViewHolder> {
     @SuppressLint("StaticFieldLeak")
     static private Context startActivityPage;
-
+    public static int isLand = 0;
     static class ContactViewHolder extends RecyclerView.ViewHolder {
 
 
@@ -45,9 +46,17 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             contactName = itemView.findViewById(R.id.contactUserName);
 
             itemView.setOnClickListener(view -> {
-                Intent chat = new Intent(startActivityPage, ChatPageActivity.class);
-                chat.putExtra("id", contactName.getText().toString());
+                Intent chat;
+                if(isLand == 0) {
+                    chat = new Intent(startActivityPage, ChatPageActivity.class);
+                    chat.putExtra("id", contactName.getText().toString());
+                }
+                else {
+                    chat = new Intent(startActivityPage, ChatLand.class);
+                    chat.putExtra("id", contactName.getText().toString());
+                }
                 startActivityPage.startActivity(chat);
+
             });
         }
     }

@@ -86,12 +86,18 @@ public class StartChatActivity extends AppCompatActivity {
     }
 
     private void setAddButton() {
-        // add onclick listener - adding a contact
-        binding.btnAdd.setOnClickListener(view -> {
-            // move to the FormActivity in order to add a new contact
-            Intent i = new Intent(this, FormActivity.class);
-            startActivity(i);
-        });
+        if (findViewById(R.id.btnAdd) != null) {
+            // add onclick listener - adding a contact
+            binding.btnAdd.setOnClickListener(view -> {
+                // move to the FormActivity in order to add a new contact
+                Intent i = new Intent(this, FormActivity.class);
+                startActivity(i);
+            });
+        }
+        else {
+            ContactListAdapter.isLand = 1;
+        }
+
     }
 
     private void setArrayAdapter() {

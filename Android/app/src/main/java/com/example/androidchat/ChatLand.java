@@ -1,6 +1,7 @@
 package com.example.androidchat;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -14,28 +15,32 @@ import android.view.View;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import com.example.androidchat.Adapters.ContactListAdapter;
 import com.example.androidchat.Adapters.MessageListAdapter;
 import com.example.androidchat.AppSettings.MyApplication;
 import com.example.androidchat.Models.Contact;
 import com.example.androidchat.Models.Message;
 import com.example.androidchat.api.ChatAPI;
+import com.example.androidchat.databinding.ActivityChatLandBinding;
 import com.example.androidchat.databinding.ActivityChatPageBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ChatPageActivity extends AppCompatActivity {
+public class ChatLand extends AppCompatActivity {
     private View parentView;
     private SwitchMaterial themeSwitch;
-    private ActivityChatPageBinding binding;
+    private ActivityChatLandBinding binding;
     private AppDB db;
     private ChatDao chatDao; // we can communicate with the DB with chatDao
     private String connected;
@@ -44,6 +49,8 @@ public class ChatPageActivity extends AppCompatActivity {
     //working with static var from myApp
     //private MessageListAdapter messageAdapter;
     private ChatAPI chatAPI;
+    private ContactListAdapter contactArrayAdapter;
+    private NotificationManagerCompat notificationManagerCompat;
 
 
     @SuppressLint("NotifyDataSetChanged")
@@ -53,8 +60,22 @@ public class ChatPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setDefaultSettings();
+        if (findViewById(R.id.btnGoBackChatPageFuck)!= null) {
+            ContactListAdapter.isLand = 0;
+            finish();
+
+        }
         setMessageAdapter();
-        setGoBackButton();
+        setArrayAdapter();
+
+        /** ViewModel Delete **/
+//        contactsViewModel = new ViewModelProvider(this).get(ContactsViewModel.class);
+//        contactsViewModel.getLiveData().observe(this, contacts -> {
+//            contactArrayAdapter.setContactList(contacts);
+//            contactArrayAdapter.notifyDataSetChanged();
+//        });
+
+        createNotificationChannel();
     }
 
 
@@ -69,11 +90,14 @@ public class ChatPageActivity extends AppCompatActivity {
         MyApplication.messageListAdapter.notifyDataSetChanged();
 
         binding.listMessages.smoothScrollToPosition(messageList.size());
+        contactArrayAdapter.setContactList(chatDao.getAllUserContacts(connected));
+        chatAPI.getAllConnectedUserContacts(contactArrayAdapter);
+        contactArrayAdapter.notifyDataSetChanged();
 
     }
 
     private void setDefaultSettings() {
-        binding = ActivityChatPageBinding.inflate(getLayoutInflater());
+        binding = ActivityChatLandBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         initWidgets();
@@ -207,4 +231,33 @@ public class ChatPageActivity extends AppCompatActivity {
         super.onStop();
         MyApplication.messageListAdapter = null;
     }
+    private void setArrayAdapter() {
+        contactArrayAdapter = new ContactListAdapter(this);
+
+        //recycle view for messages
+        RecyclerView contactListView = binding.listContacts;
+        //set layout manager (linear should do the work for our needs every time)
+        contactListView.setLayoutManager(new LinearLayoutManager(this));
+
+        //setting the data for the adapter
+        contactArrayAdapter.setContactList(new ArrayList<>());
+
+        //adapt
+        contactListView.setAdapter(contactArrayAdapter);
+    }
+
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence msgNotification = getString(R.string.NotificationMessageName);
+            String description = getString(R.string.descriptionNotificationMessage);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(
+                    getString(R.string.NotificationMessageID), msgNotification, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
 }
