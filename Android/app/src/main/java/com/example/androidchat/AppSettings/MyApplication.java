@@ -3,6 +3,8 @@ package com.example.androidchat.AppSettings;
 import android.app.Application;
 import android.content.Context;
 
+import com.example.androidchat.Adapters.MessageListAdapter;
+
 public class MyApplication extends Application {
     /** User Settings **/
     public static final String PREFERENCES = "preferences";
@@ -16,6 +18,11 @@ public class MyApplication extends Application {
     public static String jwtToken;
     public static String firebaseToken;
     public static String connected_user;
+
+
+
+    /** static vars for firebase **/
+    public static MessageListAdapter messageListAdapter;
 
     @Override
     public void onCreate() {

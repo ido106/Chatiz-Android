@@ -13,6 +13,7 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import com.example.androidchat.AppSettings.MyApplication;
+import com.example.androidchat.api.ChatAPI;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import androidx.room.Room;
 import androidx.core.app.NotificationCompat;
@@ -34,6 +35,7 @@ public class StartChatActivity extends AppCompatActivity {
     private ContactListAdapter contactArrayAdapter;
     private String connected;
     private NotificationManagerCompat notificationManagerCompat;
+    private ChatAPI chatAPI;
 
     @SuppressLint("NotifyDataSetChanged")
     @Override
@@ -80,6 +82,7 @@ public class StartChatActivity extends AppCompatActivity {
 
         // now we can get the Dao
         chatDao = db.chatDao();
+        chatAPI = new ChatAPI();
     }
 
     private void setAddButton() {
@@ -124,7 +127,9 @@ public class StartChatActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
         contactArrayAdapter.setContactList(chatDao.getAllUserContacts(connected));
+        chatAPI.getAllConnectedUserContacts(contactArrayAdapter);
         contactArrayAdapter.notifyDataSetChanged();
     }
 

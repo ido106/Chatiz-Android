@@ -1915,3 +1915,11 @@ C:\Users\Ido\Documents\GitHub\Advanced2_Android\WebApp\WebApi\bin\Debug\net6.0\G
 C:\Users\Ido\Documents\GitHub\Advanced2_Android\WebApp\WebApi\bin\Debug\net6.0\Google.Apis.Auth.PlatformServices.dll
 C:\Users\Ido\Documents\GitHub\Advanced2_Android\WebApp\WebApi\bin\Debug\net6.0\Google.Apis.Auth.dll
 C:\Users\Ido\Documents\GitHub\Advanced2_Android\WebApp\WebApi\bin\Debug\net6.0\Google.Apis.Core.dll
+C:\Users\yoavo\BAR_ILAN\second_year\Android\Advanced2_Android\WebApp\WebApi\bin\Debug\net6.0\firebase_key.json
+C:\Users\yoavo\BAR_ILAN\second_year\Android\Advanced2_Android\WebApp\WebApi\bin\Debug\net6.0\FirebaseAdmin.dll
+C:\Users\yoavo\BAR_ILAN\second_year\Android\Advanced2_Android\WebApp\WebApi\bin\Debug\net6.0\Google.Api.Gax.dll
+C:\Users\yoavo\BAR_ILAN\second_year\Android\Advanced2_Android\WebApp\WebApi\bin\Debug\net6.0\Google.Api.Gax.Rest.dll
+C:\Users\yoavo\BAR_ILAN\second_year\Android\Advanced2_Android\WebApp\WebApi\bin\Debug\net6.0\Google.Apis.dll
+C:\Users\yoavo\BAR_ILAN\second_year\Android\Advanced2_Android\WebApp\WebApi\bin\Debug\net6.0\Google.Apis.Auth.PlatformServices.dll
+C:\Users\yoavo\BAR_ILAN\second_year\Android\Advanced2_Android\WebApp\WebApi\bin\Debug\net6.0\Google.Apis.Auth.dll
+C:\Users\yoavo\BAR_ILAN\second_year\Android\Advanced2_Android\WebApp\WebApi\bin\Debug\net6.0\Google.Apis.Core.dll

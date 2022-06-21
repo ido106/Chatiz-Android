@@ -41,7 +41,8 @@ public class ChatPageActivity extends AppCompatActivity {
     private String connected;
     private Contact currentContact;
     private List<Message> messageList;
-    private MessageListAdapter messageAdapter;
+    //working with static var from myApp
+    //private MessageListAdapter messageAdapter;
     private ChatAPI chatAPI;
 
 
@@ -61,8 +62,12 @@ public class ChatPageActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        messageAdapter.setMessageList(chatDao.getUserMessageWithContact(connected, currentContact.getId()));
-        messageAdapter.notifyDataSetChanged();
+//        messageAdapter.setMessageList(chatDao.getUserMessageWithContact(connected, currentContact.getId()));
+//        messageAdapter.notifyDataSetChanged();
+
+        MyApplication.messageListAdapter.setMessageList(chatDao.getUserMessageWithContact(connected, currentContact.getId()));
+        MyApplication.messageListAdapter.notifyDataSetChanged();
+
         binding.listMessages.smoothScrollToPosition(messageList.size());
 
     }
@@ -93,6 +98,7 @@ public class ChatPageActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void setMessageAdapter() {
         if (getIntent().getExtras() == null) {
@@ -101,16 +107,22 @@ public class ChatPageActivity extends AppCompatActivity {
         String id = getIntent().getExtras().getString("id");
         currentContact = chatDao.getContact(connected, id);
         messageList = chatDao.getUserMessageWithContact(connected, currentContact.getId());
-        messageAdapter = new MessageListAdapter(this);
+//        messageAdapter = new MessageListAdapter(this);
+
+        MyApplication.messageListAdapter = new MessageListAdapter(this);
         //recycle view for messages
         RecyclerView listMessages = binding.listMessages;
         //adapt
         //set layout manager (linear should do the work for our needs every time)
         listMessages.setLayoutManager(new LinearLayoutManager(this));
         //setting the data for the adapter
-        messageAdapter.setMessageList(messageList);
+//        messageAdapter.setMessageList(messageList);
+//        //adapt
+//        listMessages.setAdapter(messageAdapter);
+
+        MyApplication.messageListAdapter.setMessageList(messageList);
         //adapt
-        listMessages.setAdapter(messageAdapter);
+        listMessages.setAdapter( MyApplication.messageListAdapter);
 
 
         // add listener to "Send message" button to send the message
@@ -142,8 +154,11 @@ public class ChatPageActivity extends AppCompatActivity {
             messageList.addAll(chatDao.getUserMessageWithContact(connected, currentContact.getId()));
             //messageAdapter.notifyDataSetChanged();
             binding.messageData.setText("");
-            messageAdapter.setMessageList(chatDao.getUserMessageWithContact(connected, currentContact.getId()));
-            messageAdapter.notifyDataSetChanged();
+//            messageAdapter.setMessageList(chatDao.getUserMessageWithContact(connected, currentContact.getId()));
+//            messageAdapter.notifyDataSetChanged();
+
+            MyApplication.messageListAdapter.setMessageList(chatDao.getUserMessageWithContact(connected, currentContact.getId()));
+            MyApplication.messageListAdapter.notifyDataSetChanged();
 
             //scrolling down to the last message
             listMessages.smoothScrollToPosition(messageList.size());
@@ -184,6 +199,12 @@ public class ChatPageActivity extends AppCompatActivity {
         } else {
             parentView.setBackgroundColor(white);
         }
+    }
 
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        MyApplication.messageListAdapter = null;
     }
 }

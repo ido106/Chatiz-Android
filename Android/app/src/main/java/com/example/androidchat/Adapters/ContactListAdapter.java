@@ -27,14 +27,9 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     static private Context startActivityPage;
 
     static class ContactViewHolder extends RecyclerView.ViewHolder {
-        private final TextView mySendTime;
-        private final TextView myData;
-        private final LinearLayout myMessageLayoutWarp;
 
 
-        private final TextView notMySendTime;
-        private final TextView notMyData;
-        private final LinearLayout notMyMessageLayoutWarp;
+
         private final TextView contactName;
         private final TextView contactNickName;
         private final TextView lastMessage;
@@ -43,14 +38,6 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 
         private ContactViewHolder(@NonNull View itemView) {
             super(itemView);
-            myMessageLayoutWarp = (LinearLayout) itemView.findViewById(R.id.myMessageLayoutWrap);
-            mySendTime = itemView.findViewById(R.id.mySentTimeMessage);
-            myData = itemView.findViewById(R.id.myMessageTextData);
-
-            notMyMessageLayoutWarp = (LinearLayout) itemView.findViewById(R.id.notMyMessageLayoutWrap);
-            notMySendTime = itemView.findViewById(R.id.notMySentTimeMessage);
-            notMyData = itemView.findViewById(R.id.notMyMessageTextData);
-
             contactImage = itemView.findViewById(R.id.imgContact);
             contactLastSeen = itemView.findViewById(R.id.contactLastSeen);
             lastMessage = itemView.findViewById(R.id.contactLastMessage);

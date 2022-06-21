@@ -1,5 +1,6 @@
 package com.example.androidchat.api;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -8,6 +9,7 @@ import android.view.View;
 import androidx.annotation.RequiresApi;
 import androidx.room.Room;
 
+import com.example.androidchat.Adapters.ContactListAdapter;
 import com.example.androidchat.AppDB;
 import com.example.androidchat.ChatDao;
 import com.example.androidchat.Models.Contact;
@@ -20,6 +22,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -72,7 +78,7 @@ public class ChatAPI {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.code() == 200) { // signin success
-                    MyApplication.jwtToken = "Bearer " +response.body();
+                    MyApplication.jwtToken = "Bearer " + response.body();
                     onSuccess.run();
                     //validations and login to the chat page if correct
                 } else { // signin failed
@@ -88,7 +94,7 @@ public class ChatAPI {
         });
     }
 
-    public void Register(String username,String nickName, String password) {
+    public void Register(String username, String nickName, String password) {
         JsonObject register_response = new JsonObject();
         register_response.addProperty("username", username);
         register_response.addProperty("nickName", nickName);
@@ -99,13 +105,12 @@ public class ChatAPI {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 String server = MyApplication.context.getString(R.string.ServerURL);
-                User user = new User(username,nickName,password, server);
+                User user = new User(username, nickName, password, server);
                 chatDao.addUser(user);
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                return;
             }
         });
     }
@@ -139,7 +144,7 @@ public class ChatAPI {
                 newId[0] = m.getId();
             }
         });
-        Message message_to_add = new Message(to, from, newId[0]+1, content, "", false);
+        Message message_to_add = new Message(to, from, newId[0] + 1, content, "", false);
         chatDao.addMessage(message_to_add);
     }
 
@@ -243,11 +248,45 @@ public class ChatAPI {
                 newId[0] = m.getId();
             }
         });
-        Message message_to_add = new Message(MyApplication.connected_user,id, newId[0]+1, content, "", true);
+        Message message_to_add = new Message(MyApplication.connected_user, id, newId[0] + 1, content, "", true);
         chatDao.addMessage(message_to_add);
+    }
 
+
+    public void getAllConnectedUserContacts(ContactListAdapter adapter) {
+        if (MyApplication.jwtToken == null) return;
+        Call<List<Contact>> call = webServiceAPI.getAllContacts(MyApplication.jwtToken);
+        final List<Contact>[] contactList = new List[]{null};
+
+        call.enqueue(new Callback<List<Contact>>() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onResponse(Call<List<Contact>> call, Response<List<Contact>> response) {
+                List<Contact> list = response.body();
+                assert list != null;
+                for (Contact c : list) {
+                    Date date =  new Date();
+                    @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("dd/MM hh:mm");
+                    try {
+                        date = formatter.parse(c.getLastSeen());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    assert date != null;
+                    c.setLastSeen(formatter.format(date));
+                }
+                adapter.setContactList(response.body());
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<List<Contact>> call, Throwable t) {
+
+            }
+        });
 
     }
+
 
     //todo update local db?
 }

@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(view -> {
             String username = binding.LoginUsername.getText().toString();
             String password = binding.LoginPassword.getText().toString();
-            chatAPI.SignIn(username, password, () -> {onLoginSuccess();});
+            chatAPI.SignIn(username, password, this::onLoginSuccess);
         });
     }
 
