@@ -5,7 +5,7 @@ using Repository;
 using Services;
 using System.Text;
 using WebApi.Hubs;
-using WebAPI.Services;
+using WebApi.Services;
 using FirebaseAdmin;
 using FirebaseAdmin.Messaging;
 using Google.Apis.Auth.OAuth2;
@@ -15,10 +15,6 @@ using System.Threading.Tasks;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var defaultApp = FirebaseApp.Create(new AppOptions()
-{
-    Credential = GoogleCredential.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "firebase_key.json")),
-});
 
 // Add services to the container.
 

@@ -1907,7 +1907,6 @@ C:\Users\yoavo\BAR_ILAN\second_year\Android\Advanced2_Android\WebApp\WebApi\obj\
 C:\Users\yoavo\BAR_ILAN\second_year\Android\Advanced2_Android\WebApp\WebApi\obj\Debug\net6.0\WebApi.pdb
 C:\Users\yoavo\BAR_ILAN\second_year\Android\Advanced2_Android\WebApp\WebApi\obj\Debug\net6.0\WebApi.genruntimeconfig.cache
 C:\Users\yoavo\BAR_ILAN\second_year\Android\Advanced2_Android\WebApp\WebApi\obj\Debug\net6.0\ref\WebApi.dll
-C:\Users\Ido\Documents\GitHub\Advanced2_Android\WebApp\WebApi\bin\Debug\net6.0\firebase_key.json
 C:\Users\Ido\Documents\GitHub\Advanced2_Android\WebApp\WebApi\bin\Debug\net6.0\FirebaseAdmin.dll
 C:\Users\Ido\Documents\GitHub\Advanced2_Android\WebApp\WebApi\bin\Debug\net6.0\Google.Api.Gax.dll
 C:\Users\Ido\Documents\GitHub\Advanced2_Android\WebApp\WebApi\bin\Debug\net6.0\Google.Api.Gax.Rest.dll

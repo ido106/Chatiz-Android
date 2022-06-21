@@ -4,7 +4,7 @@ using Services;
 using System.Net.Http.Json;
 using System.Text.Json;
 
-namespace WebAPI.Services
+namespace WebApi.Services
 {
     public class FirebaseService : IFirebaseService
     {
