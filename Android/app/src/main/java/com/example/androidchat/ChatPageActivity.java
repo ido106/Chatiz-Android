@@ -147,9 +147,6 @@ public class ChatPageActivity extends AppCompatActivity {
             /** ALREADY ADDED ON ChatAPI AddMessage **/
             //chatDao.addMessage(msgToAdd);
 
-
-
-
             messageList.clear();
             messageList.addAll(chatDao.getUserMessageWithContact(connected, currentContact.getId()));
             //messageAdapter.notifyDataSetChanged();
