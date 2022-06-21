@@ -4,7 +4,7 @@
 <br/>The practitioner allowed us to submit a day late.
 
 <br/>**Technologies:**
-<b1/>android studio
+<br/>android studio
 
 <br/>ASP.NET
 
