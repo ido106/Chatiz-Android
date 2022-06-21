@@ -191,11 +191,7 @@ public class ChatLand extends AppCompatActivity {
         });
     }
 
-    private void setGoBackButton() {
-        binding.btnGoBackChatPage.setOnClickListener(view -> {
-            finish();
-        });
-    }
+
 
     private void initWidgets() {
 
