@@ -1,5 +1,4 @@
 ﻿# Advanced2_New
- <br/> 
  # Extend time for the exercise from the practitioner
 
 <br/>The practitioner allowed us to submit a day late.
