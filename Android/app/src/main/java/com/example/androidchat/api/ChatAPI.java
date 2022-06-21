@@ -265,7 +265,7 @@ public class ChatAPI {
                 List<Contact> list = response.body();
                 assert list != null;
                 for (Contact c : list) {
-                    Date date =  new Date();
+                    Date date = new Date();
                     @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("dd/MM hh:mm");
                     try {
                         date = formatter.parse(c.getLastSeen());
@@ -275,6 +275,8 @@ public class ChatAPI {
                     assert date != null;
                     c.setLastSeen(formatter.format(date));
                 }
+
+
                 adapter.setContactList(response.body());
                 adapter.notifyDataSetChanged();
             }
@@ -284,7 +286,77 @@ public class ChatAPI {
 
             }
         });
+    }
 
+
+    private void loadContacts() {
+        Call<List<Contact>> call = webServiceAPI.getAllContacts(MyApplication.jwtToken);
+        final List<Contact>[] contactList = new List[]{null};
+
+        call.enqueue(new Callback<List<Contact>>() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onResponse(Call<List<Contact>> call, Response<List<Contact>> response) {
+                List<Contact> list = response.body();
+                assert list != null;
+                for (Contact c : list) {
+                    Date date = new Date();
+                    @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("dd/MM hh:mm");
+                    try {
+                        date = formatter.parse(c.getLastSeen());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    assert date != null;
+                    c.setLastSeen(formatter.format(date));
+                    c.setTalkingTo(MyApplication.connected_user);
+                    chatDao.addContact(c);
+                }
+
+                loadMessages();
+            }
+
+            @Override
+            public void onFailure(Call<List<Contact>> call, Throwable t) {
+            }
+        });
+    }
+
+
+    private void loadMessages() {
+        List<Contact> contactList = chatDao.getAllUserContacts(MyApplication.connected_user);
+        for (Contact contact : contactList) {
+
+            Call<List<Message>> call = webServiceAPI.getAllContactMessages(MyApplication.jwtToken,
+                    contact.getId());
+            call.enqueue(new Callback<List<Message>>() {
+                @Override
+                public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
+                    List<Message> messageList = response.body();
+                    assert messageList != null;
+                    for (Message m : messageList) {
+                        chatDao.addMessage(m);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<Message>> call, Throwable t) {
+
+                }
+            });
+
+
+        }
+
+
+    }
+
+
+    public void updateRoom() {
+        chatDao.resetContactTable();
+        chatDao.resetMessageTable();
+        chatDao.resetUserTable();
+        loadContacts();
     }
 
 

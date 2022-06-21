@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void onLoginSuccess() {
         if(MyApplication.jwtToken != null) { //success
+
             binding.LoginError.setVisibility(View.INVISIBLE);
 
             SharedPreferences pref = MyApplication.context.getSharedPreferences("MyPref",
@@ -49,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
             editor.apply();
 
             MyApplication.connected_user = binding.LoginUsername.getText().toString(); // add to Application
-
+            chatAPI.updateRoom();
             Intent chat = new Intent(MyApplication.context, StartChatActivity.class);
             startActivity(chat);
         } else {
