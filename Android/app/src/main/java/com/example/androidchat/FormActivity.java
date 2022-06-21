@@ -10,6 +10,7 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
+import com.example.androidchat.AppSettings.MyApplication;
 import com.example.androidchat.Models.Contact;
 import com.example.androidchat.api.ChatAPI;
 import com.example.androidchat.databinding.ActivityFormBinding;
@@ -52,8 +53,8 @@ public class FormActivity extends AppCompatActivity {
             );
             // invitation
             chatAPI.Invitation(
+                    MyApplication.connected_user,
                     contactUsername.getText().toString(),
-                    contactNickname.getText().toString(),
                     contactServer.getText().toString()
             );
 

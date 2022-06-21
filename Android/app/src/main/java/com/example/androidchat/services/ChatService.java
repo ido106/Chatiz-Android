@@ -34,7 +34,7 @@ public class ChatService extends FirebaseMessagingService {
     private ChatDao chatDao;
 
     public ChatService() {
-        AppDB db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ChatDB") // "ChatDB" will be the name of the DB
+        AppDB db = Room.databaseBuilder(MyApplication.context, AppDB.class, "ChatDB") // "ChatDB" will be the name of the DB
                 .allowMainThreadQueries()  // allow the DB to run on the main thread, it is not supposed to be like this but its okay for now
                 .build();
 

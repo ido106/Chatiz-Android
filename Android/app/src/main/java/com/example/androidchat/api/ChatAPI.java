@@ -169,7 +169,6 @@ public class ChatAPI {
             }
         });
 
-        // todo how to update on local db
         chatDao.addContact(new Contact(to, from, from, server));
     }
 
