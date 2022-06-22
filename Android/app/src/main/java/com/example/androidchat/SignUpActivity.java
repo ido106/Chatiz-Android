@@ -54,8 +54,8 @@ public class SignUpActivity extends AppCompatActivity {
                 byte[] byteArray = byteArrayOutputStream.toByteArray();
                 ProfilePictureHolder holder = new ProfilePictureHolder();
                 holder.setUsername(binding.SignupUsername.getText().toString());
-                holder.setDecodedProfileImage(Str);
-                //holder.setDecodedProfileImage(byteArray);
+                String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                holder.setDecodedProfileImage(encodedImage);
                 if (chatDao.getPictureByUsername(binding.SignupUsername.getText().
                         toString()) == null) {
                     chatDao.addProfilePictureHolder(holder);

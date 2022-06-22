@@ -73,6 +73,10 @@ public class StartChatActivity extends AppCompatActivity {
         binding.userNameStartChat.setText("Hello " + MyApplication.connected_user);
         ProfilePictureHolder holder = chatDao.getPictureByUsername(MyApplication.connected_user);
         //todo set image profile
+        byte[] bytes=Base64.decode(holder.getDecodedProfileImage(),Base64.DEFAULT);
+        Bitmap bitmap= BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+        // set bitmap on imageView
+        binding.userImageViewStartChat.setImageBitmap(bitmap);
 
         //byte[] imageTile = holder.getDecodedProfileImage();
         //Bitmap bMap = BitmapFactory.decodeByteArray(imageTile, 0, imageTile.length);
