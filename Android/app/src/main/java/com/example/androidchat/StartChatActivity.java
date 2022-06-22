@@ -7,21 +7,32 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+
 import com.example.androidchat.AppSettings.MyApplication;
+import com.example.androidchat.Models.ProfilePictureHolder;
 import com.example.androidchat.api.ChatAPI;
 import com.google.android.material.switchmaterial.SwitchMaterial;
+
 import androidx.room.Room;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.androidchat.Adapters.ContactListAdapter;
 import com.example.androidchat.databinding.ActivityStartChatBinding;
+
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 
 public class StartChatActivity extends AppCompatActivity {
@@ -55,6 +66,17 @@ public class StartChatActivity extends AppCompatActivity {
         setAddButton();
 
         createNotificationChannel();
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void setTopBar() {
+        binding.userNameStartChat.setText("Hello " + MyApplication.connected_user);
+        ProfilePictureHolder holder = chatDao.getPictureByUsername(MyApplication.connected_user);
+        //todo set image profile
+
+        //byte[] imageTile = holder.getDecodedProfileImage();
+        //Bitmap bMap = BitmapFactory.decodeByteArray(imageTile, 0, imageTile.length);
+
     }
 
     private void setDefaultSettings() {
@@ -93,8 +115,7 @@ public class StartChatActivity extends AppCompatActivity {
                 Intent i = new Intent(this, FormActivity.class);
                 startActivity(i);
             });
-        }
-        else {
+        } else {
             ContactListAdapter.isLand = 1;
         }
 

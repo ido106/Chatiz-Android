@@ -65,9 +65,10 @@ public class ChatPageActivity extends AppCompatActivity {
 //        messageAdapter.setMessageList(chatDao.getUserMessageWithContact(connected, currentContact.getId()));
 //        messageAdapter.notifyDataSetChanged();
 
-        MyApplication.messageListAdapter.setMessageList(chatDao.getUserMessageWithContact(connected, currentContact.getId()));
-        MyApplication.messageListAdapter.notifyDataSetChanged();
-
+        if (MyApplication.messageListAdapter != null) {
+            MyApplication.messageListAdapter.setMessageList(chatDao.getUserMessageWithContact(connected, currentContact.getId()));
+            MyApplication.messageListAdapter.notifyDataSetChanged();
+        }
         binding.listMessages.smoothScrollToPosition(messageList.size());
 
     }
@@ -122,7 +123,7 @@ public class ChatPageActivity extends AppCompatActivity {
 
         MyApplication.messageListAdapter.setMessageList(messageList);
         //adapt
-        listMessages.setAdapter( MyApplication.messageListAdapter);
+        listMessages.setAdapter(MyApplication.messageListAdapter);
 
 
         // add listener to "Send message" button to send the message
@@ -146,8 +147,6 @@ public class ChatPageActivity extends AppCompatActivity {
 
             /** ALREADY ADDED ON ChatAPI AddMessage **/
             //chatDao.addMessage(msgToAdd);
-
-
 
 
             messageList.clear();

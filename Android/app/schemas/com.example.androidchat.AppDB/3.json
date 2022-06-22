@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "810184952ae7448a386f969e48d6f515",
+    "identityHash": "eef06ce4dafa2255d46ff99737c10719",
     "entities": [
       {
         "tableName": "User",
@@ -150,12 +150,38 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "ProfilePictureHolder",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`username` TEXT NOT NULL, `decodedProfileImage` BLOB, PRIMARY KEY(`username`))",
+        "fields": [
+          {
+            "fieldPath": "username",
+            "columnName": "username",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "decodedProfileImage",
+            "columnName": "decodedProfileImage",
+            "affinity": "BLOB",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "username"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '810184952ae7448a386f969e48d6f515')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'eef06ce4dafa2255d46ff99737c10719')"
     ]
   }
 }

@@ -70,6 +70,16 @@
             android:hint="@string/verify_password_sign_up_hint"
             android:inputType="textPassword" />
 
+        <Button
+            android:id="@+id/choosePfpButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/image_pick_signup_button_text"
+            android:layout_gravity="center"
+            android:layout_marginBottom="40dp"
+            />
+
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

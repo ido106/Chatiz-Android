@@ -6,14 +6,15 @@ import androidx.room.RoomDatabase;
 
 import com.example.androidchat.Models.Contact;
 import com.example.androidchat.Models.Message;
+import com.example.androidchat.Models.ProfilePictureHolder;
 import com.example.androidchat.Models.User;
 
 // if we change the models in the future, we will have to increment the version by 1
 @Database(
-        entities = {User.class, Contact.class, Message.class},
-        version = 2,
+        entities = {User.class, Contact.class, Message.class, ProfilePictureHolder.class},
+        version = 3,
         autoMigrations = {
-                @AutoMigration(from = 1, to = 2)
+                @AutoMigration(from = 2, to = 3)
         }
 )
 

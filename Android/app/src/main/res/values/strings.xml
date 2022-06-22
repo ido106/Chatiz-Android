@@ -25,5 +25,6 @@
     <string name="BaseURL">http://10.0.2.2:7038/api/</string>
     <string name="ServerURL">http://10.0.2.2:7038/</string>
     <string name="sign_in">Sign In</string>
+    <string name="image_pick_signup_button_text">choose image</string>
 
 </resources>

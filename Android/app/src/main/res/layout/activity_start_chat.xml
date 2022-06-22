@@ -8,12 +8,46 @@
     android:background="@color/seashell"
     tools:context=".StartChatActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/userImageViewStartChat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ma="80dp"
+                android:src="@drawable/common_google_signin_btn_text_dark_normal_background"
+                tools:ignore="NestedWeights" />
+
+            <TextView
+                android:id="@+id/userNameStartChat"
+                android:text="idoido"
+                android:paddingLeft="50dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2"/>
+
+
+        </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listContacts"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_editor_absoluteX="0dp"
+        android:layout_weight="12"
         app:layout_editor_absoluteY="0dp"/>
+
+    </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"

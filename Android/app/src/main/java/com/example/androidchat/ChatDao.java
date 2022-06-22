@@ -8,6 +8,7 @@ import androidx.room.Update;
 
 import com.example.androidchat.Models.Contact;
 import com.example.androidchat.Models.Message;
+import com.example.androidchat.Models.ProfilePictureHolder;
 import com.example.androidchat.Models.User;
 
 import java.util.List;
@@ -79,4 +80,11 @@ public interface ChatDao {
 
     @Query("DELETE FROM message")
     void resetMessageTable();
+
+
+    @Insert
+    void addProfilePictureHolder(ProfilePictureHolder holder);
+
+    @Query("SELECT * FROM profilepictureholder WHERE username =:username")
+    ProfilePictureHolder getPictureByUsername(String username);
 }

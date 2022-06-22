@@ -3,6 +3,9 @@ package com.example.androidchat.Adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +23,7 @@ import com.example.androidchat.Models.Contact;
 import com.example.androidchat.R;
 
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 
@@ -27,8 +31,8 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     @SuppressLint("StaticFieldLeak")
     static private Context startActivityPage;
     public static int isLand = 0;
-    static class ContactViewHolder extends RecyclerView.ViewHolder {
 
+    static class ContactViewHolder extends RecyclerView.ViewHolder {
 
 
         private final TextView contactName;
@@ -47,11 +51,10 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 
             itemView.setOnClickListener(view -> {
                 Intent chat;
-                if(isLand == 0) {
+                if (isLand == 0) {
                     chat = new Intent(startActivityPage, ChatPageActivity.class);
                     chat.putExtra("id", contactName.getText().toString());
-                }
-                else {
+                } else {
                     chat = new Intent(startActivityPage, ChatLand.class);
                     chat.putExtra("id", contactName.getText().toString());
                 }
@@ -79,7 +82,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     }
 
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "UseCompatLoadingForDrawables"})
     @Override
     public void onBindViewHolder(@NonNull ContactViewHolder holder, int position) {
         if (contactList != null) {
@@ -90,9 +93,21 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             holder.contactNickName.setText(current.getNickname());
             holder.contactLastSeen.setText(current.getLastSeen());
             holder.lastMessage.setText(current.getLastMessage());
+            int id = 0;
+            switch (position % 3) {
+                case 0:
+                    id = R.drawable.avatar1_25;
+                    break;
+                case 1:
+                    id = R.drawable.avatar2_25;
+                    break;
+                case 2:
+                    id = R.drawable.avatar3_25;
 
+            }
+            holder.contactImage.setImageDrawable(
+                    startActivityPage.getResources().getDrawable(id));
 
-            //todo set profile image
         }
     }
 
