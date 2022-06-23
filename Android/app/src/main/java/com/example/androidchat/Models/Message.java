@@ -75,6 +75,7 @@ public class Message {
         return Sent;
     }
 
+
     //SET
 
     public void setContent(String content) {
@@ -92,4 +93,7 @@ public class Message {
                 ", Sent=" + Sent +
                 '}';
     }
+
+
+
 }

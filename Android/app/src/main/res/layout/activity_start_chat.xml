@@ -24,7 +24,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:ma="80dp"
                 android:src="@drawable/common_google_signin_btn_text_dark_normal_background"
                 tools:ignore="NestedWeights" />
 
@@ -33,7 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:paddingLeft="40dp"
+                android:paddingStart="40dp"
                 android:text="idoido" />
 
 

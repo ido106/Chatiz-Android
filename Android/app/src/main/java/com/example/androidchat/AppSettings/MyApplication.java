@@ -3,7 +3,11 @@ package com.example.androidchat.AppSettings;
 import android.app.Application;
 import android.content.Context;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.example.androidchat.Adapters.MessageListAdapter;
+
+import java.util.List;
 
 public class MyApplication extends Application {
     /** User Settings **/
@@ -23,6 +27,7 @@ public class MyApplication extends Application {
 
     /** static vars for firebase **/
     public static MessageListAdapter messageListAdapter;
+    public static MutableLiveData<List<String>> newMessageData;
 
     @Override
     public void onCreate() {

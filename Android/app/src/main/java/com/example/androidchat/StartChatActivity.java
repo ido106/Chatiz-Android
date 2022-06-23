@@ -55,31 +55,23 @@ public class StartChatActivity extends AppCompatActivity {
 
         setDefaultSettings();
         setArrayAdapter();
-
-        /** ViewModel Delete **/
-//        contactsViewModel = new ViewModelProvider(this).get(ContactsViewModel.class);
-//        contactsViewModel.getLiveData().observe(this, contacts -> {
-//            contactArrayAdapter.setContactList(contacts);
-//            contactArrayAdapter.notifyDataSetChanged();
-//        });
-
         setAddButton();
+        setTopBar();
 
         createNotificationChannel();
     }
 
     @SuppressLint("SetTextI18n")
     private void setTopBar() {
-        binding.userNameStartChat.setText("Hello " + MyApplication.connected_user);
+        assert binding.userNameStartChat != null;
+        binding.userNameStartChat.setText("       Current User: " + MyApplication.connected_user);
         ProfilePictureHolder holder = chatDao.getPictureByUsername(MyApplication.connected_user);
-        //todo set image profile
+
         byte[] bytes=Base64.decode(holder.getDecodedProfileImage(),Base64.DEFAULT);
         Bitmap bitmap= BitmapFactory.decodeByteArray(bytes,0,bytes.length);
         // set bitmap on imageView
+        assert binding.userImageViewStartChat != null;
         binding.userImageViewStartChat.setImageBitmap(bitmap);
-
-        //byte[] imageTile = holder.getDecodedProfileImage();
-        //Bitmap bMap = BitmapFactory.decodeByteArray(imageTile, 0, imageTile.length);
 
     }
 

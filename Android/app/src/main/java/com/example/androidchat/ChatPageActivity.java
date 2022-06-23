@@ -17,6 +17,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Dao;
 import androidx.room.Room;
 
 import com.example.androidchat.Adapters.MessageListAdapter;
@@ -62,16 +63,13 @@ public class ChatPageActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        messageAdapter.setMessageList(chatDao.getUserMessageWithContact(connected, currentContact.getId()));
-//        messageAdapter.notifyDataSetChanged();
-
-        if (MyApplication.messageListAdapter != null) {
-            MyApplication.messageListAdapter.setMessageList(chatDao.getUserMessageWithContact(connected, currentContact.getId()));
-            MyApplication.messageListAdapter.notifyDataSetChanged();
-        }
-        binding.listMessages.smoothScrollToPosition(messageList.size());
+        MyApplication.messageListAdapter.setMessageList(chatDao.getUserMessageWithContact(
+                MyApplication.connected_user, currentContact.getId()));
+        chatAPI.getAllMessagesWithContact(currentContact.getId());
+        MyApplication.messageListAdapter.notifyDataSetChanged();
 
     }
+
 
     private void setDefaultSettings() {
         binding = ActivityChatPageBinding.inflate(getLayoutInflater());

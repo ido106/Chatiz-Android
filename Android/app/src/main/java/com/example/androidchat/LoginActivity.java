@@ -13,6 +13,8 @@ import com.example.androidchat.AppSettings.MyApplication;
 import com.example.androidchat.api.ChatAPI;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.switchmaterial.SwitchMaterial;
+
+import androidx.lifecycle.MutableLiveData;
 import androidx.room.Room;
 import com.example.androidchat.databinding.ActivityMainBinding;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -74,6 +76,9 @@ public class LoginActivity extends AppCompatActivity {
             String newToken = instanceIdResult.getToken();
             MyApplication.firebaseToken = newToken;
         });
+
+        //set global var
+        MyApplication.newMessageData = new MutableLiveData<>(null);
     }
 
     private void setSettingsButton() {

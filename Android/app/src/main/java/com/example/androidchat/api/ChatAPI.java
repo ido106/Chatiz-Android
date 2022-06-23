@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -255,7 +256,6 @@ public class ChatAPI {
     public void getAllConnectedUserContacts(ContactListAdapter adapter) {
         if (MyApplication.jwtToken == null) return;
         Call<List<Contact>> call = webServiceAPI.getAllContacts(MyApplication.jwtToken);
-        final List<Contact>[] contactList = new List[]{null};
 
         call.enqueue(new Callback<List<Contact>>() {
             @SuppressLint("NotifyDataSetChanged")
@@ -282,6 +282,49 @@ public class ChatAPI {
 
             @Override
             public void onFailure(Call<List<Contact>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private int initId(String contact) {
+        int id = 1;
+        List<Message> messageList = chatDao.getUserMessageWithContact(MyApplication.connected_user, contact);
+        for (Message m : messageList) {
+            if (id < m.getId()) {
+                id = m.getId();
+            }
+        }
+        return id;
+    }
+
+
+    public void getAllMessagesWithContact(String contactUsername) {
+        if (MyApplication.jwtToken == null) return;
+        Call<List<Message>> call = webServiceAPI.getAllContactMessages(
+                MyApplication.jwtToken, contactUsername);
+
+
+        call.enqueue(new Callback<List<Message>>() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
+                List<Message> list = response.body();
+                List<Message> messageListToUse = new LinkedList<>();
+                assert list != null;
+                int id = initId(contactUsername);
+                for (Message message : list) {
+                    messageListToUse.add(new Message(message.getFrom(), message.getTo(),
+                            id++, message.getContent(),
+                            message.getTimeSent(), message.isSent()));
+                }
+
+                MyApplication.messageListAdapter.setMessageList(response.body());
+                MyApplication.messageListAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<List<Message>> call, Throwable t) {
 
             }
         });

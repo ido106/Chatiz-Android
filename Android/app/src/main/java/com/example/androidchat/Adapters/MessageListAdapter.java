@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.androidchat.AppSettings.MyApplication;
 import com.example.androidchat.Models.Message;
 import com.example.androidchat.R;
 
@@ -63,6 +64,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
         if (messageList != null) {
             final Message current = messageList.get(position);
+
 
 
             holder.mySendTime.setText(current.getTimeSent());

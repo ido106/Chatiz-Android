@@ -25,6 +25,7 @@ import com.example.androidchat.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @SuppressLint("MissingFirebaseInstanceTokenRefresh")
@@ -50,6 +51,17 @@ public class ChatService extends FirebaseMessagingService {
             initialized = true;
         }
         setNotification(remoteMessage);
+        setLiveData(remoteMessage);
+    }
+
+    private void setLiveData(RemoteMessage remoteMessage) {
+        String id = remoteMessage.getFrom();
+        String content = remoteMessage.getData().get("content");
+        List<String> strings = new LinkedList<>();
+        strings.add(id);
+        strings.add(content);
+        MyApplication.newMessageData.postValue(strings);
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -75,7 +87,7 @@ public class ChatService extends FirebaseMessagingService {
         if (MyApplication.messageListAdapter == null) return;
 
         Message message = createMessageFromRemote(remoteMessage);
-        List<Message> list =  MyApplication.messageListAdapter.getMessageList();
+        List<Message> list = MyApplication.messageListAdapter.getMessageList();
         list.add(message);
         MyApplication.messageListAdapter.setMessageList(list);
         MyApplication.messageListAdapter.notifyDataSetChanged();
@@ -106,7 +118,7 @@ public class ChatService extends FirebaseMessagingService {
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
             notificationManager.notify(maxNotificationId++, builder.build());
 
-            addMessageToRoom(remoteMessage);
+           // addMessageToRoom(remoteMessage);
         }
     }
 
