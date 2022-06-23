@@ -16,7 +16,7 @@
             android:id="@+id/imgContact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="4"
             android:src="@drawable/common_google_signin_btn_text_dark_normal_background" />
 
 
@@ -24,20 +24,21 @@
             android:id="@+id/ContactsNames"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="12"
+
+            android:layout_weight="2"
             android:orientation="vertical"
             android:paddingHorizontal="15dp"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:textColor="@color/black"
-                android:id="@+id/contactNickName"
+                android:id="@+id/contactUserName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="nickname: dumb" />
             <TextView
 
-                android:id="@+id/contactUserName"
+                android:id="@+id/contactNickName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="name: idodo"
@@ -48,6 +49,7 @@
         <LinearLayout
             android:id="@+id/lastMessageLayoutWrap"
             android:layout_width="match_parent"
+            android:layout_weight="2"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
@@ -66,8 +68,10 @@
 
         <TextView
             android:id="@+id/contactLastSeen"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_gravity="right"
             android:paddingLeft="40dp"
             android:text="18:45" />
     </LinearLayout>

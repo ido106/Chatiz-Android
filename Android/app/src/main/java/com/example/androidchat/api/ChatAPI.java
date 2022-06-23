@@ -155,13 +155,12 @@ public class ChatAPI {
         invitation.addProperty("from", from);
         invitation.addProperty("to", to);
         invitation.addProperty("server", server);
-
         Call<Void> response = webServiceAPI.Invitation(invitation);
         // in order not to crush on runtime
         response.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                return;
+                chatDao.addContact(new Contact(to, from, from, server));
             }
 
             @Override
@@ -170,7 +169,7 @@ public class ChatAPI {
             }
         });
 
-        chatDao.addContact(new Contact(to, from, from, server));
+
     }
 
     public void AddContactLocal(String id, String name, String server) {

@@ -82,17 +82,47 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     }
 
 
+    @SuppressLint("SetTextI18n")
+    private static void setTextToShowForData(ContactViewHolder holder, String data) {
+        if (data == null) return;
+        if (data.length() > 20) {
+            holder.lastMessage.setText(data.substring(0, 20) + "...");
+        } else {
+            holder.lastMessage.setText(data);
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private static void setContactName(ContactViewHolder holder, String data) {
+        if (data == null) return;
+        if (data.length() > 8) {
+            holder.contactName.setText(data.substring(0, 8) + "...");
+        } else {
+            holder.contactName.setText(data);
+        }
+    }
+
+
+    @SuppressLint("SetTextI18n")
+    private static void setContactNickName(ContactViewHolder holder, String data) {
+        if (data == null) return;
+        if (data.length() > 8) {
+            holder.contactNickName.setText(data.substring(0, 8) + "...");
+        } else {
+            holder.contactNickName.setText(data);
+        }
+    }
+
     @SuppressLint({"SetTextI18n", "UseCompatLoadingForDrawables"})
     @Override
     public void onBindViewHolder(@NonNull ContactViewHolder holder, int position) {
         if (contactList != null) {
             final Contact current = contactList.get(position);
 
-
-            holder.contactName.setText(current.getId());
-            holder.contactNickName.setText(current.getNickname());
+            setContactName(holder, current.getId());
+            setContactNickName(holder, current.getNickname());
             holder.contactLastSeen.setText(current.getLastSeen());
-            holder.lastMessage.setText(current.getLastMessage());
+            setTextToShowForData(holder, current.getLastMessage());
             int id = 0;
             switch (position % 3) {
                 case 0:

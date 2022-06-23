@@ -47,6 +47,7 @@ public class StartChatActivity extends AppCompatActivity {
     private String connected;
     private NotificationManagerCompat notificationManagerCompat;
     private ChatAPI chatAPI;
+    private Bitmap bitmapPicture;
 
     @SuppressLint("NotifyDataSetChanged")
     @Override
@@ -56,7 +57,6 @@ public class StartChatActivity extends AppCompatActivity {
         setDefaultSettings();
         setArrayAdapter();
         setAddButton();
-        setTopBar();
 
         createNotificationChannel();
     }
@@ -65,13 +65,16 @@ public class StartChatActivity extends AppCompatActivity {
     private void setTopBar() {
         assert binding.userNameStartChat != null;
         binding.userNameStartChat.setText("       Current User: " + MyApplication.connected_user);
+        // set bitmap on imageView
+        assert binding.userImageViewStartChat != null;
+        binding.userImageViewStartChat.setImageBitmap(bitmapPicture);
+    }
+
+    private void initBitmapPicture() {
         ProfilePictureHolder holder = chatDao.getPictureByUsername(MyApplication.connected_user);
 
         byte[] bytes=Base64.decode(holder.getDecodedProfileImage(),Base64.DEFAULT);
-        Bitmap bitmap= BitmapFactory.decodeByteArray(bytes,0,bytes.length);
-        // set bitmap on imageView
-        assert binding.userImageViewStartChat != null;
-        binding.userImageViewStartChat.setImageBitmap(bitmap);
+        bitmapPicture =  BitmapFactory.decodeByteArray(bytes,0,bytes.length);
 
     }
 
@@ -154,6 +157,9 @@ public class StartChatActivity extends AppCompatActivity {
         contactArrayAdapter.setContactList(chatDao.getAllUserContacts(connected));
         chatAPI.getAllConnectedUserContacts(contactArrayAdapter);
         contactArrayAdapter.notifyDataSetChanged();
+        initBitmapPicture();
+        setTopBar();
+
     }
 
     private void initWidgets() {

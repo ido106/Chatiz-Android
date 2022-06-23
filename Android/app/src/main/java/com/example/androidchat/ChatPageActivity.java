@@ -56,6 +56,7 @@ public class ChatPageActivity extends AppCompatActivity {
         setDefaultSettings();
         setMessageAdapter();
         setGoBackButton();
+        setContactTopBar();
     }
 
 
@@ -95,6 +96,11 @@ public class ChatPageActivity extends AppCompatActivity {
         if (sharedpreferences.contains("Username")) {
             connected = sharedpreferences.getString("Username", "shit");
         }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void setContactTopBar() {
+        binding.contactNameTopBar.setText("   Talking to: " + currentContact.getId());
     }
 
     @SuppressLint("NotifyDataSetChanged")
