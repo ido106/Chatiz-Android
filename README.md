@@ -38,10 +38,6 @@ https://user-images.githubusercontent.com/88191199/174644859-6c0d1181-fd0d-42aa-
 
 https://user-images.githubusercontent.com/88191199/174649568-298e5cc1-1cf3-4604-a82d-eb0e4b03e498.mp4
 
-<br/>**Live messaging**
-
-<br/>To see live messaging between two users, run two emulators, in each of them, log in to a different user,
-add each user as the other's contactUser, and send messages from one to the other.
 
 
 
