@@ -1,7 +1,7 @@
 ﻿# Advanced2_New
- # Extend time for the exercise from the practitioner
+ # Extend time for the exercise from the practitioner - until 24/06 (afterwards it is only readme updates)
 
-<br/>The practitioner allowed us to submit a day late.
+<br/>
 
 <br/>**Technologies:**
 <br/>android studio
