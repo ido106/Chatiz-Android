@@ -55,5 +55,41 @@ In order to use *Chatiz* on android, the server must be run in the background be
 ## Screenshots
 *For screenshots of the server side visit the [second part](https://github.com/ido106/Chatiz_Server).*
 
+### Dark Mode and Light Mode Login Page
+<p align="center">
+  <img 
+    width="300"
+    src="https://user-images.githubusercontent.com/92651125/197416693-5f02bbbd-d32b-461b-9145-a8d6ffcaac38.png"
+  > 
+  <img 
+    width="300"
+    src="https://user-images.githubusercontent.com/92651125/197416775-6f8d6ad0-cab3-462c-91df-fadbe6224b54.png"
+  >
+</p> 
+
+### Messages
+<p align="center">
+  <img 
+    width="300"
+    src="https://user-images.githubusercontent.com/92651125/197418392-70f81f33-bdbc-4af6-b9db-303a01287162.png"
+  > 
+</p> 
+
+### Contacts
+<p align="center">
+  <img 
+    width="300"
+    src="https://user-images.githubusercontent.com/92651125/197418375-0216df52-25d8-4632-829b-aeb95cf324b9.png"
+  > 
+</p> 
+
+### Sign Up
+<p align="center">
+  <img 
+    width="300"
+    src="https://user-images.githubusercontent.com/92651125/197417328-0e984437-1739-4c52-89dc-65c0d6afe10c.png"
+  > 
+</p> 
+
 
 ## **Enjoy	:smile:**
