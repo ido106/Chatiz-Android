@@ -6,7 +6,7 @@
     height="393"
     src="https://user-images.githubusercontent.com/92651125/197267879-3c5e0b83-5f6a-4a4c-a414-80e77f2bb319.png"
   >
-</p>
+</p> 
 
 ## Description
 ### ***For screenshots - skip to the bottom of the page.***  
